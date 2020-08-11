@@ -184,6 +184,26 @@ class ExamenFisico(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.IMPRESION_CLINCIA, self.ESTADO)
 
+class Antecedente(models.Model):
+    PK_ANTECEDENTES = models.AutoField(primary_key=True)
+    ULTIMA_REGLA = models.DateTimeField(blank=True, null=True)
+    FECHA_PROBABLE_PARTO = models.DateTimeField(blank=True, null=True)
+    GESTA = models.DateTimeField(blank=True, null=True)
+    ABORTO = models.DateTimeField(blank=True, null=True)
+    HIJOS_VIVOS = models.IntegerField(blank=True, null=True)
+    PESO = models.FloatField(blank=True, null=True)
+    QUIRURGICO = models.TextField(blank=True, null=True)
+    MEDICO = models.TextField(blank=True, null=True)
+    ALERGIA = models.TextField(blank=True, null=True)
+    FAMILIAR= models.TextField(blank=True, null=True)
+    HABITO = models.TextField(blank=True, null=True)
+    CIGARRO  = models.TextField(blank=True, null=True)
+    LICOR = models.TextField(blank=True, null=True)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
+    class Meta:
+        verbose_name = 'Antecedente'
+        verbose_name_plural = 'Antecedentes'
 
-
+    def __str__(self):
+        return "{0},{1}".format(self.PK_ANTECEDENTES, self.ESTADO)
