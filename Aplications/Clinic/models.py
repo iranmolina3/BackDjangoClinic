@@ -91,4 +91,20 @@ class Pregunta(models.Model):
     def __str__(self):
         return "{0},{1},{2}".format(self.DESCRIPCION, self.ESTADO, self.FECHA_CREACION)
 
+class Usuario(models.Model):
+    PK_USUARIO = models.AutoField(primary_key=True)
+    CARNET = models.CharField(max_length=60, blank=False, null=False)
+    CONTRASENIA = models.CharField(max_length=25, blank=False, null=False)
+    FECHA_CREACION = models.DateField(auto_now=False, auto_now_add=True)
+    CORREO = models.EmailField(default='nocorreo@dominio.com', blank=True, null=True)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
+    FK_ROL = models.ForeignKey(Rol, on_delete=models.CASCADE, blank=False, null=False)
 
+    class Meta:
+        verbose_name = 'Usuario'
+        verbose_name_plural = 'Usuarios'
+        ordering = ['FECHA_CREACION']
+
+    def __str__(self):
+        return "{0},{1},{2}".format(self.CARNET, self.CORREO, self.FECHA_CREACION)
