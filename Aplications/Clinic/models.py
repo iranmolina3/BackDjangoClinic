@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.timezone import now
 # Create your models here.
 
 # Create table rol
@@ -109,7 +109,7 @@ class Usuario(models.Model):
     def __str__(self):
         return "{0},{1},{2}".format(self.CARNET, self.CORREO, self.FECHA_CREACION)
 
-class HistorialCsat():
+class HistorialCsat(models.Model):
     PK_HISTORIAL_CSAT = models.AutoField(primary_key=True)
     RESPUESTA = models.IntegerField(blank=False, null=False)
     FECHA_CREACION = models.DateField(auto_now_add=True, auto_now=False)
@@ -124,7 +124,7 @@ class HistorialCsat():
     def __str__(self):
         return "{0},{1},{2}".format(self.FK_PREGUNTA, self.RESPUESTA, self.FECHA_CREACION)
 
-class TipoCita():
+class TipoCita(models.Model):
     PK_TIPO_CITA =  models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=50, blank=False, null=False)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
@@ -137,3 +137,18 @@ class TipoCita():
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.ESTADO)
 
+
+class Cita(models.Model):
+    PK_CITA = models.AutoField(primary_key=True)
+    NUMERO = models.IntegerField(blank=False, null=True)
+    FECHA_CREACION = models.DateTimeField(auto_now_add=True, auto_now=False)
+    FECHA_FINALIZACION = models.DateTimeField(auto_now=True)
+    ESTADO  = models.BooleanField(default=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Cita'
+        verbose_name_plural = 'Citas'
+        ordering = ['NUMERO']
+
+    def __str__(self):
+        return "{0},{1},{2}".format(self.NUMERO, self.ESTADO, self.FECHA_FINALIZACION)
