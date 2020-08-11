@@ -152,3 +152,38 @@ class Cita(models.Model):
 
     def __str__(self):
         return "{0},{1},{2}".format(self.NUMERO, self.ESTADO, self.FECHA_FINALIZACION)
+
+class Consulta(models.Model):
+    PK_CONSULTA = models.AutoField(primary_key=True)
+    MOTIVO_CONSULTA = models.CharField(max_length=200, blank=False, null=False)
+    HISTORIA = models.TextField(blank=False, null=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Consulta'
+        verbose_name_plural = 'Consultas'
+        ordering = ['MOTIVO_CONSULTA']
+
+    def __str__(self):
+        return "{0},{1}".format(self.MOTIVO_CONSULTA, self.ESTADO)
+
+class ExamenFisico(models.Model):
+    PK_EXAMEN_FISICO = models.AutoField(primary_key=True)
+    PRESION_ARTERIAL = models.FloatField(blank=False, null=False)
+    FRECUENCIA_CARDIACA = models.FloatField(blank=False, null=False)
+    FRECUENCIA_RESPIRATORIA = models.FloatField(blank=False, null=False)
+    TEMPERATURA = models.FloatField(blank=False, null=False)
+    FRECUENCIA_CARDIACA_FETAL = models.FloatField(blank=False, null=False)
+    IMPRESION_CLINCIA = models.CharField(max_length=200, blank=False, null=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Examene Fisico'
+        verbose_name_plural = 'Examenes Fisicos'
+
+    def __str__(self):
+        return "{0},{1}".format(self.IMPRESION_CLINCIA, self.ESTADO)
+
+
+
+
