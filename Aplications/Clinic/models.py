@@ -108,3 +108,18 @@ class Usuario(models.Model):
 
     def __str__(self):
         return "{0},{1},{2}".format(self.CARNET, self.CORREO, self.FECHA_CREACION)
+
+class HistorialCsat():
+    PK_HISTORIAL_CSAT = models.AutoField(primary_key=True)
+    RESPUESTA = models.IntegerField(blank=False, null=False)
+    FECHA_CREACION = models.DateField(auto_now_add=True, auto_now=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    FK_PREGUNTA = models.ForeignKey(Pregunta, on_delete=models.CASCADE, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'HistorialCsat'
+        verbose_name_plural = 'HistorialCsat'
+        ordering = ['FECHA_CREACION']
+
+    def __str__(self):
+        return "{0},{1},{2}".format(self.FK_PREGUNTA, self.RESPUESTA, self.FECHA_CREACION)
