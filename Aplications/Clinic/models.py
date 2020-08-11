@@ -61,7 +61,7 @@ class Persona(models.Model):
     NOMBRE = models.CharField(max_length=50, blank=False, null=False)
     APELLIDO = models.CharField(max_length=50, blank=False, null=False)
     DPI = models.CharField(max_length=14, default='Menor de edad', blank=False, null=False)
-    EDAD = models.IntegerField(max_length=3, blank=False, null=False)
+    EDAD = models.IntegerField(blank=False, null=False)
     FECHA = models.DateField(auto_now=False, auto_now_add=True)
     TELEFONO = models.CharField(max_length=9, blank=True, null=True)
     GENERO = models.CharField(max_length=10, blank=False, null=False)
@@ -123,3 +123,17 @@ class HistorialCsat():
 
     def __str__(self):
         return "{0},{1},{2}".format(self.FK_PREGUNTA, self.RESPUESTA, self.FECHA_CREACION)
+
+class TipoCita():
+    PK_TIPO_CITA =  models.AutoField(primary_key=True)
+    NOMBRE = models.CharField(max_length=50, blank=False, null=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Tipo Cita'
+        verbose_name_plural = 'Tipos Citas'
+        ordering = ['NOMBRE']
+
+    def __str__(self):
+        return "{0},{1}".format(self.NOMBRE, self.ESTADO)
+
