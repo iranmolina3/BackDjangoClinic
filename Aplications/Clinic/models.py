@@ -12,9 +12,10 @@ class Rol(models.Model):
     class Meta:
         verbose_name = 'Rol'
         verbose_name_plural = 'Roles'
+        ordering = ['NOMBRE']
 
     def __str__(self):
-        return self.NOMBRE
+        return "{0},{1}".format(self.NOMBRE, self.ESTADO)
 
 class EstadoCivil(models.Model):
     PK_ESTADO_CIVIL = models.AutoField(primary_key=True)
@@ -24,9 +25,10 @@ class EstadoCivil(models.Model):
     class Meta:
         verbose_name = 'Estado Civil'
         verbose_name_plural = 'Estados Civiles'
+        ordering = ['NOMBRE']
 
     def __str__(self):
-        return self.NOMBRE
+        return "{0},{1}".format(self.NOMBRE, self.ESTADO)
 
 class Municipio(models.Model):
     PK_MUNICIPIO = models.AutoField(primary_key=True)
@@ -36,6 +38,57 @@ class Municipio(models.Model):
     class Meta:
         verbose_name = 'Municipio'
         verbose_name_plural = 'Municipios'
+        ordering = ['NOMBRE']
 
     def __str__(self):
-        return self.NOMBRE
+        return "{0},{1}".format(self.NOMBRE, self.ESTADO)
+
+class Direccion(models.Model):
+    PK_DIRECCION = models.AutoField(primary_key=True)
+    DESCRIPCION = models.TextField(blank=False, null=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    FK_MUNICIPIO = models.ForeignKey(Municipio, on_delete=models.CASCADE, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Direccion'
+        verbose_name_plural = 'Direcciones'
+
+    def __str__(self):
+        return "{0},{1},{2}".format(self.FK_MUNICIPIO, self.DESCRIPCION, self.ESTADO)
+
+class Persona(models.Model):
+    PK_PERSONA = models.AutoField(primary_key=True)
+    NOMBRE = models.CharField(max_length=50, blank=False, null=False)
+    APELLIDO = models.CharField(max_length=50, blank=False, null=False)
+    DPI = models.CharField(max_length=14, default='Menor de edad', blank=False, null=False)
+    EDAD = models.IntegerField(max_length=3, blank=False, null=False)
+    FECHA = models.DateField(auto_now=False, auto_now_add=True)
+    TELEFONO = models.CharField(max_length=9, blank=True, null=True)
+    GENERO = models.CharField(max_length=10, blank=False, null=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    FK_DIRECCION = models.ForeignKey(Direccion, on_delete=models.CASCADE, blank=False, null=False)
+    FK_ESTADO_CIVIL = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Persona'
+        verbose_name_plural = 'Personas'
+        ordering = ['FECHA']
+
+    def __str__(self):
+        return "{0},{1},{2}".format(self.NOMBRE, self.APELLIDO, self.FECHA, self.ESTADO)
+
+class Pregunta(models.Model):
+    PK_PREGUNTA = models.AutoField(primary_key=True)
+    DESCRIPCION = models.CharField(max_length=200, blank=False, null=False)
+    FECHA_CREACION = models.DateField(auto_now_add=True, auto_now=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Pregunta'
+        verbose_name_plural = 'Preguntas'
+        ordering = ['FECHA_CREACION']
+
+    def __str__(self):
+        return "{0},{1},{2}".format(self.DESCRIPCION, self.ESTADO, self.FECHA_CREACION)
+
+
