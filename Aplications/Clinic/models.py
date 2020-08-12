@@ -5,9 +5,9 @@ from django.utils.timezone import now
 # Create table rol
 
 class Rol(models.Model):
-    PK_ROL = models.AutoField(primary_key=True)
-    NOMBRE = models.CharField(max_length=25, blank=False, null=False)
-    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    PK_ROL = models.AutoField('Id del rol', primary_key=True)
+    NOMBRE = models.CharField('Nombre del rol', max_length=25, blank=False, null=False)
+    ESTADO = models.BooleanField('Estado activo/incativo', default=True, blank=False, null=False)
 
     class Meta:
         verbose_name = 'Rol'
@@ -75,7 +75,7 @@ class Persona(models.Model):
         ordering = ['FECHA']
 
     def __str__(self):
-        return "{0},{1},{2}".format(self.NOMBRE, self.APELLIDO, self.FECHA, self.ESTADO)
+        return "{0},{1},{2}".format(self.NOMBRE, self.APELLIDO, self.APELLIDO)
 
 class Pregunta(models.Model):
     PK_PREGUNTA = models.AutoField(primary_key=True)
@@ -89,7 +89,7 @@ class Pregunta(models.Model):
         ordering = ['FECHA_CREACION']
 
     def __str__(self):
-        return "{0},{1},{2}".format(self.DESCRIPCION, self.ESTADO, self.FECHA_CREACION)
+        return "{0},{1}".format(self.DESCRIPCION, self.ESTADO)
 
 class Usuario(models.Model):
     PK_USUARIO = models.AutoField(primary_key=True)
@@ -136,7 +136,6 @@ class TipoCita(models.Model):
 
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.ESTADO)
-
 
 class Cita(models.Model):
     PK_CITA = models.AutoField(primary_key=True)
