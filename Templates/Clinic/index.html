@@ -1,0 +1,233 @@
+{%load staticfiles%}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- PROPERTIES FROM DE PAGE -->
+
+	<meta name="keywords" content="clinica medica salama">
+	<meta name="keywords" content="clinica Fernando Pineda">
+	<!-- <meta http-equiv="refresh" content="5;URL='https://www.youtube.com/'"> -->
+	<!-- <meta http-equiv="refresh"` content="160"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=1" user-scalable=yes/>
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Last-Modified" content="0">
+	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta charset="utf-8">
+	<meta name="author" content="DevIran">
+	<meta name="descriptcion" content="clincia medica salama Dr. Fernando Pineda">
+
+	<!-- GOOGLE FONTS -->
+
+	<link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
+
+	<!-- LINK EFECT MOVE IMAGE -->
+
+    <link href="{% static 'css/imagehover.min.css'%}" rel="stylesheet" media="all">
+
+	<!-- LINK EFECT MOVE IMAGE -->
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+	<!-- MIS ENLACES -->
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+	
+	<title>
+		Clinica Medica Dr. Fernado Pineda
+	</title>
+
+</head>
+<body>
+
+<!-- ***** ***** HEADER ***** ***** -->	 
+	
+	<nav class="navbar navbar-expand-lg navbar-light  backgroundnav">
+  		<a class="navbar-brand" href="#">
+  			<img class="ImgLogo" src="https://i.postimg.cc/j2jMs7Hk/Logo-Clincia-Medica2.png" alt="Logo-Clincia-Medica"/>
+  		</a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+  		</button>
+  		<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+	    	<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+	    		<!--
+	      		<li class="nav-item active">
+	        	<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	      		</li>
+	      		<li class="nav-item">
+	        		<a class="nav-link" href="#">Link</a>
+	      		</li>
+	      		<li class="nav-item">
+	        		<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+	      		</li>
+	      		-->
+	    	</ul>
+			<a href="login.html">
+				<button class="btn btn-outline-success1 my-2 my-sm-0" type="submit">Iniciar sesion</button>
+			</a>
+  		</div>
+	</nav>
+
+<!-- ***** ***** ***** CAROUSEL ***** ***** ***** -->	  
+
+	  	<!--Carousel Wrapper-->
+	<div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
+  		<!--Indicators-->
+  		<ol class="carousel-indicators">
+    		<li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+    		<li data-target="#carousel-example-2" data-slide-to="1"></li>
+    		<li data-target="#carousel-example-2" data-slide-to="2"></li>
+  		</ol>
+	  	<!--/.Indicators-->
+	  	<!--Slides-->
+	    <div class="carousel-inner" role="listbox">
+	    	<div class="carousel-item active">
+	      		<div class="view">
+	        		<img class="d-block w-100" src="https://i.postimg.cc/NF62zgPG/slide1.jpg"
+	          		alt="First slide">
+	        		<div class="mask rgba-black-light"></div>
+	      		</div>
+			    <div class="carousel-caption">
+		        	<h3 class="fonttitlecarousel">Control prenatal</h3>
+			        <p class="fontpcarousel">Para un embarazo seguro</p>
+		      	</div>
+	    	</div>
+    		<div class="carousel-item">
+      			<!--Mask color-->
+      			<div class="view">
+        			<img class="d-block w-100" src="https://i.postimg.cc/28YZBZV1/slide2.jpg"
+          			alt="Second slide">
+        			<div class="mask rgba-black-strong"></div>
+      			</div>
+      			<div class="carousel-caption">
+        			<h3 class="fonttitlecarousel">Sistema virtual</h3>
+        			<p class="fontpcarousel">Porque tu salud es primero</p>
+      			</div>
+    		</div>
+    		<div class="carousel-item">
+      		<!--Mask color-->
+      			<div class="view">
+        			<img class="d-block w-100" src="https://i.postimg.cc/8CxFkF2P/slide3.jpg"
+          			alt="Third slide">
+        			<div class="mask rgba-black-slight"></div>
+	    		</div>	
+      			<div class="carousel-caption">
+        			<h3 class="fonttitlecarousel">Control de salud</h3>
+        			<p class="fontpcarousel">Diagnostico rapido y efectivo</p>
+      			</div>
+    		</div>
+  		</div>
+		<!--/.Slides-->
+  		<!--Controls-->
+  		<a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+    		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    		<span class="sr-only">Previous</span>
+  		</a>
+  		<a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+    		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+    		<span class="sr-only">Next</span>
+  		</a>
+  	<!--/.Controls-->
+	</div>
+	<!--/.Carousel Wrapper-->
+	
+	
+	<nav class="navbar navbar-expand-lg navbar-light sticky-top backgroundnav">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	  	</button>
+		<div class="collapse navbar-collapse" id="navbarTogglerDemo01" >
+			<ul class="navbar-nav mr-auto mt-2 mt-lg-0 RegularFont">
+			  	<li class="nav-item dropdown active">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<font color="#FFFFFF">				
+							Servicios
+						</font>
+
+					</a>
+					<div class="dropdown-menu">
+				  		<a class="dropdown-item" href="#">Consultas</a>
+				  		<a class="dropdown-item" href="#">Resonancias</a>
+				  		<a class="dropdown-item" href="#">Citas</a>
+				  		<div class="dropdown-divider"></div>
+				  		<a class="dropdown-item" href="#">Historial medico</a>
+					</div>
+			  	</li>
+				 <li class="nav-item active">
+					<a class="nav-link RegularFont" href="#">
+						<font color="#FFFFFF">
+							¿Quienes somos?	
+						</font>					
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link RegularFont" href="#">
+						<font color="#FFFFFF">
+							Contactanos
+						</font>					
+					</a>
+				</li>			
+			</ul>
+				    
+			<!--
+			<form class="form-inline my-2 my-lg-0">
+			  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+			  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+			-->
+		</div>
+	</nav>
+
+
+	<!-- INFORMATION FROM DR. SERVICES -->
+	<div id="servicios" class="container-fluid-without-padding titleseparator">
+		<p class="paraphseparator">
+			B&nbsp;I&nbsp;E&nbsp;N&nbsp;E&nbsp;S&nbsp;T&nbsp;A&nbsp;R 			
+		</p>
+	</div>
+  	<div class="container-fluid-without-padding">
+		<figure class="figureslide imghvr-slide-left">
+			<img class="sizeimg" src="https://image.freepik.com/foto-gratis/concepto-salud-medico-medico-medicina-estetoscopio-mano-pacientes_34200-313.jpg">
+			<figcaption>
+			  <h3 style="font-size:5vw; margin-top: 7%;">Bienestar</h3>
+			  <p style="font-size:3vw;">Porque tu salud es lo mas importante para nosotros te brindamos el mejor servicio de calidad para ti y tu familia.</p>
+			</figcaption>
+		</figure>
+	</div>	
+	<div id="servicios" class="container-fluid-without-padding titleseparator">
+		<p class="paraphseparator">
+			C&nbsp;A&nbsp;L&nbsp;I&nbsp;D&nbsp;A&nbsp;D 			
+		</p>
+	</div>
+  	<div class="container-fluid-without-padding">  				<figure class="figureslide imghvr-slide-right">
+			<img class="sizeimg" src="https://image.freepik.com/foto-gratis/concepto-salud-medico-medico-medicina-estetoscopio-mano-pacientes_34200-313.jpg">
+			<figcaption>
+			  <h3 style="font-size:5vw; margin-top: 7%;">Calidad de servicio</h3>
+			  <p style="font-size:3vw;">Llevamos tiempo brindando el servicio de la salud y contamos con personal calificado para brindarte el mejor servicio y cuidado de tu salud o de tu familia.</p>
+			</figcaption>
+		</figure>          
+    </div>
+
+    <!-- MAPS WITH JAVASCRIPT-->
+
+    <div id="servicios" class="container-fluid-without-padding titleseparator">
+		<p class="paraphseparator">
+			L&nbsp;O&nbsp;C&nbsp;A&nbsp;L&nbsp;I&nbsp;Z&nbsp;A&nbsp;C&nbsp;I&nbsp;O&nbsp;N
+		</p>
+	</div>
+	<footer>		
+		<div class="foothermy foothercontainer">			
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3852.0503933358914!2d-90.32214698607095!3d15.100551089485595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x858a211cf8a84a4d%3A0x1bcd9b68363f09b9!2sCl%C3%ADnica%20M%C3%A9dica%20Dr.%20Fernando%20Alberto%20Pineda%20Pe%C3%B1ate!5e0!3m2!1ses-419!2sgt!4v1597402268921!5m2!1ses-419!2sgt" height="300" frameborder="0" style="border:0; width: 100%; allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+				      	
+		</div>
+    </footer>
+
+</body>
+</html>
