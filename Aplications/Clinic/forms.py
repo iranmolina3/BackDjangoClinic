@@ -1,85 +1,97 @@
 from django import forms
 from .models import *
 
-class formRol(forms.ModelForm):
+class FormRol(forms.ModelForm):
     class Meta:
         model = Rol
         fields = [
             'NOMBRE', 'ESTADO'
         ]
 
-class formEstadoCivil(forms.ModelForm):
+class FormEstadoCivil(forms.ModelForm):
     class Meta:
-        model = [
+        model = EstadoCivil
+        fields = [
             'NOMBRE', 'ESTADO'
         ]
 
-class formMunicipio(forms.ModelForm):
+class FormMunicipio(forms.ModelForm):
     class Meta:
-        model = [
+        model = Municipio
+        fields = [
             'NOMBRE', 'ESTADO'
         ]
 
-class formDireccion(forms.ModelForm):
+class FormDireccion(forms.ModelForm):
     class Meta:
-        model = [
+        model = Direccion
+        fields = [
             'DESCRIPCION', 'ESTADO', 'FK_MUNICIPIO'
         ]
 
-class formPersona(forms.ModelForm):
+class FormPersona(forms.ModelForm):
     class Meta:
-        model = [
-            'NOMBRE', 'APELLIDO', 'DPI', 'EDAD', 'FECHA', 'TELEFONO', 'GENERO',
+        model = Persona
+        fields = [
+            'NOMBRE', 'APELLIDO', 'DPI', 'EDAD', 'TELEFONO', 'GENERO',
             'ESTADO', 'FK_DIRECCION', 'FK_ESTADO_CIVIL'
         ]
 
-class formPregunta(forms.ModelForm):
+class FormPregunta(forms.ModelForm):
     class Meta:
-        model = [
-            'DESCRIPCION', 'FECHA_CREACION', 'ESTADO'
+        model = Pregunta
+        fields = [
+            'DESCRIPCION', 'ESTADO'
         ]
 
-class formUsuario(forms.ModelForm):
+class FormUsuario(forms.ModelForm):
     class Meta:
-        model = [
-            'CARNET', 'CONTRASENIA', 'FECHA_CREACION', 'CORREO', 'ESTADO',
+        model = Usuario
+        fields = [
+            'CARNET', 'CONTRASENIA', 'CORREO', 'ESTADO',
             'FK_PERSONA', 'FK_ROL'
         ]
 
-class formHistorialCsat(forms.ModelForm):
+class FormHistorialCsat(forms.ModelForm):
     class Meta:
-        model = [
-            'RESPUESTA', 'FECHA_CREACION', 'ESTADO', 'FK_PREGUNTA'
+        model = HistorialCsat
+        fields = [
+            'RESPUESTA', 'ESTADO', 'FK_PREGUNTA'
         ]
 
-class formTipoCita(forms.ModelForm):
+class FormTipoCita(forms.ModelForm):
     class Meta:
-        model = [
+        model = TipoCita
+        fields = [
             'NOMBRE', 'ESTADO'
         ]
 
-class formCita(forms.ModelForm):
+class FormCita(forms.ModelForm):
     class Meta:
-        model = [
-            'NUMERO', 'FECHA_CREACION', 'FECHA_FINALIZACION', 'ESTADO'
+        model = Cita
+        fields = [
+            'NUMERO', 'ESTADO'
         ]
 
-class formConsulta(forms.ModelForm):
+class FormConsulta(forms.ModelForm):
     class Meta:
-        model = [
+        model = Consulta
+        fields = [
             'MOTIVO_CONSULTA', 'HISTORIA', 'ESTADO'
         ]
 
-class formExamenFisico(forms.ModelForm):
+class FormExamenFisico(forms.ModelForm):
     class Meta:
-        model = [
+        model = ExamenFisico
+        fields = [
             'PRESION_ARTERIAL', 'FRECUENCIA_CARDIACA', 'FRECUENCIA_RESPIRATORIA',
             'TEMPERATURA', 'FRECUENCIA_CARDIACA_FETAL', 'IMPRESION_CLINCIA', 'ESTADO'
         ]
 
-class formAntecedente(forms.ModelForm):
+class FormAntecedente(forms.ModelForm):
     class Meta:
-        model = [
+        model = Antecedente
+        fields = [
             'ULTIMA_REGLA', 'FECHA_PROBABLE_PARTO', 'GESTA', 'ABORTO', 'HIJOS_VIVOS',
             'PESO', 'QUIRURGICO', 'MEDICO', 'ALERGIA', 'FAMILIAR', 'HABITO', 'CIGARRO', 'LICOR', 'ESTADO'
         ]

@@ -19,7 +19,7 @@ from Aplications.Clinic.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Clinic/', include(('Aplications.Clinic.urls', 'Clinic'))),
-    path('home/', home, name = 'home'),
+    path('clinica/', include(('Aplications.Clinic.urls', 'Clinic'))),
+    path('index/', home, name = 'index'),
     path('login/', login, name = 'login')
 ]
