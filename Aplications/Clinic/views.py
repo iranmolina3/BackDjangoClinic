@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def Bienvenido(request):
-    return render(request, 'Clinic/index.html')
+def home(request):
+    return render(request, 'index.html')
 
-def Sesion(request):
-    return render(request, 'Clinic/login.html')
+def login(request):
+    return render(request, 'login.html')
