@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def Bienvenido(request):
     return render(request, 'Clinic/index.html')
+
+def Sesion(request):
+    return render(request, 'Clinic/login.html')
