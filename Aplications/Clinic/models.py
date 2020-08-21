@@ -194,9 +194,9 @@ class Antecedente(models.Model):
     QUIRURGICO = models.TextField(blank=True, null=True)
     MEDICO = models.TextField(blank=True, null=True)
     ALERGIA = models.TextField(blank=True, null=True)
-    FAMILIAR= models.TextField(blank=True, null=True)
+    FAMILIAR = models.TextField(blank=True, null=True)
     HABITO = models.TextField(blank=True, null=True)
-    CIGARRO  = models.TextField(blank=True, null=True)
+    CIGARRO = models.TextField(blank=True, null=True)
     LICOR = models.TextField(blank=True, null=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
