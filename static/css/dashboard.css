@@ -1,0 +1,161 @@
+/*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/templates/simple-sidebar)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+ #wrapper {
+    overflow-x: hidden;
+ }
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+
+/*
+  color de fondo
+*/
+
+.dash{
+
+  background-image: url(https://image.freepik.com/vector-gratis/asistencia-sanitaria-medica-color-azul_1017-26800.jpg);
+  height: 50%;  
+}
+
+.bg-marin{
+  background-color: #0F4C75;
+}
+
+.color-a{
+  position: relative;
+  text-align: left;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  /*font-family: 'Patua One', cursive;*/
+  font-size: 17px;
+  font-weight: bold;
+
+}
+
+.border-sidebar{
+  border-color: #ffffff;
+  border-radius: 10px 40px 10px 40px;
+  background: transparent;
+  color: #ffffff;
+}
+
+.border-sidebar:hover{
+  border-radius: 40px 10px 40px 10px; 
+  text-align: right;
+}
+
+
+i{
+  padding-left: 5px; 
+  padding-right: 5px;
+}
+
+body{
+  background: url(https://i.postimg.cc/nVWmmSB8/Dashboard.jpg);
+  background-size: cover;
+  background-attachment: fixed; 
+}
+
+thead{
+  background: #0F4C75;
+  color: #ffffff;
+  /*font-weight: bold;*/
+}
+
+tbody{
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px #0F4C75;
+  background-color:
+}
+
+h1{
+  color: #0F4C75;
+  font-weight: bold;
+  font-size: 9vw;
+  text-align: center; 
+  text-shadow: 3px 3px #ffffff;
+  font-family: 'Kaushan Script', cursive;
+  padding: 20px;
+}
+
+h2{
+  color: #0F4C75;
+  font-weight: bold;
+  font-size: 5vw;
+  text-align: center;
+  text-shadow: 3px 3px #ffffff;
+  font-family: 'Kaushan Script', cursive;
+  padding: 20px;
+}
+
+.a-custom{
+  padding: 10px;
+  background-color: #0F4C75;
+  font-size: bold;
+  color: #ffffff;
+  margin: 10px;
+}
+
+.a-custom:hover{
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  font-size: bold;
+  color: #0F4C75;
+  border-radius: 20px 20px 20px 20px;
+  border-color: #0F4C75;
+}
+
+.list-backgroud-custom-opacity{
+	background-color: rgba(0, 0, 0, 0.20);
+	border-radius: 20px 20px 20px 20px;
+	padding: 10px;
+	/*text-align: center;*/
+}
+
