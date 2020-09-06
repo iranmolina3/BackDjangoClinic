@@ -21,11 +21,9 @@
 
 	<link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
 
-	<!-- LINK EFECT MOVE IMAGE -->
+	<!-- LINK EFECT MOVE TEXT-->
 
     <link href="{% static 'css/imagehover.min.css'%}" rel="stylesheet" media="all">
-
-	<!-- LINK EFECT MOVE IMAGE -->
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -53,22 +51,52 @@
     	<span class="navbar-toggler-icon"></span>
   		</button>
   		<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-	    	<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-	    		<!--
-	      		<li class="nav-item active">
-	        	<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-	      		</li>
-	      		<li class="nav-item">
-	        		<a class="nav-link" href="#">Link</a>
-	      		</li>
-	      		<li class="nav-item">
-	        		<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-	      		</li>
-	      		-->
-	    	</ul>
-			<a href="login.html">
-				<button class="btn btn-outline-success1 my-2 my-sm-0" type="submit">Iniciar sesion</button>
-			</a>
+	    	<ul class="navbar-nav mr-auto mt-2 mt-lg-0 RegularFont">
+			  	<li class="nav-item dropdown active">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<font color="#FFFFFF">				
+							Servicios
+						</font>
+
+					</a>
+					<div class="dropdown-menu">
+				  		<a class="dropdown-item" href="#">Consultas</a>
+				  		<a class="dropdown-item" href="#">Resonancias</a>
+				  		<a class="dropdown-item" href="#">Citas</a>
+				  		<div class="dropdown-divider"></div>
+				  		<a class="dropdown-item" href="#">Historial medico</a>
+					</div>
+			  	</li>
+				 <li class="nav-item active">
+					<a class="nav-link RegularFont" href="#">
+						<font color="#FFFFFF">
+							¿Quienes somos?	
+						</font>					
+						<span class="sr-only">
+							(current)
+						</span>
+					</a>
+				</li>				
+				<li class="nav-item active">
+					<a class="nav-link RegularFont" href="#">
+						<font color="#FFFFFF">
+							Contactanos
+						</font>					
+					</a>
+				</li>
+				<li class="nav-item">
+              		<a class="nav-link text-light color-a" href="#" data-toggle="tooltip" data-placement="bottom" title="Servicio activo">
+	                Atendiendo <i class="far fa-thumbs-down"></i><i class="far fa-thumbs-up"></i>     
+	              	</a>
+	            </li>	            		
+			</ul>
+			<a class="nav" href="login.html">
+	      		<button class="btn btn-outline-success1 my-2 my-sm-0" type="submit">
+	      			Iniciar sesion
+	      		</button>
+      		</a>	
+			</div>
+			
   		</div>
 	</nav>
 
@@ -135,7 +163,7 @@
 	</div>
 	<!--/.Carousel Wrapper-->
 	
-	
+	<!--
 	<nav class="navbar navbar-expand-lg navbar-light sticky-top backgroundnav">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -176,15 +204,16 @@
 				</li>			
 			</ul>
 				    
-			<!--
 			<form class="form-inline my-2 my-lg-0">
 			  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 			  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
-			-->
+			
 		</div>
 	</nav>
-
+	-->
+	<!-- Font awesome icons -->
+  	<script src="https://kit.fontawesome.com/00f20dde71.js" crossorigin="anonymous"></script>
 
 	<!-- INFORMATION FROM DR. SERVICES -->
 	<div id="servicios" class="container-fluid-without-padding titleseparator">

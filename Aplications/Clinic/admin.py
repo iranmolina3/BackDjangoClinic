@@ -46,7 +46,7 @@ class AdminMunicipio(ImportExportModelAdmin, admin.ModelAdmin):
 admin.site.register(Municipio, AdminMunicipio)
 
 # IranDev this is the model admin DIRECCION
-
+"""
 class ResourceDireccion(resources.ModelResource):
     class Meta:
         model = Direccion
@@ -57,7 +57,7 @@ class AdminDireccion(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = ResourceDireccion
 
 admin.site.register(Direccion, AdminDireccion)
-
+"""
 # IranDev this is the model admin PERSONA
 
 class ResourcePersona(resources.ModelResource):

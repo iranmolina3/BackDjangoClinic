@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Aplications.Clinic.views import *
+from Aplications.Clinic.urls import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('clinica/', include(('Aplications.Clinic.urls', 'Clinic'))),
+    path('clinic/', include(('Aplications.Clinic.urls', 'clinic'))),
     path('index/', home, name = 'index'),
-    path('login/', login, name = 'login')
+    path('login/', login, name = 'login'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]

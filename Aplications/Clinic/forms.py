@@ -21,20 +21,20 @@ class FormMunicipio(forms.ModelForm):
         fields = [
             'NOMBRE', 'ESTADO'
         ]
-
+"""
 class FormDireccion(forms.ModelForm):
     class Meta:
         model = Direccion
         fields = [
             'DESCRIPCION', 'ESTADO', 'FK_MUNICIPIO'
         ]
-
+"""
 class FormPersona(forms.ModelForm):
     class Meta:
         model = Persona
         fields = [
             'NOMBRE', 'APELLIDO', 'DPI', 'EDAD', 'TELEFONO', 'GENERO',
-            'ESTADO', 'FK_DIRECCION', 'FK_ESTADO_CIVIL'
+            'FECHA_NACIMIENTO', 'ESTADO', 'FK_MUNICIPIO', 'FK_ESTADO_CIVIL'
         ]
 
 class FormPregunta(forms.ModelForm):

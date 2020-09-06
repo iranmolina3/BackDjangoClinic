@@ -42,7 +42,7 @@ class Municipio(models.Model):
 
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.ESTADO)
-
+"""
 class Direccion(models.Model):
     PK_DIRECCION = models.AutoField(primary_key=True)
     DESCRIPCION = models.TextField(blank=False, null=False)
@@ -55,27 +55,28 @@ class Direccion(models.Model):
 
     def __str__(self):
         return "{0},{1},{2}".format(self.FK_MUNICIPIO, self.DESCRIPCION, self.ESTADO)
-
+"""
 class Persona(models.Model):
     PK_PERSONA = models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=50, blank=False, null=False)
     APELLIDO = models.CharField(max_length=50, blank=False, null=False)
     DPI = models.CharField(max_length=14, default='Menor de edad', blank=False, null=False)
     EDAD = models.IntegerField(blank=False, null=False)
-    FECHA = models.DateField(auto_now=False, auto_now_add=True)
+    FECHA_NACIMIENTO = models.DateField(blank=False, null=False)
     TELEFONO = models.CharField(max_length=9, blank=True, null=True)
     GENERO = models.CharField(max_length=10, blank=False, null=False)
+    DIRECCION = models.CharField(max_length=200, blank=True, null=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
-    FK_DIRECCION = models.ForeignKey(Direccion, on_delete=models.CASCADE, blank=False, null=False)
+    FK_MUNICIPIO = models.ForeignKey(Municipio, on_delete=models.CASCADE, blank=False, null=False)
     FK_ESTADO_CIVIL = models.ForeignKey(EstadoCivil, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         verbose_name = 'Persona'
         verbose_name_plural = 'Personas'
-        ordering = ['FECHA']
+        ordering = ['FECHA_NACIMIENTO']
 
     def __str__(self):
-        return "{0},{1},{2}".format(self.NOMBRE, self.APELLIDO, self.APELLIDO)
+        return "{0},{1}".format(self.NOMBRE, self.APELLIDO)
 
 class Pregunta(models.Model):
     PK_PREGUNTA = models.AutoField(primary_key=True)

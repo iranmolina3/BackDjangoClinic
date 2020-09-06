@@ -27,7 +27,6 @@
   	background-color: #FFFFFF;
   	border-color: #000000;
  	border-radius: 25px 25px 25px 25px;
-
 }
 
 .btn-outline-success1:focus, .btn-outline-success1.focus {
@@ -64,7 +63,7 @@
 /* - - > NAV SUPERIOR< - - - */
 
 .ImgLogo{
-	width: 300px;
+	width: 250px;
 }
 
 
@@ -179,6 +178,12 @@
 	margin-top: 5%;
 	text-shadow: 1px 1px 4px #000000;
 
+}
+
+
+i{
+  padding-left: 5px; 
+  padding-right: 5px;
 }
 
 /* FOOTER STYLE*/
