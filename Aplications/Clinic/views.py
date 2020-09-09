@@ -3,8 +3,6 @@ from .forms import *
 from .models import *
 from django.core.paginator import Paginator
 
-from datetime import date
-
 # Create your views here.
 
 def home(request):
@@ -61,9 +59,9 @@ def update_persona(request, pk_persona):
     if(request.method == "GET"):
         municipio = Municipio.objects.filter(ESTADO=True)
         estado_civil = EstadoCivil.objects.filter(ESTADO=True)
-        fecha = persona.FECHA_NACIMIENTO
-        print(fecha)
-        return render(request, 'Clinic/Persona/update_persona.html', {'persona': persona, 'estado_civil': estado_civil, 'municipio': municipio, 'fecha': str(fecha)})
+        fecha_nacimiento = persona.FECHA_NACIMIENTO.strftime("%Y-%m-%d")
+        print(fecha_nacimiento)
+        return render(request, 'Clinic/Persona/update_persona.html', {'persona': persona, 'estado_civil': estado_civil, 'municipio': municipio, 'fecha_nacimiento': fecha_nacimiento})
     else:
         _nombre = request.POST.get('NOMBRE')
         _apellido = request.POST.get('APELLIDO')
