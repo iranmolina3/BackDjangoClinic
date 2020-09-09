@@ -185,7 +185,7 @@ class ExamenFisico(models.Model):
         return "{0},{1}".format(self.IMPRESION_CLINCIA, self.ESTADO)
 
 class Antecedente(models.Model):
-    PK_ANTECEDENTES = models.AutoField(primary_key=True)
+    PK_ANTECEDENTE = models.AutoField(primary_key=True)
     ULTIMA_REGLA = models.DateTimeField(blank=True, null=True)
     FECHA_PROBABLE_PARTO = models.DateTimeField(blank=True, null=True)
     GESTA = models.DateTimeField(blank=True, null=True)
@@ -206,4 +206,4 @@ class Antecedente(models.Model):
         verbose_name_plural = 'Antecedentes'
 
     def __str__(self):
-        return "{0},{1}".format(self.PK_ANTECEDENTES, self.ESTADO)
+        return "{0},{1}".format(self.PK_ANTECEDENTE, self.ESTADO)

@@ -9,10 +9,10 @@
 <form method="POST">
     {%csrf_token%}
     <div class="container-fluid">
-        <h1 class="mt-4">Registrar antecedente</h1>
+        <h1 class="mt-4">Actualizar antecedente</h1>
         <div class="container backgroud-custom-opacity">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label>Ultima regla</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -20,10 +20,10 @@
                         </div>
                         <input type="datetime-local" name="ULTIMA_REGLA" class="form-control"
                                placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="2020-01-01">
+                               aria-describedby="basic-addon1" value="{{fecha_ultima_regla}}">
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label>Gesta</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -31,10 +31,10 @@
                         </div>
                         <input type="datetime-local" name="GESTA" class="form-control"
                                placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                               aria-describedby="basic-addon1" value="{{fecha_probable_parto}}">
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label>Fecha probable parto</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -42,10 +42,13 @@
                         </div>
                         <input type="datetime-local" name="FECHA_PROBABLE_PARTO" class="form-control"
                                placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                               aria-describedby="basic-addon1" value="{{gesta}}">
                     </div>
                 </div>
-                <div class="col-sm-3">
+
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
                     <label>Aborto</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -53,12 +56,10 @@
                         </div>
                         <input type="datetime-local" name="ABORTO" class="form-control"
                                placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                               aria-describedby="basic-addon1" value="{{aborto}}">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label>Hijos vivos</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -66,10 +67,10 @@
                         </div>
                         <input type="number" name="HIJOS_VIVOS" class="form-control"
                                placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                               aria-describedby="basic-addon1" value="{{antecedente.HIJOS_VIVOS}}">
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label>Peso</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -77,9 +78,11 @@
                         </div>
                         <input type="number" name="PESO" class="form-control"
                                placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                               aria-describedby="basic-addon1" value="{{antecedente.PESO}}">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <label>Quirurgico</label>
                     <div class="input-group mb-3">
@@ -88,11 +91,9 @@
                         </div>
                         <textarea type="number" name="QUIRURGICO" class="form-control"
                                   placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1"></textarea>
+                                  aria-describedby="basic-addon1">{{antecedente.QUIRURGICO}}</textarea>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <label>Medico</label>
                     <div class="input-group mb-3">
@@ -101,7 +102,7 @@
                         </div>
                         <textarea type="number" name="MEDICO" class="form-control"
                                   placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1"></textarea>
+                                  aria-describedby="basic-addon1">{{antecedente.MEDICO}}</textarea>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -112,11 +113,9 @@
                         </div>
                         <textarea type="number" name="ALERGIA" class="form-control"
                                   placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1"></textarea>
+                                  aria-describedby="basic-addon1">{{antecedente.ALERGIA}}</textarea>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <label>Familiar</label>
                     <div class="input-group mb-3">
@@ -125,9 +124,11 @@
                         </div>
                         <textarea type="number" name="FAMILIAR" class="form-control"
                                   placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1"></textarea>
+                                  aria-describedby="basic-addon1">{{antecedente.FAMILIAR}}</textarea>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <label>Habito</label>
                     <div class="input-group mb-3">
@@ -136,11 +137,9 @@
                         </div>
                         <textarea type="number" name="HABITO" class="form-control"
                                   placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1"></textarea>
+                                  aria-describedby="basic-addon1">{{antecedente.HABITO}}</textarea>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-3">
                     <label>Cigarrillo</label>
                     <div class="input-group mb-3">
@@ -148,8 +147,13 @@
                             <label class="input-group-text" for="inputGroupSelect01">Options</label>
                         </div>
                         <select class="custom-select" name="CIGARRO" id="inputGroupSelect01">
+                            {%if antecedente.CIGARRO%}
+                            <option value="{{True}}" selected>SI</option>
+                            <option value="{{False}}">NO</option>
+                            {%else%}
                             <option value="{{True}}">SI</option>
                             <option value="{{False}}" selected>NO</option>
+                            {%endif%}
                         </select>
                     </div>
                 </div>
@@ -160,8 +164,13 @@
                             <label class="input-group-text" for="inputGroupSelect01">Options</label>
                         </div>
                         <select class="custom-select" name="LICOR" id="inputGroupSelect01">
+                            {%if antecedente.CIGARRO%}
+                            <option value="{{True}}" selected>SI</option>
+                            <option value="{{False}}">NO</option>
+                            {%else%}
                             <option value="{{True}}">SI</option>
                             <option value="{{False}}" selected>NO</option>
+                            {%endif%}
                         </select>
                     </div>
                 </div>

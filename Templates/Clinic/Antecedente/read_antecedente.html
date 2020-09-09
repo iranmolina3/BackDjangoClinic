@@ -1,10 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%extends 'dashboard.html'%}
+{%load staticfiles%}
 
-</body>
-</html>
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
+{%endblock link%}
+
+{%block body%}
+{%if antecedente%}
+    <div class="container-fluid" >
+        <h1 class="mt-4">Listar antecedentes</h1>
+        <div class="container list-backgroud-custom-opacity">
+            <div class="container-fluid">
+                <div class="table-responsive">
+                  <table class="table table-striped ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Familiar</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {%for listar_antecedente in antecedente%}
+                      <tr>
+                        <th scope="row">{{listar_antecedente.FAMILIAR}}</th>
+                        <td>
+                            <a href="{%url 'clinic:update_antecedente' listar_antecedente.PK_ANTECEDENTE%}" class="a-custom">Editar</a>
+                        </td>
+                        <td>
+                            <a href="{%url 'clinic:delete_antecedente' listar_antecedente.PK_ANTECEDENTE%}" class="a-custom">Eliminar</a>
+                        </td>
+                    {%endfor%}
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cl-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-left">
+                        {%if persona.has_previous%}
+                            <div class="clearfix">
+                                <a href="?page={{persona.previous_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}" class="btn a-custom float-left">Anterior</a>
+                            </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="cl-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 float-right">
+                        {%if persona.has_next%}
+                            <div class="clearfix">
+                                <a href="?page={{persona.next_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}" class="btn a-custom float-right">Siguiente</a>
+                            </div>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{%else%}
+    <div class="container-fluid" >
+        <h1 class="mt-4">Listar antecedentes</h1>
+        <div class="container backgroud-custom-opacity">
+        <h2 class="mt-4">No hay informacion <i class="fas fa-info-circle"></i></h2>
+        </div>
+    </div>
+{%endif%}
+    <!-- /#page-content-wrapper -->
+{%endblock body%}

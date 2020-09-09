@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from django.core.paginator import Paginator
+
+from datetime import date
+
 # Create your views here.
 
 def home(request):
@@ -59,6 +62,7 @@ def update_persona(request, pk_persona):
         municipio = Municipio.objects.filter(ESTADO=True)
         estado_civil = EstadoCivil.objects.filter(ESTADO=True)
         fecha = persona.FECHA_NACIMIENTO
+        print(fecha)
         return render(request, 'Clinic/Persona/update_persona.html', {'persona': persona, 'estado_civil': estado_civil, 'municipio': municipio, 'fecha': str(fecha)})
     else:
         _nombre = request.POST.get('NOMBRE')
@@ -163,10 +167,8 @@ def read_examen_fisico(request):
 
 def update_examen_fisico(request, pk_examen_fisico):
     examen_fisico = ExamenFisico.objects.get(PK_EXAMEN_FISICO = pk_examen_fisico)
-
-    var = examen_fisico.PRESION_ARTERIAL
     if(request.method == "GET"):
-        return render(request, 'Clinic/ExamenFisico/update_examen_fisico.html', {'examen_fisico': examen_fisico, 'var': int(var)})
+        return render(request, 'Clinic/ExamenFisico/update_examen_fisico.html', {'examen_fisico': examen_fisico})
     else:
         _presion_arterial = request.POST.get('PRESION_ARTERIAL')
         _frecuencia_cardiaca = request.POST.get('FRECUENCIA_CARDIACA')
@@ -223,8 +225,61 @@ def create_antecedente(request):
 
 def read_antecedente(request):
     antecedente = Antecedente.objects.filter(ESTADO = True)
-    print(antecedente)
     paginator = Paginator(antecedente, 6)
     page = request.GET.get('page')
     antecedente = paginator.get_page(page)
-    return render(request, 'Clinic/ExamenFisico/read_examen_fisico.html', {'antecedente':antecedente})
+    return render(request, 'Clinic/Antecedente/read_antecedente.html', {'antecedente':antecedente})
+
+def update_antecedente(request, pk_antecedente):
+    antecedente = Antecedente.objects.get(PK_ANTECEDENTE = pk_antecedente)
+    if(request.method == "GET"):
+        fecha_ultima_regla = antecedente.ULTIMA_REGLA.strftime("%Y-%m-%dT%H:%M")
+        fecha_probable_parto = antecedente.FECHA_PROBABLE_PARTO.strftime("%Y-%m-%dT%H:%M")
+        gesta = antecedente.GESTA.strftime("%Y-%m-%dT%H:%M")
+        aborto = antecedente.ABORTO.strftime("%Y-%m-%dT%H:%M")
+        print("CONVERSION FECHA Y HORA =", fecha_ultima_regla)
+        return render(request, 'Clinic/Antecedente/update_antecedente.html',
+                      {'antecedente': antecedente,
+                       'fecha_ultima_regla': fecha_ultima_regla,
+                       'fecha_probable_parto': fecha_probable_parto,
+                       'gesta': gesta,
+                       'aborto': aborto})
+    else:
+        _ultima_regla = request.POST.get('ULTIMA_REGLA')
+        _fecha_probable_parto = request.POST.get('FECHA_PROBABLE_PARTO')
+        _gesta = request.POST.get('GESTA')
+        _aborto = request.POST.get('ABORTO')
+        _hijos_vivos = request.POST.get('HIJOS_VIVOS')
+        _peso = request.POST.get('PESO')
+        _quirurgico = request.POST.get('QUIRURGICO')
+        _medico = request.POST.get('MEDICO')
+        _alergia = request.POST.get('ALERGIA')
+        _familiar = request.POST.get('FAMILIAR')
+        _habito = request.POST.get('HABITO')
+        _cigarro = request.POST.get('CIGARRO')
+        _licor = request.POST.get('LICOR')
+        antecedente.ULTIMA_REGLA = _ultima_regla
+        antecedente.FECHA_PROBABLE_PARTO = _fecha_probable_parto
+        antecedente.GESTA = _gesta
+        antecedente.ABORTO = _aborto
+        antecedente.HIJOS_VIVOS = _hijos_vivos
+        antecedente.PESO = _peso
+        antecedente.QUIRURGICO = _quirurgico
+        antecedente.MEDICO = _medico
+        antecedente.ALERGIA = _alergia
+        antecedente.FAMILIAR = _familiar
+        antecedente.HABITO = _habito
+        antecedente.CIGARRO = _cigarro
+        antecedente.LICOR = _licor
+        antecedente.save()
+        return redirect('dashboard')
+
+def delete_antecedente(request, pk_antecedente):
+    antecedente = Antecedente.objects.get(PK_ANTECEDENTE = pk_antecedente)
+    print(antecedente)
+    if(request.method == "GET"):
+        return render(request, 'Clinic/Antecedente/delete_antecedente.html')
+    else:
+        antecedente.ESTADO = False
+        antecedente.save()
+        return redirect('dashboard')
