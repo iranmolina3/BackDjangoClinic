@@ -7,149 +7,162 @@
 
 {%block body%}
 <form method="POST">
-  {%csrf_token%}
-  <div class="container-fluid" >
-    <h1 class="mt-4">Registrar paciente</h1>
-    <div class="container backgroud-custom-opacity">
-      <div  class="row">
-        <div class="col-sm-4">
-          <label>Nombre</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
+    {%csrf_token%}
+    <div class="container-fluid">
+        <h1 class="mt-4">Registrar paciente</h1>
+        <div class="container backgroud-custom-opacity">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Nombre</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="text" name="NOMBRE" class="form-control" placeholder="Ingresar nombre"
+                               aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>Apellido</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="text" name="APELLIDO" class="form-control" placeholder="Ingresar apellido"
+                               aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>DPI</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="text" name="DPI" class="form-control" placeholder="Ingresar DPI"
+                               aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
             </div>
-            <input type="text" name="NOMBRE" class="form-control" placeholder="Ingresar nombre" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <label>Apellido</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label>Genero</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        </div>
+                        <select class="custom-select" name="GENERO" id="inputGroupSelect01">
+                            <option selected>Selecciona un genero</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Indefinido">Indefinido</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label>Edad</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="number" name="EDAD" class="form-control" placeholder="Ingresar edad"
+                               aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>Fecha nacimiento</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="date" name="FECHA_NACIMIENTO" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon1" value="">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label>Estado civil</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        </div>
+                        <select class="custom-select" name="FK_ESTADO_CIVIL" id="inputGroupSelect01">
+                            <option selected>Selecciona estado civil</option>
+                            {%for lista_estado_civil in estado_civil%}
+                            <option value="{{lista_estado_civil.PK_ESTADO_CIVIL}}">{{lista_estado_civil.NOMBRE}}
+                            </option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
             </div>
-            <input type="text" name="APELLIDO" class="form-control" placeholder="Ingresar apellido" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <label>DPI</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Telefono</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="text" name="TELEFONO" class="form-control" placeholder="Ingresar telefono"
+                               aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Direccion</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="text" name="DIRECCION" class="form-control"
+                               placeholder="Ingresar direccion detallada" aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>Municipio</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        </div>
+                        <select class="custom-select" name="MUNICIPIO" id="inputGroupSelect01">
+                            <option selected>Selecciona un municipio</option>
+                            {%for lista_municipio in municipio%}
+                            <option value="{{lista_municipio.PK_MUNICIPIO}}">{{lista_municipio.NOMBRE}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
             </div>
-            <input type="text" name="DPI" class="form-control" placeholder="Ingresar DPI" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-        </div>
-      </div>
-      <div  class="row">
-        <div class="col-sm-3">
-          <label>Genero</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Options</label>
-            </div>
-            <select class="custom-select" name="GENERO" id="inputGroupSelect01">
-              <option selected>Selecciona un genero</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
-              <option value="Indefinido">Indefinido</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <label>Edad</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
-            </div>
-            <input type="number" name="EDAD" class="form-control" placeholder="Ingresar edad" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <label>Fecha nacimiento</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
-            </div>
-            <input type="date" name="FECHA_NACIMIENTO" class="form-control" aria-label="Username" aria-describedby="basic-addon1" value="">
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <label>Estado civil</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Options</label>
-            </div>
-            <select class="custom-select" name="FK_ESTADO_CIVIL" id="inputGroupSelect01">
-              <option selected>Selecciona estado civil</option>
-              {%for lista_estado_civil in estado_civil%}
-              <option value="{{lista_estado_civil.PK_ESTADO_CIVIL}}">{{lista_estado_civil.NOMBRE}}</option>
-              {%endfor%}
-            </select>
-          </div>
-        </div>
-      </div>
-      <div  class="row">
-        <div class="col-sm-2">
-          <label>Telefono</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
-            </div>
-            <input type="text" name="TELEFONO" class="form-control" placeholder="Ingresar telefono" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <label>Direccion</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
-            </div>
-            <input type="text" name="DIRECCION" class="form-control" placeholder="Ingresar direccion detallada" aria-label="Username" aria-describedby="basic-addon1">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <label>Municipio</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Options</label>
-            </div>
-            <select class="custom-select" name="MUNICIPIO" id="inputGroupSelect01">
-              <option selected>Selecciona un municipio</option>
-              {%for lista_municipio in municipio%}
-              <option value="{{lista_municipio.PK_MUNICIPIO}}">{{lista_municipio.NOMBRE}}</option>
-              {%endfor%}
-            </select>
-          </div>
-        </div>
-      </div>
 
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal" data-target="#staticBackdrop">
-        Registrar datos
-      </button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal"
+                    data-target="#staticBackdrop">
+                Registrar datos
+            </button>
 
-      <!-- Modal -->
-      <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una cambio.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
+                                    data-dismiss="modal">Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-              Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una cambio.
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-form-custom mbtn font-weight-bold" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar</button>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- /#page-content-wrapper -->
+    <!-- /#page-content-wrapper -->
 </form>
 {%endblock body%}

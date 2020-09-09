@@ -146,7 +146,7 @@ def create_examen_fisico(request):
         _frecuencia_cardiaca_fetal = request.POST.get('FRECUENCIA_CARDIACA_FETAL')
         _impresion_clinica = request.POST.get('IMPRESION_CLINCIA')
         print(_presion_arterial, _frecuencia_cardiaca, _frecuencia_respiratoria, _temperatura, _frecuencia_cardiaca_fetal, _impresion_clinica)
-        _model_examen_fisico = ExamenFisico(PRESION_ARTERIAL = float(_presion_arterial), FRECUENCIA_CARDIACA = _frecuencia_cardiaca,
+        _model_examen_fisico = ExamenFisico(PRESION_ARTERIAL = _presion_arterial, FRECUENCIA_CARDIACA = _frecuencia_cardiaca,
                                         FRECUENCIA_RESPIRATORIA = _frecuencia_respiratoria, TEMPERATURA = _temperatura,
                                         FRECUENCIA_CARDIACA_FETAL = _frecuencia_cardiaca_fetal, IMPRESION_CLINCIA = _impresion_clinica)
         _model_examen_fisico.save()
@@ -163,12 +163,68 @@ def read_examen_fisico(request):
 
 def update_examen_fisico(request, pk_examen_fisico):
     examen_fisico = ExamenFisico.objects.get(PK_EXAMEN_FISICO = pk_examen_fisico)
+
+    var = examen_fisico.PRESION_ARTERIAL
     if(request.method == "GET"):
-        return render(request, 'Clinic/ExamenFisico/update_examen_fisico.html', {'examen_fisico': examen_fisico})
+        return render(request, 'Clinic/ExamenFisico/update_examen_fisico.html', {'examen_fisico': examen_fisico, 'var': int(var)})
     else:
-        _motivo_consulta = request.POST.get('MOTIVO_CONSULTA')
-        _historia = request.POST.get('HISTORIA')
-        consulta.MOTIVO_CONSULTA = _motivo_consulta
-        consulta.HISTORIA = _historia
-        consulta.save()
+        _presion_arterial = request.POST.get('PRESION_ARTERIAL')
+        _frecuencia_cardiaca = request.POST.get('FRECUENCIA_CARDIACA')
+        _frecuencia_respiratoria = request.POST.get('FRECUENCIA_RESPIRATORIA')
+        _temperatura = request.POST.get('TEMPERATURA')
+        _frecuencia_cardiaca_fetal = request.POST.get('FRECUENCIA_CARDIACA_FETAL')
+        _impresion_clinica = request.POST.get('IMPRESION_CLINCIA')
+        examen_fisico.MOTIVO_CONSULTA = _presion_arterial
+        examen_fisico.HISTORIA = _frecuencia_cardiaca
+        examen_fisico.FRECUENCIA_RESPIRATORIA = _frecuencia_respiratoria
+        examen_fisico.TEMPERATURA = _temperatura
+        examen_fisico.FRECUENCIA_CARDIACA_FETAL = _frecuencia_cardiaca_fetal
+        examen_fisico.IMPRESION_CLINCIA = _impresion_clinica
+        examen_fisico.save()
         return redirect('dashboard')
+
+def delete_examen_fisico(request, pk_examen_fisico):
+    examen_fisico = ExamenFisico.objects.get(PK_EXAMEN_FISICO = pk_examen_fisico)
+    print(examen_fisico)
+    if(request.method == "GET"):
+        return render(request, 'Clinic/ExamenFisico/delete_examen_fisico.html')
+    else:
+        examen_fisico.ESTADO = False
+        examen_fisico.save()
+        return redirect('dashboard')
+
+def create_antecedente(request):
+    if(request.method == "POST"):
+#        print(request.POST)
+        _ultima_regla = request.POST.get('ULTIMA_REGLA')
+        _fecha_probable_parto = request.POST.get('FECHA_PROBABLE_PARTO')
+        _gesta = request.POST.get('GESTA')
+        _aborto = request.POST.get('ABORTO')
+        _hijos_vivos = request.POST.get('HIJOS_VIVOS')
+        _peso = request.POST.get('PESO')
+        _quirurgico = request.POST.get('QUIRURGICO')
+        _medico = request.POST.get('MEDICO')
+        _alergia = request.POST.get('ALERGIA')
+        _familiar = request.POST.get('FAMILIAR')
+        _habito = request.POST.get('HABITO')
+        _cigarro = request.POST.get('CIGARRO')
+        _licor = request.POST.get('LICOR')
+        print(_ultima_regla, _fecha_probable_parto, _gesta,
+              _aborto, _hijos_vivos, _peso, _quirurgico, _medico, _alergia, _familiar, _habito,
+              _cigarro, _licor)
+        _model_antecedente = Antecedente(ULTIMA_REGLA = _ultima_regla, FECHA_PROBABLE_PARTO = _fecha_probable_parto,
+                                        GESTA = _gesta, ABORTO = _aborto, HIJOS_VIVOS = _hijos_vivos,
+                                        PESO = _peso, QUIRURGICO = _quirurgico, MEDICO = _medico, ALERGIA = _alergia,
+                                        FAMILIAR = _familiar, HABITO = _habito, CIGARRO = _cigarro,
+                                        LICOR = _licor)
+        _model_antecedente.save()
+        return redirect('dashboard')
+    return render(request, 'Clinic/Antecedente/create_antecedente.html')
+
+def read_antecedente(request):
+    antecedente = Antecedente.objects.filter(ESTADO = True)
+    print(antecedente)
+    paginator = Paginator(antecedente, 6)
+    page = request.GET.get('page')
+    antecedente = paginator.get_page(page)
+    return render(request, 'Clinic/ExamenFisico/read_examen_fisico.html', {'antecedente':antecedente})

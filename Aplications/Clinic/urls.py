@@ -14,4 +14,8 @@ urlpatterns = [
 
     path('create_examen_fisico/', create_examen_fisico, name = 'create_examen_fisico'),
     path('listar_examen_fisico', read_examen_fisico, name = 'read_examen_fisico'),
+    path('update_examen_fisico/<int:pk_examen_fisico>', update_examen_fisico, name = 'update_examen_fisico'),
+    path('delete_examen_fisico/<int:pk_examen_fisico>', delete_examen_fisico, name = 'delete_examen_fisico'),
+
+    path('create_antecedente/', create_antecedente, name = 'create_antecedente'),
 ]

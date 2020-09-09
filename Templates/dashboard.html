@@ -79,9 +79,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
             <a class="dropdown-item" href="#">Listar antecedentes</a>
-            <a class="dropdown-item" href="#">Registrar antecedente</a>
-            <a class="dropdown-item" href="#">Modificar antecedente</a>
-            <a class="dropdown-item" href="#">Eliminar antecedente</a>
+            <a class="dropdown-item" href="{%url 'clinic:create_antecedente'%}">Registrar antecedente</a>
           </div>
         </div>
         <div class="btn-group" role="group">
@@ -161,7 +159,9 @@
             <li class="nav-item">
               <a class="nav-link text-light color-a" href="#">Lista de citas <span class="badge badge-light">4</span></a>
             </li>
-            <button class="btn btn-outline-success1 my-2 my-sm-0 font-weight-bold" type="submit">Cerrar sesion</button>
+            <a href="{%url 'index'%}">
+              <button class="btn btn-outline-success1 my-2 my-sm-0 font-weight-bold" type="submit">Cerrar sesion</button>
+            </a>
           </ul>
         </div>
       </nav>

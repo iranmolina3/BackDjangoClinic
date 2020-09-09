@@ -25,10 +25,10 @@
                       <tr>
                         <th scope="row">{{listar_examen_fisico.IMPRESION_CLINCIA}}</th>
                         <td>
-                            <a href="#" class="a-custom">Editar</a>
+                            <a href="{%url 'clinic:update_examen_fisico' listar_examen_fisico.PK_EXAMEN_FISICO%}" class="a-custom">Editar</a>
                         </td>
                         <td>
-                            <a href="#" class="a-custom">Eliminar</a>
+                            <a href="{%url 'clinic:delete_examen_fisico' listar_examen_fisico.PK_EXAMEN_FISICO%}" class="a-custom">Eliminar</a>
                         </td>
                     {%endfor%}
                     </tbody>
@@ -59,7 +59,7 @@
     </div>
 {%else%}
     <div class="container-fluid" >
-        <h1 class="mt-4">Listar pacientes</h1>
+        <h1 class="mt-4">Listar examen fisico</h1>
         <div class="container backgroud-custom-opacity">
         <h2 class="mt-4">No hay informacion <i class="fas fa-info-circle"></i></h2>
         </div>

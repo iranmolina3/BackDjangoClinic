@@ -9,7 +9,7 @@
 <form method="POST">
   {%csrf_token%}
   <div class="container-fluid" >
-    <h1 class="mt-1">Registrar examen fisico</h1>
+    <h1 class="mt-1">Editar examen fisico</h1>
     <div class="container backgroud-custom-opacity">
       <div  class="row">
         <div class="col-sm-4">
@@ -18,7 +18,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">*</span>
             </div>
-            <input type="number" name="PRESION_ARTERIAL" class="form-control" placeholder="Ingresar presion arterial" aria-label="Username" aria-describedby="basic-addon1" min="0" step="any">
+            <input type="text" name="PRESION_ARTERIAL" class="form-control" placeholder="Ingresar presion arterial" aria-label="Username" aria-describedby="basic-addon1" value="{{examen_fisico.PRESION_ARTERIAL}}">
           </div>
         </div>
         <div class="col-sm-4">
@@ -27,7 +27,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">*</span>
             </div>
-            <input type="number" name="FRECUENCIA_CARDIACA" class="form-control" placeholder="Ingresar frecuencia cardiaca" aria-label="Username" aria-describedby="basic-addon1" min="0" step="any">
+            <input type="text" name="FRECUENCIA_CARDIACA" class="form-control" placeholder="Ingresar frecuencia cardiaca" aria-label="Username" aria-describedby="basic-addon1" value="{{examen_fisico.FRECUENCIA_CARDIACA}}">
           </div>
         </div>
         <div class="col-sm-4">
@@ -36,7 +36,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">*</span>
             </div>
-            <input type="number" name="FRECUENCIA_RESPIRATORIA" class="form-control" placeholder="Ingresar frecuencua repiratoria" aria-label="Username" aria-describedby="basic-addon1" min="0" step="any">
+            <input type="text" name="FRECUENCIA_RESPIRATORIA" class="form-control" placeholder="Ingresar frecuencua repiratoria" aria-label="Username" aria-describedby="basic-addon1" value="{{examen_fisico.FRECUENCIA_RESPIRATORIA}}">
           </div>
         </div>
       </div>
@@ -45,9 +45,9 @@
           <label>Temperatura</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">*</span>
+              <span class="input-group-text" id="basic-addon1">ºC</span>
             </div>
-            <input type="number" name="TEMPERATURA" class="form-control" placeholder="Ingresar temperatura" aria-label="Username" aria-describedby="basic-addon1" min="0" step="any">
+            <input type="number" name="TEMPERATURA" class="form-control" placeholder="Ingresar temperatura" aria-label="Username" aria-describedby="basic-addon1" min="0" step="any" value="{{examen_fisico.TEMPERATURA}}">
           </div>
         </div>
         <div class="col-sm-4">
@@ -56,7 +56,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">*</span>
             </div>
-            <input type="number" name="FRECUENCIA_CARDIACA_FETAL" class="form-control" placeholder="Ingresar frecuencia cardiaca fetal" aria-label="Username" aria-describedby="basic-addon1" min="0" step="any">
+            <input type="text" name="FRECUENCIA_CARDIACA_FETAL" class="form-control" placeholder="Ingresar frecuencia cardiaca fetal" aria-label="Username" aria-describedby="basic-addon1" value="{{examen_fisico.FRECUENCIA_CARDIACA_FETAL}}">
           </div>
         </div>
         <div class="col-sm-5">
@@ -65,7 +65,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">*</span>
             </div>
-            <textarea type="text" name="IMPRESION_CLINCIA" class="form-control" placeholder="Ingresar impresion clinica" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+            <textarea type="text" name="IMPRESION_CLINCIA" class="form-control" placeholder="Ingresar impresion clinica" aria-label="Username" aria-describedby="basic-addon1">{{examen_fisico.IMPRESION_CLINCIA}}</textarea>
           </div>
         </div>
       </div>

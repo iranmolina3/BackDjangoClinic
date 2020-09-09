@@ -169,11 +169,11 @@ class Consulta(models.Model):
 
 class ExamenFisico(models.Model):
     PK_EXAMEN_FISICO = models.AutoField(primary_key=True)
-    PRESION_ARTERIAL = models.FloatField(blank=False, null=False)
-    FRECUENCIA_CARDIACA = models.FloatField(blank=False, null=False)
-    FRECUENCIA_RESPIRATORIA = models.FloatField(blank=False, null=False)
-    TEMPERATURA = models.FloatField(blank=False, null=False)
-    FRECUENCIA_CARDIACA_FETAL = models.FloatField(blank=False, null=False)
+    PRESION_ARTERIAL = models.IntegerField(blank=False, null=False)
+    FRECUENCIA_CARDIACA = models.IntegerField(blank=False, null=False)
+    FRECUENCIA_RESPIRATORIA = models.IntegerField(blank=False, null=False)
+    TEMPERATURA = models.IntegerField(blank=False, null=False)
+    FRECUENCIA_CARDIACA_FETAL = models.IntegerField(blank=False, null=False)
     IMPRESION_CLINCIA = models.TextField(blank=False, null=False)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
@@ -191,14 +191,14 @@ class Antecedente(models.Model):
     GESTA = models.DateTimeField(blank=True, null=True)
     ABORTO = models.DateTimeField(blank=True, null=True)
     HIJOS_VIVOS = models.IntegerField(blank=True, null=True)
-    PESO = models.FloatField(blank=True, null=True)
+    PESO = models.IntegerField(blank=True, null=True)
     QUIRURGICO = models.TextField(blank=True, null=True)
     MEDICO = models.TextField(blank=True, null=True)
     ALERGIA = models.TextField(blank=True, null=True)
     FAMILIAR = models.TextField(blank=True, null=True)
     HABITO = models.TextField(blank=True, null=True)
-    CIGARRO = models.TextField(blank=True, null=True)
-    LICOR = models.TextField(blank=True, null=True)
+    CIGARRO = models.BooleanField(default=False, blank=False, null=False)
+    LICOR = models.BooleanField(default=False, blank=False, null=False)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
     class Meta:
