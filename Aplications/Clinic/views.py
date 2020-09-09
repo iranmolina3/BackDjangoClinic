@@ -94,3 +94,81 @@ def delete_persona(request, pk_persona):
         persona.ESTADO = False
         persona.save()
         return redirect('dashboard')
+
+def create_consulta(request):
+    if(request.method == "POST"):
+#        print(request.POST)
+        _motivo_consulta = request.POST.get('MOTIVO_CONSULTA')
+        _historia = request.POST.get('HISTORIA')
+        print(_motivo_consulta, _historia)
+        _model_consulta = Consulta(MOTIVO_CONSULTA = _motivo_consulta,
+                                   HISTORIA = _historia)
+        _model_consulta.save()
+        return redirect('dashboard')
+    return render(request, 'Clinic/Consulta/create_consulta.html')
+
+def read_consulta(request):
+    consulta = Consulta.objects.filter(ESTADO = True)
+    print(consulta)
+    paginator = Paginator(consulta, 6)
+    page = request.GET.get('page')
+    consulta = paginator.get_page(page)
+    return render(request, 'Clinic/Consulta/read_consulta.html', {'consulta':consulta})
+
+def update_consulta(request, pk_consulta):
+    consulta = Consulta.objects.get(PK_CONSULTA = pk_consulta)
+    if(request.method == "GET"):
+        return render(request, 'Clinic/Consulta/update_consulta.html', {'consulta': consulta})
+    else:
+        _motivo_consulta = request.POST.get('MOTIVO_CONSULTA')
+        _historia = request.POST.get('HISTORIA')
+        consulta.MOTIVO_CONSULTA = _motivo_consulta
+        consulta.HISTORIA = _historia
+        consulta.save()
+        return redirect('dashboard')
+
+def delete_consulta(request, pk_consulta):
+    consulta = Consulta.objects.get(PK_CONSULTA = pk_consulta)
+    if(request.method == "GET"):
+        return render(request, 'Clinic/Consulta/delete_consulta.html', {'consulta':consulta})
+    else:
+        consulta.ESTADO = False
+        consulta.save()
+        return redirect('dashboard')
+
+def create_examen_fisico(request):
+    if(request.method == "POST"):
+#        print(request.POST)
+        _presion_arterial = request.POST.get('PRESION_ARTERIAL')
+        _frecuencia_cardiaca = request.POST.get('FRECUENCIA_CARDIACA')
+        _frecuencia_respiratoria = request.POST.get('FRECUENCIA_RESPIRATORIA')
+        _temperatura = request.POST.get('TEMPERATURA')
+        _frecuencia_cardiaca_fetal = request.POST.get('FRECUENCIA_CARDIACA_FETAL')
+        _impresion_clinica = request.POST.get('IMPRESION_CLINCIA')
+        print(_presion_arterial, _frecuencia_cardiaca, _frecuencia_respiratoria, _temperatura, _frecuencia_cardiaca_fetal, _impresion_clinica)
+        _model_examen_fisico = ExamenFisico(PRESION_ARTERIAL = float(_presion_arterial), FRECUENCIA_CARDIACA = _frecuencia_cardiaca,
+                                        FRECUENCIA_RESPIRATORIA = _frecuencia_respiratoria, TEMPERATURA = _temperatura,
+                                        FRECUENCIA_CARDIACA_FETAL = _frecuencia_cardiaca_fetal, IMPRESION_CLINCIA = _impresion_clinica)
+        _model_examen_fisico.save()
+        return redirect('dashboard')
+    return render(request, 'Clinic/ExamenFisico/create_examen_fisico.html')
+
+def read_examen_fisico(request):
+    examen_fisico = ExamenFisico.objects.filter(ESTADO = True)
+    print(examen_fisico)
+    paginator = Paginator(examen_fisico, 6)
+    page = request.GET.get('page')
+    examen_fisico = paginator.get_page(page)
+    return render(request, 'Clinic/ExamenFisico/read_examen_fisico.html', {'examen_fisico':examen_fisico})
+
+def update_examen_fisico(request, pk_examen_fisico):
+    examen_fisico = ExamenFisico.objects.get(PK_EXAMEN_FISICO = pk_examen_fisico)
+    if(request.method == "GET"):
+        return render(request, 'Clinic/ExamenFisico/update_examen_fisico.html', {'examen_fisico': examen_fisico})
+    else:
+        _motivo_consulta = request.POST.get('MOTIVO_CONSULTA')
+        _historia = request.POST.get('HISTORIA')
+        consulta.MOTIVO_CONSULTA = _motivo_consulta
+        consulta.HISTORIA = _historia
+        consulta.save()
+        return redirect('dashboard')

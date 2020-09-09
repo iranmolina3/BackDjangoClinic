@@ -174,7 +174,7 @@ class ExamenFisico(models.Model):
     FRECUENCIA_RESPIRATORIA = models.FloatField(blank=False, null=False)
     TEMPERATURA = models.FloatField(blank=False, null=False)
     FRECUENCIA_CARDIACA_FETAL = models.FloatField(blank=False, null=False)
-    IMPRESION_CLINCIA = models.CharField(max_length=200, blank=False, null=False)
+    IMPRESION_CLINCIA = models.TextField(blank=False, null=False)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
     class Meta:

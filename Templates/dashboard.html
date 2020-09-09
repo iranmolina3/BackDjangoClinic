@@ -60,10 +60,8 @@
              <a href="#" class="list-group-item list-group-item-action border-sidebar font-weight-bold">Consultas<i class="fas fa-chevron-circle-down"></i></a>
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="#">Listar consultas</a>
-            <a class="dropdown-item" href="#">Registrar consulta</a>
-            <a class="dropdown-item" href="#">Modificar consulta</a>
-            <a class="dropdown-item" href="#">Eliminar consulta</a>
+            <a class="dropdown-item" href="{%url 'clinic:read_consulta'%}">Listar consultas</a>
+            <a class="dropdown-item" href="{%url 'clinic:create_consulta'%}">Registrar consulta</a>
           </div>
         </div>
         <div class="btn-group" role="group">
@@ -71,10 +69,8 @@
              <a href="#" class="list-group-item list-group-item-action border-sidebar font-weight-bold">Examenes fisicos<i class="fas fa-chevron-circle-down"></i></a>
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="#">Listar examenes fisicos</a>
-            <a class="dropdown-item" href="#">Registrar examen fisico</a>
-            <a class="dropdown-item" href="#">Modificar examen fisico</a>
-            <a class="dropdown-item" href="#">Eliminar examen fisico</a>
+            <a class="dropdown-item" href="{%url 'clinic:read_examen_fisico'%}">Listar examenes fisicos</a>
+            <a class="dropdown-item" href="{%url 'clinic:create_examen_fisico'%}">Registrar examen fisico</a>
           </div>
         </div>
         <div class="btn-group" role="group">
