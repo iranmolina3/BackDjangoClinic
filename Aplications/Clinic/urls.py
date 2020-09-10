@@ -22,5 +22,5 @@ urlpatterns = [
     path('update_antecedente/<int:pk_antecedente>', update_antecedente, name = 'update_antecedente'),
     path('delete_antecedente/<int:pk_antecedente>', delete_antecedente, name = 'delete_antecedente'),
 
-
+    path('create_cita/', create_cita, name = 'create_cita'),
 ]

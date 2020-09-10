@@ -45,19 +45,6 @@ class AdminMunicipio(ImportExportModelAdmin, admin.ModelAdmin):
 
 admin.site.register(Municipio, AdminMunicipio)
 
-# IranDev this is the model admin DIRECCION
-"""
-class ResourceDireccion(resources.ModelResource):
-    class Meta:
-        model = Direccion
-
-class AdminDireccion(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['NOMBRE']
-    list_display = ['FK_MUNICIPIO', 'DESCRIPCION']
-    resource_class = ResourceDireccion
-
-admin.site.register(Direccion, AdminDireccion)
-"""
 # IranDev this is the model admin PERSONA
 
 class ResourcePersona(resources.ModelResource):
@@ -169,8 +156,22 @@ class ResourceAntecedente(resources.ModelResource):
         model = Antecedente
 
 class AdminAntecedente(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['ESTADO']
-    list_display = ['ESTADO']
+    search_fields = ['FAMILIAR', 'ESTADO']
+    list_display = ['FAMILIAR', 'ESTADO']
     resource_class = ResourceAntecedente
 
 admin.site.register(Antecedente, AdminAntecedente)
+
+# IranDev this is the model admin ANTECEDENTE
+
+class ResourceHistorialClinico(resources.ModelResource):
+    class Meta:
+        model = HistorialClinico
+
+class AdminHistorialClinico(ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = ['FECHA_CREACION']
+    list_display = ['FECHA_CREACION', 'ESTADO']
+    resource_class = ResourceHistorialClinico
+
+admin.site.register(HistorialClinico, AdminHistorialClinico)
+

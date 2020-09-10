@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from django.core.paginator import Paginator
-
+from datetime import date
 # Create your views here.
 
 def home(request):
@@ -43,8 +43,8 @@ def create_persona(request):
                                  FK_ESTADO_CIVIL = estado_civil)
         _model_persona.save()
         return redirect('dashboard')
-    municipio = Municipio.objects.all()
-    estado_civil = EstadoCivil.objects.all()
+    municipio = Municipio.objects.filter(ESTADO = True)
+    estado_civil = EstadoCivil.objects.filter(ESTADO = True)
     return render(request, 'Clinic/Persona/create_persona.html', {'municipio':municipio, 'estado_civil':estado_civil})
 
 def read_persona(request):
@@ -281,3 +281,18 @@ def delete_antecedente(request, pk_antecedente):
         antecedente.ESTADO = False
         antecedente.save()
         return redirect('dashboard')
+
+def create_cita(request):
+    if(request.method == "POST"):
+#        print(request.POST)
+        _numero = request.POST.get('NUMERO')
+#        print(_numero, _fk_usuario)
+        _model_cita = Cita(NUMERO = _numero)
+        _model_cita.save()
+        return redirect('dashboard')
+    today = date.today()
+    print(today)
+    cita = Cita.objects.filter(ESTADO = True)
+
+    return render(request, 'Clinic/Cita/create_cita.html')
+

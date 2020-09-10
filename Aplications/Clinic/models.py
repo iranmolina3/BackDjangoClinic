@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
+
+
 # Create your models here.
 
 # Create table rol
@@ -17,6 +19,7 @@ class Rol(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.ESTADO)
 
+
 class EstadoCivil(models.Model):
     PK_ESTADO_CIVIL = models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=25, blank=False, null=False)
@@ -30,6 +33,7 @@ class EstadoCivil(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.ESTADO)
 
+
 class Municipio(models.Model):
     PK_MUNICIPIO = models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=25, blank=False, null=False)
@@ -42,20 +46,8 @@ class Municipio(models.Model):
 
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.ESTADO)
-"""
-class Direccion(models.Model):
-    PK_DIRECCION = models.AutoField(primary_key=True)
-    DESCRIPCION = models.TextField(blank=False, null=False)
-    ESTADO = models.BooleanField(default=True, blank=False, null=False)
-    FK_MUNICIPIO = models.ForeignKey(Municipio, on_delete=models.CASCADE, blank=False, null=False)
 
-    class Meta:
-        verbose_name = 'Direccion'
-        verbose_name_plural = 'Direcciones'
 
-    def __str__(self):
-        return "{0},{1},{2}".format(self.FK_MUNICIPIO, self.DESCRIPCION, self.ESTADO)
-"""
 class Persona(models.Model):
     PK_PERSONA = models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=50, blank=False, null=False)
@@ -78,6 +70,7 @@ class Persona(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.APELLIDO)
 
+
 class Pregunta(models.Model):
     PK_PREGUNTA = models.AutoField(primary_key=True)
     DESCRIPCION = models.CharField(max_length=200, blank=False, null=False)
@@ -92,6 +85,7 @@ class Pregunta(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.DESCRIPCION, self.ESTADO)
 
+
 class Usuario(models.Model):
     PK_USUARIO = models.AutoField(primary_key=True)
     CARNET = models.CharField(max_length=60, blank=False, null=False)
@@ -99,7 +93,7 @@ class Usuario(models.Model):
     FECHA_CREACION = models.DateField(auto_now=False, auto_now_add=True)
     CORREO = models.EmailField(default='nocorreo@dominio.com', blank=True, null=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
-    FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
+    FK_PERSONA = models.OneToOneField(Persona, on_delete=models.CASCADE, blank=False, null=False)
     FK_ROL = models.ForeignKey(Rol, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
@@ -108,25 +102,11 @@ class Usuario(models.Model):
         ordering = ['FECHA_CREACION']
 
     def __str__(self):
-        return "{0},{1},{2}".format(self.CARNET, self.CORREO, self.FECHA_CREACION)
+        return "{0}".format(self.CARNET)
 
-class HistorialCsat(models.Model):
-    PK_HISTORIAL_CSAT = models.AutoField(primary_key=True)
-    RESPUESTA = models.IntegerField(blank=False, null=False)
-    FECHA_CREACION = models.DateField(auto_now_add=True, auto_now=False)
-    ESTADO = models.BooleanField(default=True, blank=False, null=False)
-    FK_PREGUNTA = models.ForeignKey(Pregunta, on_delete=models.CASCADE, blank=False, null=False)
-
-    class Meta:
-        verbose_name = 'HistorialCsat'
-        verbose_name_plural = 'HistorialCsat'
-        ordering = ['FECHA_CREACION']
-
-    def __str__(self):
-        return "{0},{1},{2}".format(self.FK_PREGUNTA, self.RESPUESTA, self.FECHA_CREACION)
 
 class TipoCita(models.Model):
-    PK_TIPO_CITA =  models.AutoField(primary_key=True)
+    PK_TIPO_CITA = models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=50, blank=False, null=False)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
@@ -138,12 +118,15 @@ class TipoCita(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.NOMBRE, self.ESTADO)
 
+
 class Cita(models.Model):
     PK_CITA = models.AutoField(primary_key=True)
     NUMERO = models.IntegerField(blank=False, null=True)
+    FECHA_INGRESO = models.DateField(auto_now_add=True, auto_now=False)
     FECHA_CREACION = models.DateTimeField(auto_now_add=True, auto_now=False)
     FECHA_FINALIZACION = models.DateTimeField(auto_now=True)
-    ESTADO  = models.BooleanField(default=True, blank=False, null=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    FK_USUARIO = models.ForeignKey(Usuario, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         verbose_name = 'Cita'
@@ -152,6 +135,24 @@ class Cita(models.Model):
 
     def __str__(self):
         return "{0},{1},{2}".format(self.NUMERO, self.ESTADO, self.FECHA_FINALIZACION)
+
+
+class HistorialCsat(models.Model):
+    PK_HISTORIAL_CSAT = models.AutoField(primary_key=True)
+    RESPUESTA = models.IntegerField(blank=False, null=False)
+    FECHA_CREACION = models.DateField(auto_now_add=True, auto_now=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    FK_PREGUNTA = models.ForeignKey(Pregunta, on_delete=models.CASCADE, blank=False, null=False)
+    FK_CITA = models.OneToOneField(Cita, on_delete=models.CASCADE, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'HistorialCsat'
+        verbose_name_plural = 'HistorialCsat'
+        ordering = ['FECHA_CREACION']
+
+    def __str__(self):
+        return "{0},{1},{2}".format(self.FK_PREGUNTA, self.RESPUESTA, self.FECHA_CREACION)
+
 
 class Consulta(models.Model):
     PK_CONSULTA = models.AutoField(primary_key=True)
@@ -166,6 +167,7 @@ class Consulta(models.Model):
 
     def __str__(self):
         return "{0},{1}".format(self.MOTIVO_CONSULTA, self.ESTADO)
+
 
 class ExamenFisico(models.Model):
     PK_EXAMEN_FISICO = models.AutoField(primary_key=True)
@@ -183,6 +185,7 @@ class ExamenFisico(models.Model):
 
     def __str__(self):
         return "{0},{1}".format(self.IMPRESION_CLINCIA, self.ESTADO)
+
 
 class Antecedente(models.Model):
     PK_ANTECEDENTE = models.AutoField(primary_key=True)
@@ -206,4 +209,22 @@ class Antecedente(models.Model):
         verbose_name_plural = 'Antecedentes'
 
     def __str__(self):
-        return "{0},{1}".format(self.PK_ANTECEDENTE, self.ESTADO)
+        return "{0},{1},{2}".format(self.PK_ANTECEDENTE, self.FAMILIAR, self.ESTADO)
+
+
+class HistorialClinico(models.Model):
+    PK_HISTORIAL_CLINICO = models.AutoField(primary_key=True)
+    FECHA_CREACION = models.DateField(auto_now_add=True, auto_now=False)
+    ESTADO = models.BooleanField(default=True, blank=False, null=False)
+    FK_CONSULTA = models.OneToOneField(Consulta, on_delete=models.CASCADE, blank=False, null=False)
+    FK_EXAMEN_FISICO = models.OneToOneField(ExamenFisico, on_delete=models.CASCADE, blank=False, null=False)
+    FK_ANTECEDENTE = models.OneToOneField(Antecedente, on_delete=models.CASCADE, blank=False, null=False)
+    FK_PERSONA = models.OneToOneField(Persona, on_delete=models.CASCADE, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Historial clinico'
+        verbose_name_plural = 'Historiales clinicos'
+
+    def __str__(self):
+        return "{0},{1}".format(self.FECHA_CREACION, self.ESTADO)
+

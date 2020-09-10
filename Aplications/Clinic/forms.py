@@ -21,14 +21,7 @@ class FormMunicipio(forms.ModelForm):
         fields = [
             'NOMBRE', 'ESTADO'
         ]
-"""
-class FormDireccion(forms.ModelForm):
-    class Meta:
-        model = Direccion
-        fields = [
-            'DESCRIPCION', 'ESTADO', 'FK_MUNICIPIO'
-        ]
-"""
+
 class FormPersona(forms.ModelForm):
     class Meta:
         model = Persona
@@ -70,7 +63,7 @@ class FormCita(forms.ModelForm):
     class Meta:
         model = Cita
         fields = [
-            'NUMERO', 'ESTADO'
+            'NUMERO', 'ESTADO', 'FK_USUARIO'
         ]
 
 class FormConsulta(forms.ModelForm):
@@ -95,4 +88,3 @@ class FormAntecedente(forms.ModelForm):
             'ULTIMA_REGLA', 'FECHA_PROBABLE_PARTO', 'GESTA', 'ABORTO', 'HIJOS_VIVOS',
             'PESO', 'QUIRURGICO', 'MEDICO', 'ALERGIA', 'FAMILIAR', 'HABITO', 'CIGARRO', 'LICOR', 'ESTADO'
         ]
-
