@@ -386,10 +386,24 @@ def delete_cita(request, pk_cita):
     cita = Cita.objects.get(PK_CITA = pk_cita)
     print(cita)
     if(request.method == "GET"):
-        return render(request, 'Clinic/Antecedente/delete_antecedente.html')
+        return render(request, 'Clinic/Cita/delete_cita.html')
     else:
+        tipo_estado = TipoEstado.objects.get(NOMBRE='Cancelado')
         cita.ESTADO = False
+        cita.FK_TIPO_ESTADO = tipo_estado
         cita.save()
         return redirect('dashboard')
 
-
+def update_cita(request, pk_cita):
+    cita = Cita.objects.get(PK_CITA = pk_cita)
+    fecha_ingreso = cita.FECHA_INGRESO.strftime("%Y-%m-%d")
+    if(request.method == "GET"):
+        return render(request, 'Clinic/Cita/update_cita.html',
+                      {'cita': cita, 'fecha_ingreso': fecha_ingreso})
+    else:
+        _fecha_ingreso = request.POST.get('FECHA_INGRESO')
+        numero = numero_cita(_fecha_ingreso)
+        cita.NUMERO = numero
+        cita.FECHA_INGRESO = _fecha_ingreso
+        cita.save()
+        return redirect('dashboard')

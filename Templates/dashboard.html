@@ -230,11 +230,11 @@
                                        class="a-custom">Completar</a>
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="{%url 'clinic:update_cita' listar_cita.PK_CITA%}"
                                        class="a-custom">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="{%url 'clinic:delete_cita' listar_cita.PK_CITA%}"
                                        class="a-custom">Eliminar</a>
                                 </td>
                                 {%endfor%}
@@ -307,11 +307,11 @@
                                        class="a-custom">Completar</a>
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="{%url 'clinic:update_cita' listar_cita.PK_CITA%}"
                                        class="a-custom">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="#"
+                                    <a href="{%url 'clinic:delete_cita' listar_cita.PK_CITA%}"
                                        class="a-custom">Eliminar</a>
                                 </td>
                                 {%endfor%}
@@ -346,7 +346,7 @@
 
         {%else%}
         <div class="container-fluid">
-            <h1 class="mt-4">Listado de citas</h1>
+            <h1 class="mt-4">Futuras citas</h1>
             <div class="container backgroud-custom-opacity">
                 <h2 class="mt-4">No hay informacion <i class="fas fa-info-circle"></i></h2>
             </div>
@@ -370,8 +370,6 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
-
-
 
 
     </script>

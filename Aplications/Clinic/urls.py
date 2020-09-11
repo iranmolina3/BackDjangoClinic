@@ -24,4 +24,6 @@ urlpatterns = [
 
     path('create_buscar/', create_buscar, name ='create_buscar'),
     path('create_cita/<int:pk_persona>', create_cita, name = 'create_cita'),
+    path('update_cita/<int:pk_cita>', update_cita, name = 'update_cita'),
+    path('delete_cita/<int:pk_cita>', delete_cita, name = 'delete_cita'),
 ]

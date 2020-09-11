@@ -118,7 +118,7 @@ class ResourceCita(resources.ModelResource):
 
 class AdminCita(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['NUMERO']
-    list_display = [ 'NUMERO', 'FECHA_CREACION', 'ESTADO', 'FK_PERSONA']
+    list_display = [ 'NUMERO', 'FECHA_INGRESO', 'ESTADO', 'FK_PERSONA', 'FK_TIPO_ESTADO']
     resource_class = ResourceCita
 
 admin.site.register(Cita, AdminCita)
