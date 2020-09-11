@@ -23,8 +23,8 @@ def span_numero_citas():
     return contador
 
 def dashboard(request):
-    cita1 = Cita.objects.filter(FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
-    cita2 = Cita.objects.exclude(FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
+    cita1 = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
+    cita2 = Cita.objects.filter(ESTADO=True).order_by('FECHA_INGRESO').exclude(FECHA_INGRESO=date.today())
     numero = span_numero_citas()
     paginator = Paginator(cita1, 10)
     page = request.GET.get('page')

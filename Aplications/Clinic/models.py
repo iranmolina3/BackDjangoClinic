@@ -127,7 +127,7 @@ class Cita(models.Model):
     FECHA_FINALIZACION = models.DateTimeField(auto_now=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
     FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
-    FK_TIPO_ESTADO = models.ForeignKey(TipoEstado, on_delete=models.CASCADE, blank=False, null=False)
+    FK_TIPO_ESTADO = models.ForeignKey(TipoEstado, on_delete=models.CASCADE, blank=True, null=True)
     class Meta:
         verbose_name = 'Cita'
         verbose_name_plural = 'Citas'
