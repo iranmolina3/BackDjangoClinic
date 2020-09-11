@@ -52,9 +52,9 @@ class FormHistorialCsat(forms.ModelForm):
             'RESPUESTA', 'ESTADO', 'FK_PREGUNTA'
         ]
 
-class FormTipoCita(forms.ModelForm):
+class FormTipoEstado(forms.ModelForm):
     class Meta:
-        model = TipoCita
+        model = TipoEstado
         fields = [
             'NOMBRE', 'ESTADO'
         ]

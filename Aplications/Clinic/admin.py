@@ -99,16 +99,16 @@ admin.site.register(HistorialCsat, AdminHistorialCsat)
 
 # IranDev this is the model admin TIPO_CITA
 
-class ResourceTipoCita(resources.ModelResource):
+class ResourceTipoEstado(resources.ModelResource):
     class Meta:
-        model = TipoCita
+        model = TipoEstado
 
-class AdminTipoCita(ImportExportModelAdmin, admin.ModelAdmin):
+class AdminTipoEstado(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['NOMBRE']
     list_display = ['NOMBRE', 'ESTADO']
-    resource_class = ResourceTipoCita
+    resource_class = ResourceTipoEstado
 
-admin.site.register(TipoCita, AdminTipoCita)
+admin.site.register(TipoEstado, AdminTipoEstado)
 
 # IranDev this is the model admin CITA
 

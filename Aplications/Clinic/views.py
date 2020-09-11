@@ -361,6 +361,16 @@ def create_buscar(request):
         persona = paginator.get_page(page)
         return render(request, 'Clinic/Cita/create_buscar.html', {'persona': persona})
 
+# -- > generador de numero de cita siguiente
+
+def numero_cita(fecha_ingreso):
+    print(fecha_ingreso)
+    cita = Cita.objects.filter(FECHA_INGRESO=fecha_ingreso)
+    contador = 0
+    for lista_cita in cita:
+        contador = contador + 1
+    return contador
+
 def create_cita(request, pk_persona):
     persona = Persona.objects.get(PK_PERSONA=pk_persona)
     if request.method == 'GET':
@@ -372,10 +382,14 @@ def create_cita(request, pk_persona):
         cita.save()
         return redirect('dashboard')
 
-def numero_cita(fecha_ingreso):
-    print(fecha_ingreso)
-    cita = Cita.objects.filter(FECHA_INGRESO=fecha_ingreso)
-    contador = 0
-    for lista_cita in cita:
-        contador = contador + 1
-    return contador
+def delete_cita(request, pk_cita):
+    cita = Cita.objects.get(PK_CITA = pk_cita)
+    print(cita)
+    if(request.method == "GET"):
+        return render(request, 'Clinic/Antecedente/delete_antecedente.html')
+    else:
+        cita.ESTADO = False
+        cita.save()
+        return redirect('dashboard')
+
+

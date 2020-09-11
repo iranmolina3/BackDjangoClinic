@@ -105,14 +105,14 @@ class Usuario(models.Model):
         return "{0}".format(self.CARNET)
 
 
-class TipoCita(models.Model):
-    PK_TIPO_CITA = models.AutoField(primary_key=True)
+class TipoEstado(models.Model):
+    PK_TIPO_ESTADO = models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=50, blank=False, null=False)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
     class Meta:
-        verbose_name = 'Tipo Cita'
-        verbose_name_plural = 'Tipos Citas'
+        verbose_name = 'Tipo estado'
+        verbose_name_plural = 'Tipos estados'
         ordering = ['NOMBRE']
 
     def __str__(self):
@@ -127,7 +127,7 @@ class Cita(models.Model):
     FECHA_FINALIZACION = models.DateTimeField(auto_now=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
     FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
-
+    FK_TIPO_ESTADO = models.ForeignKey(TipoEstado, on_delete=models.CASCADE, blank=False, null=False)
     class Meta:
         verbose_name = 'Cita'
         verbose_name_plural = 'Citas'
