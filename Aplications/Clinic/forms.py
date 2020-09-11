@@ -63,7 +63,7 @@ class FormCita(forms.ModelForm):
     class Meta:
         model = Cita
         fields = [
-            'NUMERO', 'ESTADO', 'FK_USUARIO'
+            'NUMERO', 'ESTADO', 'FK_PERSONA'
         ]
 
 class FormConsulta(forms.ModelForm):

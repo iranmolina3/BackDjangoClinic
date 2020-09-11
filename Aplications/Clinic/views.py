@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
+from django.db.models import Q
 from django.core.paginator import Paginator
 from datetime import date
+from random import choice
+
 # Create your views here.
 
 def home(request):
@@ -11,15 +14,53 @@ def home(request):
 def login(request):
     return render(request, 'login.html')
 
+def span_numero_citas():
+    fecha_ingreso = date.today()
+    cita = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=fecha_ingreso)
+    contador = 0
+    for lista_cita in cita:
+        contador = contador + 1
+    return contador
+
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    cita1 = Cita.objects.filter(FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
+    cita2 = Cita.objects.exclude(FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
+    numero = span_numero_citas()
+    paginator = Paginator(cita1, 10)
+    page = request.GET.get('page')
+    cita1 = paginator.get_page(page)
+    return render(request, 'dashboard.html', {'cita1':cita1, 'cita2':cita2, 'numero':numero})
+
+def generator_carnet(_nombre, contador):
+#   generador de usuario con contador if a same user
+    year = date.today().strftime("%Y")
+    usuario = Usuario.objects.filter(ESTADO=True, CARNET__regex=str(_nombre) + str(year))
+    print()
+    for lista_usuario in usuario:
+        print(lista_usuario)
+        contador = contador + 1
+    _carnet = str(_nombre) + str(year) + str(contador)
+    return _carnet
+
+def generator_password():
+#   generador de contrasenia
+    longitud = 8
+    valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    _password = ""
+    _password = _password.join([choice(valores) for i in range(longitud)])
+    print("CONTRASENIA DE USUARIO ", _password)
+    return _password
 
 def create_persona(request):
 
     if(request.method == "POST"):
         print(request.POST)
-        _nombre = request.POST.get('NOMBRE')
-        _apellido = request.POST.get('APELLIDO')
+        _nombre1 = request.POST.get('NOMBRE1')
+        _nombre2 = request.POST.get('NOMBRE2')
+        _nombre = _nombre1 + ' ' + _nombre2
+        _apellido1 = request.POST.get('APELLIDO1')
+        _apellido2 = request.POST.get('APELLIDO2')
+        _apellido = _apellido1 + ' ' + _apellido2
         _dpi = request.POST.get('DPI')
         _genero = request.POST.get('GENERO')
         _edad = request.POST.get('EDAD')
@@ -42,6 +83,12 @@ def create_persona(request):
                                  FK_MUNICIPIO = municipio,
                                  FK_ESTADO_CIVIL = estado_civil)
         _model_persona.save()
+        _carnet = generator_carnet(_nombre1,1)
+        _password = generator_password()
+#       select rol Pk 1 becouse been paciente
+        rol = Rol.objects.get(PK_ROL = 1)
+        usuario = Usuario(CARNET = _carnet, CONTRASENIA = _password, FK_PERSONA = _model_persona, FK_ROL = rol)
+        usuario.save()
         return redirect('dashboard')
     municipio = Municipio.objects.filter(ESTADO = True)
     estado_civil = EstadoCivil.objects.filter(ESTADO = True)
@@ -75,7 +122,7 @@ def update_persona(request, pk_persona):
         _fk_municipio = request.POST.get('MUNICIPIO')
         municipio = Municipio.objects.get(PK_MUNICIPIO=_fk_municipio)
         estado_civil = EstadoCivil.objects.get(PK_ESTADO_CIVIL=_fk_estado_civil)
-        persona.NOMBRE = _nombre
+        persona.PRIMER_NOMBRE = _nombre
         persona.APELLIDO = _apellido
         persona.DPI = _dpi
         persona.GENERO = _genero
@@ -283,16 +330,52 @@ def delete_antecedente(request, pk_antecedente):
         return redirect('dashboard')
 
 def create_cita(request):
-    if(request.method == "POST"):
-#        print(request.POST)
-        _numero = request.POST.get('NUMERO')
-#        print(_numero, _fk_usuario)
-        _model_cita = Cita(NUMERO = _numero)
-        _model_cita.save()
+    if request.method == 'GET':
+        persona = Persona.objects.filter(ESTADO=True)
+        paginator = Paginator(persona, 6)
+        page = request.GET.get('page')
+        persona = paginator.get_page(page)
+        return render(request, 'Clinic/Cita/create_buscar.html', {'persona': persona})
+    else:
+        nombre = request.POST.get("NOMBRE")
+        apellido = request.POST.get("APELLIDO")
+        persona = Persona.objects.filter(Q(ESTADO = True), Q(NOMBRE__icontains = nombre), Q(APELLIDO__icontains = apellido))
+        paginator = Paginator(persona, 6)
+        page = request.GET.get('page')
+        persona = paginator.get_page(page)
+        return render(request, 'Clinic/Cita/create_buscar.html', {'persona': persona})
+
+def create_buscar(request):
+    if request.method == 'GET':
+        persona = Persona.objects.filter(ESTADO=True)
+        paginator = Paginator(persona, 6)
+        page = request.GET.get('page')
+        persona = paginator.get_page(page)
+        return render(request, 'Clinic/Cita/create_buscar.html', {'persona': persona})
+    else:
+        nombre = request.POST.get("NOMBRE")
+        apellido = request.POST.get("APELLIDO")
+        persona = Persona.objects.filter(Q(ESTADO = True), Q(NOMBRE__icontains = nombre), Q(APELLIDO__icontains = apellido))
+        paginator = Paginator(persona, 6)
+        page = request.GET.get('page')
+        persona = paginator.get_page(page)
+        return render(request, 'Clinic/Cita/create_buscar.html', {'persona': persona})
+
+def create_cita(request, pk_persona):
+    persona = Persona.objects.get(PK_PERSONA=pk_persona)
+    if request.method == 'GET':
+        return render(request, 'Clinic/Cita/create_cita.html', {'persona': persona})
+    else:
+        fecha_ingreso = request.POST.get('FECHA_INGRESO')
+        numero = numero_cita(fecha_ingreso)
+        cita = Cita(NUMERO = numero, FECHA_INGRESO = fecha_ingreso, FK_PERSONA = persona)
+        cita.save()
         return redirect('dashboard')
-    today = date.today()
-    print(today)
-    cita = Cita.objects.filter(ESTADO = True)
 
-    return render(request, 'Clinic/Cita/create_cita.html')
-
+def numero_cita(fecha_ingreso):
+    print(fecha_ingreso)
+    cita = Cita.objects.filter(FECHA_INGRESO=fecha_ingreso)
+    contador = 0
+    for lista_cita in cita:
+        contador = contador + 1
+    return contador

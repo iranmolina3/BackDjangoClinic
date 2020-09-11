@@ -52,7 +52,7 @@ class Persona(models.Model):
     PK_PERSONA = models.AutoField(primary_key=True)
     NOMBRE = models.CharField(max_length=50, blank=False, null=False)
     APELLIDO = models.CharField(max_length=50, blank=False, null=False)
-    DPI = models.CharField(max_length=14, default='Menor de edad', blank=False, null=False)
+    DPI = models.CharField(max_length=14, default="--MENOR DE EDAD--", blank=False, null=False)
     EDAD = models.IntegerField(blank=False, null=False)
     FECHA_NACIMIENTO = models.DateField(blank=False, null=False)
     TELEFONO = models.CharField(max_length=9, blank=True, null=True)
@@ -122,11 +122,11 @@ class TipoCita(models.Model):
 class Cita(models.Model):
     PK_CITA = models.AutoField(primary_key=True)
     NUMERO = models.IntegerField(blank=False, null=True)
-    FECHA_INGRESO = models.DateField(auto_now_add=True, auto_now=False)
+    FECHA_INGRESO = models.DateField()
     FECHA_CREACION = models.DateTimeField(auto_now_add=True, auto_now=False)
     FECHA_FINALIZACION = models.DateTimeField(auto_now=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
-    FK_USUARIO = models.ForeignKey(Usuario, on_delete=models.CASCADE, blank=False, null=False)
+    FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         verbose_name = 'Cita'
@@ -227,4 +227,3 @@ class HistorialClinico(models.Model):
 
     def __str__(self):
         return "{0},{1}".format(self.FECHA_CREACION, self.ESTADO)
-

@@ -12,38 +12,25 @@
         <h1 class="mt-4">Registrar cita</h1>
         <div class="container backgroud-custom-opacity">
             <div class="row">
-                <div class="col-sm-3">
-                    <label>Numero</label>
+                <div class="col-sm-8">
+                    <label>Nombre del paciente</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">*</span>
                         </div>
-                        <input type="text" name="NOMBRE" class="form-control" placeholder="No. paciente"
-                               aria-label="Username" aria-describedby="basic-addon1" disabled>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <label>Usuario de paciente</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                        </div>
-                        <select class="custom-select" name="GENERO" id="inputGroupSelect01">
-                            <option selected>Selecciona un genero</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                            <option value="Indefinido">Indefinido</option>
-                        </select>
+                        <input type="text" disabled class="form-control"
+                               placeholder="Nombre de paciente" aria-label="Username"
+                               aria-describedby="basic-addon1" value="{{persona.NOMBRE}} {{persona.APELLIDO}}">
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <label>Paciente</label>
+                    <label>Fecha de cita</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">*</span>
                         </div>
-                        <input type="text" name="NOMBRE" class="form-control" placeholder="Nombre paciente"
-                               aria-label="Username" aria-describedby="basic-addon1" disabled>
+                        <input type="date" name="FECHA_INGRESO" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -52,7 +39,7 @@
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal"
                     data-target="#staticBackdrop">
-                Registrar datos
+                Registrar cita
             </button>
 
             <!-- Modal -->
