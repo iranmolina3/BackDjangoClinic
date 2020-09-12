@@ -1,0 +1,62 @@
+{%extends 'dashboard.html'%}
+{%load staticfiles%}
+
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
+{%endblock link%}
+
+{%block body%}
+<form method="POST">
+    {%csrf_token%}
+    <div class="container-fluid">
+        <h1 class="mt-4">Actualizar pregunta</h1>
+        <div class="container backgroud-custom-opacity">
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>Pregunta</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="text" name="DESCRIPCION" class="form-control"
+                               placeholder="Escribe una pregunta..." aria-label="Username"
+                               aria-describedby="basic-addon1" value="{{pregunta.DESCRIPCION}}">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal"
+                    data-target="#staticBackdrop">
+                Registrar pregunta
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una cambio.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
+                                    data-dismiss="modal">Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</form>
+{%endblock body%}

@@ -6,14 +6,14 @@
 {%endblock link%}
 
 {%block body%}
-{%if persona%}
-<form method="POST">
+{%if historial_clinico%}
+<form method="GET">
     {%csrf_token%}
     <div class="container-fluid">
-        <h1 class="mt-4">Buscar paciente para cita</h1>
+        <h1 class="mt-4">Buscar paciente</h1>
         <div class="container backgroud-custom-opacity">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-8">
                     <label>Nombre paciente</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -21,18 +21,7 @@
                         </div>
                         <input type="text" name="NOMBRE" class="form-control"
                                placeholder="Buscar por nombre" aria-label="Username"
-                               aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Apellido paciente</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="APELLIDO" class="form-control"
-                               placeholder="Buscar por apellido" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                               aria-describedby="basic-addon1" value="{{request.GET.NOMBRE}}">
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -84,21 +73,23 @@
                     <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Telefono</th>
+                        <th scope="col">Fecha de creacion</th>
                         <th scope="col">DPI</th>
-                        <th scope="col">Crear cita</th>
+                        <th scope="col">Ver o editar historial clinico</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {%for listar_persona in persona%}
+                    {%for lista_historial_clinico in historial_clinico%}
                     <tr>
-                        <th scope="row">{{listar_persona.NOMBRE}}</th>
-                        <td>{{listar_persona.APELLIDO}}</td>
-                        <td>{{listar_persona.TELEFONO}}</td>
-                        <td>{{listar_persona.DPI}}</td>
+                        <th scope="row">{{lista_historial_clinico.FK_PERSONA}}</th>
+                        <td>{{lista_historial_clinico.FECHA_CREACION}}</td>
+                        {%if lista_historial_clinico.ESTADO%}
+                            <td>Reciente</td>
+                        {%else%}
+                            <td>Antiguo</td>
+                        {%endif%}
                         <td>
-                            <a href="{%url 'clinic:create_cita' listar_persona.PK_PERSONA%}" class="a-custom">Crear cita</a>
+                            <a href="{%url 'clinic:update_historial_clinico' lista_historial_clinico.PK_HISTORIAL_CLINICO%}" class="a-custom">Ver o editar</a>
                         </td>
                         {%endfor%}
                     </tbody>
@@ -108,9 +99,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="col-md-6 float-left">
-                    {%if persona.has_previous%}
+                    {%if historial_clinico.has_previous%}
                     <div class="clearfix">
-                        <a href="?page={{persona.previous_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
+                        <a href="?page={{historial_clinico.previous_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
                            class="btn a-custom float-left">Anterior</a>
                     </div>
                     {%endif%}
@@ -118,9 +109,9 @@
             </div>
             <div class="col-md-6">
                 <div class="col-md-6 float-right">
-                    {%if persona.has_next%}
+                    {%if historial_clinico.has_next%}
                     <div class="clearfix">
-                        <a href="?page={{persona.next_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
+                        <a href="?page={{historial_clinico.next_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
                            class="btn a-custom float-right">Siguiente</a>
                     </div>
                     {%endif%}
@@ -132,9 +123,9 @@
 
 {%else%}
 <div class="container-fluid">
-    <h1 class="mt-4">Buscar paciente para cita</h1>
+    <h1 class="mt-4">Buscar paciente</h1>
     <div class="container backgroud-custom-opacity">
-        <h2 class="mt-4"><i class="fas fa-info-circle"></i> No hay pacientes registrados para citar</h2>
+        <h2 class="mt-4"><i class="fas fa-info-circle"></i> No hay pacientes registrados</h2>
     </div>
 </div>
 {%endif%}

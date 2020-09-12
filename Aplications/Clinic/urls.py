@@ -26,4 +26,15 @@ urlpatterns = [
     path('create_cita/<int:pk_persona>', create_cita, name = 'create_cita'),
     path('update_cita/<int:pk_cita>', update_cita, name = 'update_cita'),
     path('delete_cita/<int:pk_cita>', delete_cita, name = 'delete_cita'),
+
+    path('create_historial_clinico/<int:pk_cita>', create_historial_clinico, name = 'create_historial_clinico'),
+    path('read_historial_clinico/', read_historial_clinico, name = 'read_historial_clinico'),
+    path('update_historial_clinico/<int:pk_historial_clinico>', update_historial_clinico, name = 'update_historial_clinico'),
+
+    path('create_pregunta/', create_pregunta, name = 'create_pregunta'),
+    path('read_buscar/', read_buscar, name = 'read_buscar'),
+    path('update_pregunta/<int:pk_pregunta>', update_pregunta, name='update_pregunta'),
+    path('delete_pregunta/<int:pk_pregunta>', delete_pregunta, name='delete_pregunta'),
+
+    path('read_buscar/', read_buscar, name = 'read_buscar'),
 ]

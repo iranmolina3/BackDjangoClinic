@@ -68,7 +68,7 @@ class Persona(models.Model):
         ordering = ['FECHA_NACIMIENTO']
 
     def __str__(self):
-        return "{0},{1}".format(self.NOMBRE, self.APELLIDO)
+        return "{0},{1},{2}".format(self.PK_PERSONA, self.NOMBRE, self.APELLIDO)
 
 
 class Pregunta(models.Model):
@@ -93,7 +93,7 @@ class Usuario(models.Model):
     FECHA_CREACION = models.DateField(auto_now=False, auto_now_add=True)
     CORREO = models.EmailField(default='nocorreo@dominio.com', blank=True, null=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
-    FK_PERSONA = models.OneToOneField(Persona, on_delete=models.CASCADE, blank=False, null=False)
+    FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
     FK_ROL = models.ForeignKey(Rol, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
@@ -171,12 +171,12 @@ class Consulta(models.Model):
 
 class ExamenFisico(models.Model):
     PK_EXAMEN_FISICO = models.AutoField(primary_key=True)
-    PRESION_ARTERIAL = models.IntegerField(blank=False, null=False)
-    FRECUENCIA_CARDIACA = models.IntegerField(blank=False, null=False)
-    FRECUENCIA_RESPIRATORIA = models.IntegerField(blank=False, null=False)
-    TEMPERATURA = models.IntegerField(blank=False, null=False)
-    FRECUENCIA_CARDIACA_FETAL = models.IntegerField(blank=False, null=False)
-    IMPRESION_CLINCIA = models.TextField(blank=False, null=False)
+    PRESION_ARTERIAL = models.IntegerField(blank=True, null=True)
+    FRECUENCIA_CARDIACA = models.IntegerField(blank=True, null=True)
+    FRECUENCIA_RESPIRATORIA = models.IntegerField(blank=True, null=True)
+    TEMPERATURA = models.IntegerField(blank=False, null=True)
+    FRECUENCIA_CARDIACA_FETAL = models.IntegerField(blank=True, null=True)
+    IMPRESION_CLINCIA = models.TextField(blank=True, null=True)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
 
     class Meta:
@@ -189,10 +189,10 @@ class ExamenFisico(models.Model):
 
 class Antecedente(models.Model):
     PK_ANTECEDENTE = models.AutoField(primary_key=True)
-    ULTIMA_REGLA = models.DateTimeField(blank=True, null=True)
-    FECHA_PROBABLE_PARTO = models.DateTimeField(blank=True, null=True)
-    GESTA = models.DateTimeField(blank=True, null=True)
-    ABORTO = models.DateTimeField(blank=True, null=True)
+    ULTIMA_REGLA = models.DateTimeField()
+    FECHA_PROBABLE_PARTO = models.DateTimeField()
+    GESTA = models.DateTimeField()
+    ABORTO = models.DateTimeField()
     HIJOS_VIVOS = models.IntegerField(blank=True, null=True)
     PESO = models.IntegerField(blank=True, null=True)
     QUIRURGICO = models.TextField(blank=True, null=True)
@@ -215,15 +215,15 @@ class Antecedente(models.Model):
 class HistorialClinico(models.Model):
     PK_HISTORIAL_CLINICO = models.AutoField(primary_key=True)
     FECHA_CREACION = models.DateField(auto_now_add=True, auto_now=False)
+    FILTRO_NOMBRE_COMPLETO = models.CharField(max_length=200, blank=False, null=False)
     ESTADO = models.BooleanField(default=True, blank=False, null=False)
-    FK_CONSULTA = models.OneToOneField(Consulta, on_delete=models.CASCADE, blank=False, null=False)
-    FK_EXAMEN_FISICO = models.OneToOneField(ExamenFisico, on_delete=models.CASCADE, blank=False, null=False)
-    FK_ANTECEDENTE = models.OneToOneField(Antecedente, on_delete=models.CASCADE, blank=False, null=False)
-    FK_PERSONA = models.OneToOneField(Persona, on_delete=models.CASCADE, blank=False, null=False)
-
+    FK_CONSULTA = models.ForeignKey(Consulta, on_delete=models.CASCADE, blank=False, null=False)
+    FK_EXAMEN_FISICO = models.ForeignKey(ExamenFisico, on_delete=models.CASCADE, blank=False, null=False)
+    FK_ANTECEDENTE = models.ForeignKey(Antecedente, on_delete=models.CASCADE, blank=False, null=False)
+    FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
     class Meta:
         verbose_name = 'Historial clinico'
         verbose_name_plural = 'Historiales clinicos'
 
     def __str__(self):
-        return "{0},{1}".format(self.FECHA_CREACION, self.ESTADO)
+        return "{0},{1},{2}".format(self.PK_HISTORIAL_CLINICO, self.FECHA_CREACION, self.ESTADO)

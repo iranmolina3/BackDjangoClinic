@@ -1,0 +1,131 @@
+{%extends 'dashboard.html'%}
+{%load staticfiles%}
+
+{%block link%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
+{%endblock link%}
+
+{%block body%}
+{%if usuario%}
+<form method="GET">
+    {%csrf_token%}
+    <div class="container-fluid">
+        <h1 class="mt-4">Buscar usuario</h1>
+        <div class="container backgroud-custom-opacity">
+            <div class="row">
+                <div class="col-sm-8">
+                    <label>Carnet de pacientes</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">*</span>
+                        </div>
+                        <input type="text" name="CARNET" class="form-control"
+                               placeholder="Escribe parte de la pregunta..." aria-label="Username"
+                               aria-describedby="basic-addon1" value="{{request.GET.CARNET}}">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label></label>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold"
+                            data-toggle="modal"
+                            data-target="#staticBackdrop">
+                        Buscar usuario
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false"
+                         tabindex="-1"
+                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una
+                                    cambio.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
+                                            data-dismiss="modal">Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</form>
+<div class="container-fluid">
+    <div class="container list-backgroud-custom-opacity">
+        <div class="container-fluid">
+            <div class="table-responsive">
+                <table class="table table-striped ">
+                    <thead>
+                    <tr>
+                        <th scope="col">Carnet</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Editar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%for listar_usuario in usuario%}
+                    <tr>
+                        <th scope="row">{{listar_usuario.CARNET}}</th>
+                        {%if listar_usuario.ESTADO%}
+                            <td>Activa</td>
+                        {%else%}
+                            <td>Desactivada</td>
+                        {%endif%}
+                        <td>
+                            <a href="#" class="a-custom">Editar</a>
+                        </td>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-6 float-left">
+                    {%if usuario.has_previous%}
+                    <div class="clearfix">
+                        <a href="?page={{usuario.previous_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
+                           class="btn a-custom float-left">Anterior</a>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-6 float-right">
+                    {%if usuario.has_next%}
+                    <div class="clearfix">
+                        <a href="?page={{usuario.next_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
+                           class="btn a-custom float-right">Siguiente</a>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%else%}
+<div class="container-fluid">
+    <h1 class="mt-4">Buscar usuario</h1>
+    <div class="container backgroud-custom-opacity">
+        <h2 class="mt-4"><i class="fas fa-info-circle"></i> No hay usuario registrados</h2>
+    </div>
+</div>
+{%endif%}
+<!-- /#page-content-wrapper -->
+{%endblock body%}
