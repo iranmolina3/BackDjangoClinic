@@ -36,5 +36,6 @@ urlpatterns = [
     path('update_pregunta/<int:pk_pregunta>', update_pregunta, name='update_pregunta'),
     path('delete_pregunta/<int:pk_pregunta>', delete_pregunta, name='delete_pregunta'),
 
-    path('read_buscar/', read_buscar, name = 'read_buscar'),
+    path('read_usuario/', read_usuario, name = 'read_usuario'),
+    path('update_usuario/<int:pk_usuario>',  update_usuario, name = 'update_usuario'),
 ]

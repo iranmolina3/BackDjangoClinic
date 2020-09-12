@@ -9,29 +9,41 @@
 <form method="POST">
     {%csrf_token%}
     <div class="container-fluid">
-        <h1 class="mt-4">Registrar consulta</h1>
+        <h1 class="mt-4">Actualizar usuario</h1>
         <div class="container backgroud-custom-opacity">
             <div class="row">
-                <div class="col-sm-6">
-                    <label>Motivo de consulta</label>
+                <div class="col-sm-4">
+                    <label>Carnet</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="MOTIVO_CONSULTA" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1">
+                        <input type="text" name="CARNET" class="form-control"
+                               placeholder="Carnet del paciente" disabled aria-label="Username"
+                               aria-describedby="basic-addon1" value="{{usuario.CARNET}}">
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <label>Historia</label>
+                <div class="col-sm-4">
+                    <label>Contraseña</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-eye"
+                                                                                onclick="myFunction()"></i></span>
                         </div>
-                        <textarea type="text" name="HISTORIA" class="form-control"
-                                  placeholder="Ingresar la historia del paciente" aria-label="Username"
-                                  aria-describedby="basic-addon1"></textarea>
+                        <input type="password" id="myInput" name="CONTRASENIA" class="form-control"
+                               placeholder="Ingresar la nueva contraseña" aria-label="Username"
+                               aria-describedby="basic-addon1" value="{{usuario.CONTRASENIA}}">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label>Correo eletronico</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input type="email" name="CORREO" class="form-control"
+                               placeholder="Carnet del paciente" aria-label="Username"
+                               aria-describedby="basic-addon1" value="{{usuario.CORREO}}">
                     </div>
                 </div>
             </div>
@@ -70,4 +82,17 @@
     </div>
     <!-- /#page-content-wrapper -->
 </form>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+
+</script>
+
 {%endblock body%}

@@ -805,7 +805,7 @@ def delete_pregunta(request, pk_pregunta):
 
 # -- > READ for the models Usuario dont delete only update
 
-def read_buscar(request):
+def read_usuario(request):
     usuario = Usuario.objects.filter(ESTADO=True)
     carnet = request.GET.get("CARNET")
     if carnet:
@@ -815,3 +815,12 @@ def read_buscar(request):
     usuario = paginator.get_page(page)
     return render(request, 'Clinic/Usuario/read_usuario.html', {'usuario':usuario})
 
+def update_usuario(request, pk_usuario):
+    usuario = Usuario.objects.get(PK_USUARIO=pk_usuario)
+    if request.method=="GET":
+        return render(request, 'Clinic/Usuario/update_usuario.html', {'usuario': usuario})
+    else:
+        usuario.CONTRASENIA = request.POST.get('CONTRASENIA')
+        usuario.CORREO = request.POST.get('CORREO')
+        usuario.save()
+        return redirect('clinic:read_usuario')
