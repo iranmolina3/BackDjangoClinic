@@ -2,30 +2,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-      Clinica Medica Dr. Fernado Pineda
-  </title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css'%}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Clinica Medica Dr. Fernado Pineda
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 </head>
 <body>
-  <section class="login-page">
-  	 <form method="post">
-  	 	 <div class="box">
-  	 	 	   <div class="form-head">
-  	 	 	   	  <h2>Inicio  de sesion</h2>
-              <p>Bienvenido porfavor ingresa tu usuario para acceder a las funcionalidades del sistema.</p>
-  	 	 	   </div>
-  	 	 	   <div class="form-body">
-  	 	 	   	  <input type="text" placeholder="Ingresa tu usuario" />
-  	 	 	   	  <input type="Password" placeholder="Ingresa tu contraseña" />
-  	 	 	   </div>
-  	 	 	   <div class="form-footer">
-  	 	 	   	  <button type="submit">Iniciar sesion</button>
-  	 	 	   </div>
-  	 	 </div>
-  	 </form>
-  </section>
+<section class="login-page">
+    <form method="POST">
+        {%csrf_token%}
+        <div class="box login-backgroud-custom-opacity">
+            <div class="form-head">
+                <h2>Inicio de sesion</h2>
+                <p class="p-custom-login">Bienvenido porfavor ingresa tu usuario y contraseña para acceder a las funcionalidades del
+                    sistema.</p>
+            </div>
+            <div class="form-body">
+                <input type="text" name="username" placeholder="Ingresa tu usuario" required>
+                <input type="Password" name="password" placeholder="Ingresa tu contraseña" required>
+            </div>
+            <div class="form-footer">
+                <button type="submit">Iniciar sesion</button>
+            </div>
+        </div>
+    </form>
+</section>
 </body>
 </html>

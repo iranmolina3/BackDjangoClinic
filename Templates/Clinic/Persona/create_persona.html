@@ -6,7 +6,7 @@
 {%endblock link%}
 
 {%block body%}
-<form method="POST">
+<form method="POST" id="FORM">
     {%csrf_token%}
     <div class="container-fluid">
         <h1 class="mt-4">Registrar paciente</h1>
@@ -16,19 +16,21 @@
                     <label>Primer nombre</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text">*</span>
                         </div>
-                        <input type="text" name="NOMBRE1" class="form-control" placeholder="Ingresar nombre"
-                               aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" name="NOMBRE1" id="NOMBRE1" class="form-control"
+                               placeholder="Ingresar nombre"
+                               aria-label="Username" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <label>Segundo nombre</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text" >*</span>
                         </div>
-                        <input type="text" name="NOMBRE2" class="form-control" placeholder="Ingresar nombre"
+                        <input type="text" name="NOMBRE2" id="NOMBRE2" class="form-control"
+                               placeholder="Ingresar nombre"
                                aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
@@ -36,19 +38,21 @@
                     <label>Primer apellido</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text" >*</span>
                         </div>
-                        <input type="text" name="APELLIDO1" class="form-control" placeholder="Ingresar apellido"
-                               aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" name="APELLIDO1" id="APELLIDO1" class="form-control"
+                               placeholder="Ingresar apellido"
+                               aria-label="Username" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <label>Segundo apellido</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text" >*</span>
                         </div>
-                        <input type="text" name="APELLIDO2" class="form-control" placeholder="Ingresar apellido"
+                        <input type="text" name="APELLIDO2" id="APELLIDO2" class="form-control"
+                               placeholder="Ingresar apellido"
                                aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
@@ -56,9 +60,9 @@
                     <label>DPI</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text">*</span>
                         </div>
-                        <input type="text" name="DPI" class="form-control" placeholder="Ingresar DPI"
+                        <input type="text" name="DPI" id="DPI" class="form-control" placeholder="Ingresar DPI"
                                aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
@@ -68,10 +72,9 @@
                     <label>Genero</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                            <label class="input-group-text" for="GENERO">Options</label>
                         </div>
-                        <select class="custom-select" name="GENERO" id="inputGroupSelect01">
-                            <option selected>Selecciona un genero</option>
+                        <select class="custom-select" name="GENERO" id="GENERO" required>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                             <option value="Indefinido">Indefinido</option>
@@ -82,30 +85,30 @@
                     <label>Edad</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text" i>*</span>
                         </div>
-                        <input type="number" name="EDAD" class="form-control" placeholder="Ingresar edad"
-                               aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="number" name="EDAD" id="EDAD" class="form-control" placeholder="Ingresar edad"
+                               aria-label="Username" aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <label>Fecha nacimiento</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text">*</span>
                         </div>
-                        <input type="date" name="FECHA_NACIMIENTO" class="form-control" aria-label="Username"
-                               aria-describedby="basic-addon1" value="">
+                        <input type="date" name="FECHA_NACIMIENTO" id="FECHA_NACIMIENTO" class="form-control"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1" required>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <label>Estado civil</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                            <label class="input-group-text" for="FK_ESTADO_CIVIL">Options</label>
                         </div>
-                        <select class="custom-select" name="FK_ESTADO_CIVIL" id="inputGroupSelect01">
-                            <option selected>Selecciona estado civil</option>
+                        <select class="custom-select" name="FK_ESTADO_CIVIL" id="FK_ESTADO_CIVIL" required>
                             {%for lista_estado_civil in estado_civil%}
                             <option value="{{lista_estado_civil.PK_ESTADO_CIVIL}}">{{lista_estado_civil.NOMBRE}}
                             </option>
@@ -119,9 +122,10 @@
                     <label>Telefono</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
+                            <span class="input-group-text">*</span>
                         </div>
-                        <input type="text" name="TELEFONO" class="form-control" placeholder="Ingresar telefono"
+                        <input type="text" name="TELEFONO" id="TELEFONO" class="form-control"
+                               placeholder="Ingresar telefono"
                                aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
@@ -131,7 +135,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">*</span>
                         </div>
-                        <input type="text" name="DIRECCION" class="form-control"
+                        <input type="text" name="DIRECCION" id="DIRECCION" class="form-control"
                                placeholder="Ingresar direccion detallada" aria-label="Username"
                                aria-describedby="basic-addon1">
                     </div>
@@ -140,10 +144,9 @@
                     <label>Municipio</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                            <label class="input-group-text" for="MUNICIPIO">Options</label>
                         </div>
-                        <select class="custom-select" name="MUNICIPIO" id="inputGroupSelect01">
-                            <option selected>Selecciona un municipio</option>
+                        <select class="custom-select" name="MUNICIPIO" id="MUNICIPIO" required>
                             {%for lista_municipio in municipio%}
                             <option value="{{lista_municipio.PK_MUNICIPIO}}">{{lista_municipio.NOMBRE}}</option>
                             {%endfor%}
@@ -157,6 +160,8 @@
                     data-target="#staticBackdrop">
                 Registrar datos
             </button>
+            <!-- Para las validaciones -->
+            <p class="warnings" id="warnings"></p>
 
             <!-- Modal -->
             <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -185,4 +190,8 @@
     </div>
     <!-- /#page-content-wrapper -->
 </form>
+
+<!-- Para js de validaciones de campos -->
+<script src="{% static 'js/validador.js'%}"></script>
+
 {%endblock body%}

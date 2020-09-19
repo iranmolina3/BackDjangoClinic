@@ -15,13 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import auth_login, logout_then_login
 from Aplications.Clinic.views import *
 from Aplications.Clinic.urls import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('clinic/', include(('Aplications.Clinic.urls', 'clinic'))),
-    path('index/', home, name = 'index'),
-    path('login/', login, name = 'login'),
+    path('', home, name = 'index'),
+    path('sing/', sing, name ='sing'),
     path('dashboard/', dashboard, name='dashboard'),
+    path('logout_view/', logout_view, name = 'logout_view')
+
 ]

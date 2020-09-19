@@ -172,16 +172,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-light color-a" href="#" data-toggle="tooltip" data-placement="bottom"
-                           title="Servicio activo">
-                            Atendiendo<i class="far fa-thumbs-down"></i> <i class="far fa-thumbs-up"></i>
-                        </a>
+                        <a class="nav-link text-light color-a" href="#">Bienvenido {{user.first_name|upper}}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light color-a" href="#">Citas de hoy <span
-                                class="badge badge-light">{{numero}}</span></a>
-                    </li>
-                    <a href="{%url 'index'%}">
+
+                    <a href="{%url 'logout_view'%}">
                         <button class="btn btn-outline-success1 my-2 my-sm-0 font-weight-bold" type="submit">Cerrar
                             sesion
                         </button>
@@ -362,6 +356,8 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
+
+
 
 
 
