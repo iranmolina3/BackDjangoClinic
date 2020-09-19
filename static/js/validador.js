@@ -72,10 +72,6 @@ form.addEventListener('submit', e=>{
         }
         correcto=true
     }
-    if(genero.value){
-        warnings+='Selecciona un genero<br>'
-        correcto=true
-    }
     if(edad.value>150){
         warnings+='La edad no puede se mayor de 150 es improbable<br>'
         correcto=true
@@ -83,14 +79,10 @@ form.addEventListener('submit', e=>{
     if(edad.value>150 || edad.value<=0){
         warnings+='Edad no debe se menor a 1 año y mayor 150 años<br>'
         correcto=true
-    }
-    if(fk_estado_civil.value){
-        warnings+='Selecciona un estado civil<br>'
-        correcto=true
-    }
+    }wa
     if(telefono.value.length!=8){
         warnings+='El telefono ser igual a 8 digitos<br>'
-        if(!regexNumero.test(telefono.value)){
+        if(!regexNumero.test(telefono.value)){ff
             warnings+='El telefono solo debe de ser numero<br>'
             correcto=true
         }
@@ -98,10 +90,6 @@ form.addEventListener('submit', e=>{
     }
     if(direccion.value.length>199){
         warnings+='Resumir la direccion'
-        correcto=true
-    }
-    if(municipio.value){
-        warnings+='Selecciona un municipio'
         correcto=true
     }
     //console.log(!regexNumero.test(dpi.value))
