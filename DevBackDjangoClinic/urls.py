@@ -19,6 +19,9 @@ from django.contrib.auth.views import auth_login, logout_then_login
 from Aplications.Clinic.views import *
 from Aplications.Clinic.urls import *
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +30,4 @@ urlpatterns = [
     path('sing/', sing, name ='sing'),
     path('dashboard/', dashboard, name='dashboard'),
     path('logout_view/', logout_view, name = 'logout_view')
-
-]
+]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
