@@ -26,7 +26,7 @@ SECRET_KEY = '(n4-5pf3yrf696c_hr!5bak$v)y_e9x@h0!*f$3w9a!9jrcx=z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'DevBackDjangoClinic.urls'
@@ -77,32 +78,32 @@ WSGI_APPLICATION = 'DevBackDjangoClinic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
+#DATABASES = {
 
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'doctor_fernando',
-        'USER': 'IranDev',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'doctor_fernando',
+#        'USER': 'IranDev',
+#        'PASSWORD': '12345',
+#        'HOST': 'localhost',
+#        'PORT': 5432
+#    }
 
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #    }
 
-}
-
-#import dj_database_url
-#from decouple import config
-
-#DATABASES = {
-#    'default':dj_database_url.config(
-#        default=config('DATABASE_URL')
-#   )
 #}
+
+import dj_database_url
+from decouple import config
+
+DATABASES = {
+    'default':dj_database_url.config(
+        default=config('DATABASE_URL')
+   )
+}
 
 
 
