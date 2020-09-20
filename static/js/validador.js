@@ -29,7 +29,6 @@ form.addEventListener('submit', e=>{
             correcto=true
         }
         correcto=true
-        e.preventDefault()
     }
     if(nombre2.value.length>25 || nombre2.value.length<3){
         //alert("Primer nombre muy largo")
@@ -40,7 +39,6 @@ form.addEventListener('submit', e=>{
             correcto=true
         }
         correcto=true
-        e.preventDefault()
     }
     if(apellido1.value.length>25 || apellido1.value.length<2){
         //alert("Primer nombre muy largo")
@@ -51,7 +49,6 @@ form.addEventListener('submit', e=>{
             correcto=true
         }
         correcto=true
-        e.preventDefault()
     }
     if(apellido1.value.length>25 || apellido1.value.length<2){
         //alert("Primer nombre muy largo")
@@ -62,7 +59,6 @@ form.addEventListener('submit', e=>{
             correcto=true
         }
         correcto=true
-        e.preventDefault()
     }
     if(dpi.value.length>13){
         //alert("Solo ingresar numeros para dpi")
@@ -73,17 +69,14 @@ form.addEventListener('submit', e=>{
             correcto=true
         }
         correcto=true
-        e.preventDefault()
     }
     if(edad.value>150){
         warnings+='La edad no puede se mayor de 150 es improbable<br>'
         correcto=true
-        e.preventDefault()
     }
     if(edad.value>150 || edad.value<=0){
         warnings+='Edad no debe se menor a 1 año y mayor 150 años<br>'
         correcto=true
-        e.preventDefault()
     }
     if(telefono.value.length!=8){
         warnings+='El telefono ser igual a 8 digitos<br>'
@@ -92,18 +85,16 @@ form.addEventListener('submit', e=>{
             correcto=true
         }
         correcto=true
-        e.preventDefault()
     }
     if(direccion.value.length>199){
         warnings+='Resumir la direccion'
         correcto=true
-        e.preventDefault()
     }
     //console.log(!regexNumero.test(dpi.value))
     //console.log(correcto)
     if(correcto){
-        e.preventDefault()
         parrafo.innerHTML=warnings
+        e.preventDefault()
     }
 
 })
