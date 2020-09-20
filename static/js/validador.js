@@ -23,51 +23,51 @@ form.addEventListener('submit', e=>{
     if(nombre1.value.length>25 || nombre1.value.length<3){
         //alert("Primer nombre muy largo")
         warnings+='Primer nombre muy largo o corto<br>'
-        if(!regexLetras.test(nombre1.value)){
+        correcto=true
+    }
+    if(!regexLetras.test(nombre1.value)){
             //alert("Solo ingresar numeros para dpi")
             warnings+='Primer nombre solo letras<br>'
             correcto=true
-        }
-        correcto=true
     }
-    if(nombre2.value.length>25 || nombre2.value.length<3){
+    if(nombre2.value.length>25 || nombre2.value.length<3 && nombre2.value.length!=0){
         //alert("Primer nombre muy largo")
         warnings+='Segundo nombre muy largo o corto<br>'
-        if(!regexLetras.test(nombre2.value)){
-            //alert("Solo ingresar numeros para dpi")
-            warnings+='Segundo nombre solo letras<br>'
-            correcto=true
-        }
+        correcto=true
+    }
+    if(!regexLetras.test(nombre2.value) && nombre2.value.length!=0){
+        //alert("Solo ingresar numeros para dpi")
+        warnings+='Segundo nombre solo letras<br>'
         correcto=true
     }
     if(apellido1.value.length>25 || apellido1.value.length<2){
         //alert("Primer nombre muy largo")
         warnings+='Primer apellido muy largo o corto<br>'
-        if(!regexLetras.test(apellido1.value)){
-            //alert("Solo ingresar numeros para dpi")
-            warnings+='Primer apellido solo letras<br>'
-            correcto=true
-        }
         correcto=true
     }
-    if(apellido1.value.length>25 || apellido1.value.length<2){
+    if(!regexLetras.test(apellido1.value)){
+        //alert("Solo ingresar numeros para dpi")
+        warnings+='Primer apellido solo letras<br>'
+        correcto=true
+    }
+    if(apellido2.value.length>25 || apellido2.value.length<2 && apellido2.value.length!=0){
         //alert("Primer nombre muy largo")
         warnings+='Segundo apellido muy largo o corto<br>'
-        if(!regexLetras.test(apellido1.value)){
-            //alert("Solo ingresar numeros para dpi")
-            warnings+='Segundo apellido solo letras<br>'
-            correcto=true
-        }
         correcto=true
     }
-    if(dpi.value.length>13){
+    if(!regexLetras.test(apellido2.value) && apellido2.value.length!=0){
+        //alert("Solo ingresar numeros para dpi")
+        warnings+='Segundo apellido solo letras<br>'
+        correcto=true
+    }
+    if(dpi.value.length!=13  && dpi.value.length!=0){
         //alert("Solo ingresar numeros para dpi")
         warnings+='El dpi no debe ser mayor a 13 digitos<br>'
-        if(!regexNumero.test(dpi.value)){
-            //alert("Solo ingresar numeros para dpi")
-            warnings+='Solo ingresar numeros para dpi<br>'
-            correcto=true
-        }
+        correcto=true
+    }
+    if(!regexNumero.test(dpi.value) && dpi.value.length!=0){
+        //alert("Solo ingresar numeros para dpi")
+        warnings+='Solo ingresar numeros para dpi<br>'
         correcto=true
     }
     if(edad.value>150){
@@ -78,12 +78,12 @@ form.addEventListener('submit', e=>{
         warnings+='Edad no debe se menor a 1 año y mayor 150 años<br>'
         correcto=true
     }
-    if(telefono.value.length!=8){
+    if(telefono.value.length!=8 && telefono.value.length!=0){
         warnings+='El telefono ser igual a 8 digitos<br>'
-        if(!regexNumero.test(telefono.value)){ff
-            warnings+='El telefono solo debe de ser numero<br>'
-            correcto=true
-        }
+        correcto=true
+    }
+    if(!regexNumero.test(telefono.value) && telefono.value.length!=0) {
+        warnings+='El telefono solo debe de ser numero<br>'
         correcto=true
     }
     if(direccion.value.length>199){
@@ -95,6 +95,6 @@ form.addEventListener('submit', e=>{
     if(correcto){
         parrafo.innerHTML=warnings
         e.preventDefault()
+        alert("Realizar correcciones que se indican")
     }
-
 })
