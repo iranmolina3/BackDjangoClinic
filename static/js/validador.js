@@ -15,8 +15,6 @@ const form = document.getElementById("FORM")
 const parrafo = document.getElementById("warnings")
 
 form.addEventListener('submit', e=>{
-    e.preventDefault()
-    let alertas = false
     let warnings = ""
     let regexNumero = /^[0-9]+$/
     let regexLetras = /^[A-Za-z]+$/
@@ -95,6 +93,7 @@ form.addEventListener('submit', e=>{
     //console.log(!regexNumero.test(dpi.value))
     //console.log(correcto)
     if(correcto){
+        e.preventDefault()
         parrafo.innerHTML=warnings
     }
 
