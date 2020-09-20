@@ -1,1 +1,1 @@
-web: gunicorn devnewrecetario.wsgi --log-file -
+web: gunicorn DevBackDjangoClinic.wsgi --log-file -
