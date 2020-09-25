@@ -175,3 +175,15 @@ class AdminHistorialClinico(ImportExportModelAdmin, admin.ModelAdmin):
 
 admin.site.register(HistorialClinico, AdminHistorialClinico)
 
+# Irandev this is a model admin CONTROL_CLINICA
+
+class ResourceControlClinica(resources.ModelResource):
+    class Meta:
+        model = ControlClinica
+
+class AdminControlClinica(ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = ['nombre',]
+    list_display = ['nombre',]
+    resource_class = ResourceControlClinica
+
+admin.site.register(ControlClinica, AdminControlClinica)

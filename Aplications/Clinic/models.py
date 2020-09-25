@@ -221,9 +221,23 @@ class HistorialClinico(models.Model):
     FK_EXAMEN_FISICO = models.ForeignKey(ExamenFisico, on_delete=models.CASCADE, blank=False, null=False)
     FK_ANTECEDENTE = models.ForeignKey(Antecedente, on_delete=models.CASCADE, blank=False, null=False)
     FK_PERSONA = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
+
     class Meta:
         verbose_name = 'Historial clinico'
         verbose_name_plural = 'Historiales clinicos'
 
     def __str__(self):
         return "{0},{1},{2}".format(self.PK_HISTORIAL_CLINICO, self.FECHA_CREACION, self.ESTADO)
+
+class ControlClinica(models.Model):
+    pk_control_clinica = models.AutoField(primary_key=True)
+    nombre = models.CharField('Nombre de la clinica', max_length=200, blank=False, null=False)
+    servicio = models.BooleanField('control atendiendo/no atendiendo', blank=False, null=False)
+    estado = models.BooleanField('Activa/Desactivada', blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Control clinica'
+        verbose_name_plural = 'Controles clinicas'
+
+    def __str__(self):
+        return "{0}".format(self.nombre)

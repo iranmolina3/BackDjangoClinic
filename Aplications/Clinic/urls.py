@@ -38,4 +38,7 @@ urlpatterns = [
 
     path('read_usuario/', read_usuario, name = 'read_usuario'),
     path('update_usuario/<int:pk_usuario>',  update_usuario, name = 'update_usuario'),
+
+    path('open_clinica/',  open_clinica, name = 'open_clinica'),
+    path('close_clinica/',  close_clinica, name = 'close_clinica'),
 ]

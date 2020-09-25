@@ -97,7 +97,8 @@ def create_persona_hitorial(request):
 
 def home(request):
     numero = span_numero_citas()
-    return render(request, 'index.html', {'numero': numero})
+    modelcontrolclinica = ControlClinica.objects.get(estado=True)
+    return render(request, 'index.html', {'numero': numero, 'modelcontrolclinica':modelcontrolclinica})
 
 # -- LOGIN -- VIEW -- > this is a functions to begin the system
 
@@ -997,3 +998,29 @@ def update_usuario(request, pk_usuario):
             usuario.CORREO = request.POST.get('CORREO')
             usuario.save()
             return redirect('clinic:read_usuario')
+
+# -- control clinic - view select -- > this functions show data clinics
+
+def close_clinica(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        modelcontrolclinica = ControlClinica.objects.get(estado=True)
+        if request.method == 'GET':
+            return render(request, 'Clinic/ControlClinica/close_clinica.html', {'modelcontrolclinica': modelcontrolclinica})
+        else:
+            modelcontrolclinica.servicio = False
+            modelcontrolclinica.save()
+            return redirect('dashboard')
+
+def open_clinica(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        modelcontrolclinica = ControlClinica.objects.get(estado=True)
+        if request.method == 'GET':
+            return render(request, 'Clinic/ControlClinica/open_clinica.html', {'modelcontrolclinica': modelcontrolclinica})
+        else:
+            modelcontrolclinica.servicio = True
+            modelcontrolclinica.save()
+            return redirect('dashboard')

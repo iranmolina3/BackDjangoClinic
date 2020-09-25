@@ -80,7 +80,12 @@
             <li class="nav-item">
                 <a class="nav-link text-light color-a" href="#" data-toggle="tooltip" data-placement="bottom"
                    title="Servicio activo">
-                    Atendiendo <i class="far fa-thumbs-down"></i><i class="far fa-thumbs-up"></i>
+                    Atendiendo
+                    {%if modelcontrolclinica.servicio%}
+                    <i class="far fa-thumbs-up"></i>
+                    {%else%}
+                    <i class="far fa-thumbs-down"></i>
+                    {%endif%}
                 </a>
             </li>
             <li class="nav-item">
