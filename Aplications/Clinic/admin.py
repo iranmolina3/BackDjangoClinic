@@ -13,37 +13,11 @@ class ResourceRol(resources.ModelResource):
         model = Rol
 
 class AdminRol(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['NOMBRE']
-    list_display = ['NOMBRE', 'ESTADO']
+    search_fields = ['nombre']
+    list_display = ['nombre', 'estado']
     resource_class = ResourceRol
 
 admin.site.register(Rol, AdminRol)
-
-# IranDev this is the model admin ESTADO_CIVIl
-
-class ResourceEstadoCivil(resources.ModelResource):
-    class Meta:
-        model = EstadoCivil
-
-class AdminEstadoCivil(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['NOMBRE']
-    list_display = ['NOMBRE', 'ESTADO']
-    resource_class = ResourceEstadoCivil
-
-admin.site.register(EstadoCivil, AdminEstadoCivil)
-
-# IranDev this is the model admin MUNICIPIO
-
-class ResourceMunicipio(resources.ModelResource):
-    class Meta:
-        model = Municipio
-
-class AdminMunicipio(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['NOMBRE']
-    list_display = ['NOMBRE', 'ESTADO']
-    resource_class = ResourceMunicipio
-
-admin.site.register(Municipio, AdminMunicipio)
 
 # IranDev this is the model admin PERSONA
 
@@ -52,8 +26,8 @@ class ResourcePersona(resources.ModelResource):
         model = Persona
 
 class AdminPersona(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['NOMBRE']
-    list_display = ['NOMBRE', 'APELLIDO', 'ESTADO']
+    search_fields = ['nombre']
+    list_display = ['nombre', 'apellido', 'estado']
     resource_class = ResourcePersona
 
 admin.site.register(Persona, AdminPersona)
@@ -65,8 +39,8 @@ class ResourcePregunta(resources.ModelResource):
         model = Pregunta
 
 class AdminPregunta(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['DESCRIPCION']
-    list_display = ['DESCRIPCION', 'ESTADO']
+    search_fields = ['descripcion']
+    list_display = ['descripcion', 'estado']
     resource_class = ResourcePregunta
 
 admin.site.register(Pregunta, AdminPregunta)
@@ -78,24 +52,24 @@ class ResourceUsuario(resources.ModelResource):
         model = Usuario
 
 class AdminPregunta(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['CARNET']
-    list_display = ['CARNET', 'FK_PERSONA', 'ESTADO']
+    search_fields = ['carnet']
+    list_display = ['carnet', 'fk_persona', 'estado']
     resource_class = ResourceUsuario
 
 admin.site.register(Usuario, AdminPregunta)
 
 # IranDev this is the model admin HISTORIAL_CSAT
 
-class ResourceHistorialCsat(resources.ModelResource):
+class ResourceCsat(resources.ModelResource):
     class Meta:
-        model = HistorialCsat
+        model = Csat
 
 class AdminHistorialCsat(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['RESPUESTA']
-    list_display = ['FK_PREGUNTA', 'RESPUESTA', 'ESTADO']
-    resource_class = ResourceHistorialCsat
+    search_fields = ['respuesta']
+    list_display = ['fk_pregunta', 'respuesta', 'estado']
+    resource_class = ResourceCsat
 
-admin.site.register(HistorialCsat, AdminHistorialCsat)
+admin.site.register(Csat, AdminHistorialCsat)
 
 # IranDev this is the model admin TIPO_CITA
 
@@ -104,8 +78,8 @@ class ResourceTipoEstado(resources.ModelResource):
         model = TipoEstado
 
 class AdminTipoEstado(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['NOMBRE']
-    list_display = ['NOMBRE', 'ESTADO']
+    search_fields = ['nombre']
+    list_display = ['nombre', 'estado']
     resource_class = ResourceTipoEstado
 
 admin.site.register(TipoEstado, AdminTipoEstado)
@@ -117,8 +91,8 @@ class ResourceCita(resources.ModelResource):
         model = Cita
 
 class AdminCita(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['NUMERO']
-    list_display = [ 'NUMERO', 'FECHA_INGRESO', 'ESTADO', 'FK_PERSONA', 'FK_TIPO_ESTADO']
+    search_fields = ['numero']
+    list_display = ['numero', 'fecha_creacion', 'estado', 'fk_persona', 'fk_tipo_estado']
     resource_class = ResourceCita
 
 admin.site.register(Cita, AdminCita)
@@ -130,8 +104,8 @@ class ResourceExamenFisico(resources.ModelResource):
         model = ExamenFisico
 
 class AdminExamenFisico(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['IMPRESION_CLINCIA']
-    list_display = ['IMPRESION_CLINCIA', 'ESTADO']
+    search_fields = ['impresion_clinica']
+    list_display = ['impresion_clinica', 'estado']
     resource_class = ResourceExamenFisico
 
 admin.site.register(ExamenFisico, AdminExamenFisico)
@@ -143,8 +117,8 @@ class ResourceConsulta(resources.ModelResource):
         model = Consulta
 
 class AdminConsulta(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['ESTADO']
-    list_display = ['MOTIVO_CONSULTA', 'ESTADO']
+    search_fields = ['estado']
+    list_display = ['motivo_consulta', 'estado']
     resource_class = ResourceConsulta
 
 admin.site.register(Consulta, AdminConsulta)
@@ -156,8 +130,8 @@ class ResourceAntecedente(resources.ModelResource):
         model = Antecedente
 
 class AdminAntecedente(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['FAMILIAR', 'ESTADO']
-    list_display = ['FAMILIAR', 'ESTADO']
+    search_fields = ['familiar', 'estado']
+    list_display = ['familiar', 'estado']
     resource_class = ResourceAntecedente
 
 admin.site.register(Antecedente, AdminAntecedente)
@@ -169,8 +143,8 @@ class ResourceHistorialClinico(resources.ModelResource):
         model = HistorialClinico
 
 class AdminHistorialClinico(ImportExportModelAdmin, admin.ModelAdmin):
-    search_fields = ['FECHA_CREACION']
-    list_display = ['FECHA_CREACION', 'ESTADO']
+    search_fields = ['fecha_creacion']
+    list_display = ['fecha_creacion', 'estado']
     resource_class = ResourceHistorialClinico
 
 admin.site.register(HistorialClinico, AdminHistorialClinico)

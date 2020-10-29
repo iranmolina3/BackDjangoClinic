@@ -1,197 +1,207 @@
-{%extends 'dashboard.html'%}
+{%extends 'index_dashboard.html'%}
 {%load staticfiles%}
 
 {%block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 {%endblock link%}
 
 {%block body%}
+
 <form method="POST" id="FORM">
     {%csrf_token%}
     <div class="container-fluid">
-        <h2 class="mt-4">Registrar paciente</h2>
-        <div class="container backgroud-custom-opacity">
-            <div class="row">
-                <div class="col-sm-2">
-                    <label>Primer nombre</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">*</span>
-                        </div>
-                        <input type="text" name="NOMBRE1" id="NOMBRE1" class="form-control"
-                               placeholder="Ingresar nombre"
-                               aria-label="Username" aria-describedby="basic-addon1" required>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Segundo nombre</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >*</span>
-                        </div>
-                        <input type="text" name="NOMBRE2" id="NOMBRE2" class="form-control"
-                               placeholder="Ingresar nombre"
-                               aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Primer apellido</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >*</span>
-                        </div>
-                        <input type="text" name="APELLIDO1" id="APELLIDO1" class="form-control"
-                               placeholder="Ingresar apellido"
-                               aria-label="Username" aria-describedby="basic-addon1" required>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Segundo apellido</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" >*</span>
-                        </div>
-                        <input type="text" name="APELLIDO2" id="APELLIDO2" class="form-control"
-                               placeholder="Ingresar apellido"
-                               aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>DPI</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">*</span>
-                        </div>
-                        <input type="text" name="DPI" id="DPI" class="form-control" placeholder="Ingresar DPI"
-                               aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label>Genero</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="GENERO">Options</label>
-                        </div>
-                        <select class="custom-select" name="GENERO" id="GENERO" required>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                            <option value="Indefinido">Indefinido</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Edad</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" i>*</span>
-                        </div>
-                        <input type="number" name="EDAD" id="EDAD" class="form-control" placeholder="Ingresar edad"
-                               aria-label="Username" aria-describedby="basic-addon1" required>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Fecha nacimiento</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">*</span>
-                        </div>
-                        <input type="date" name="FECHA_NACIMIENTO" id="FECHA_NACIMIENTO" class="form-control"
-                               aria-label="Username"
-                               aria-describedby="basic-addon1" required>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <label>Estado civil</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="FK_ESTADO_CIVIL">Options</label>
-                        </div>
-                        <select class="custom-select" name="FK_ESTADO_CIVIL" id="FK_ESTADO_CIVIL" required>
-                            {%for lista_estado_civil in estado_civil%}
-                            <option value="{{lista_estado_civil.PK_ESTADO_CIVIL}}">{{lista_estado_civil.NOMBRE}}
-                            </option>
-                            {%endfor%}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">
-                    <label>Telefono</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">*</span>
-                        </div>
-                        <input type="text" name="TELEFONO" id="TELEFONO" class="form-control"
-                               placeholder="Ingresar telefono"
-                               aria-label="Username" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label>Direccion</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="DIRECCION" id="DIRECCION" class="form-control"
-                               placeholder="Ingresar direccion detallada" aria-label="Username"
-                               aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Municipio</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="MUNICIPIO">Options</label>
-                        </div>
-                        <select class="custom-select" name="MUNICIPIO" id="MUNICIPIO" required>
-                            {%for lista_municipio in municipio%}
-                            <option value="{{lista_municipio.PK_MUNICIPIO}}">{{lista_municipio.NOMBRE}}</option>
-                            {%endfor%}
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal"
-                    data-target="#staticBackdrop">
-                Registrar datos
-            </button>
-            <!-- Para las validaciones -->
-            <p class="warnings" id="warnings"></p>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una cambio.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
-                                    data-dismiss="modal">Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar</button>
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Registro de pacientes</h4>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Nombre(s):</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <i class="fas fa-asterisk fa-sm"></i>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="nombre"
+                                               aria-describedby="name"
+                                               placeholder="Ej: Juan Carlos">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Apellido(s):</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <i class="fas fa-asterisk fa-sm"></i>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="apellido"
+                                               aria-describedby="name"
+                                               placeholder="Ej: Sanches Cruz">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                    <h6 class="card-title">Documento de identificacion:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="dpi"
+                                               aria-describedby="name"
+                                               placeholder="Dpi: 1234123451234">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Genero:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <i class="fas fa-asterisk fa-sm"></i>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01" name="genero">
+                                            <option selected>Selecciona...</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Fecha de nacimiento:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <i class="fas fa-asterisk fa-sm"></i>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="date" class="form-control" name="fecha_nacimiento">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                    <h6 class="card-title">Estado civil:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <i class="fas fa-asterisk fa-sm"></i>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01" name="estado_civil">
+                                            <option selected>Selecciona...</option>
+                                            <option value="Soltero(a)">Soltero(a)</option>
+                                            <option value="Casado(a)">Casado(a)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Telefono:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="telefono"
+                                               aria-describedby="name"
+                                               placeholder="Ej: 78231278">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Direccion:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="direccion"
+                                               aria-describedby="name"
+                                               placeholder="Ej: Barrio el centro">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                    <h6 class="card-title">Municipio:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <select class="custom-select" id="inputGroupSelect01" name="municipio">
+                                            <option selected>Selecciona...</option>
+                                            <option value="Cubulco">Cubulco</option>
+                                            <option value="Santa Cruz el Chol">Santa Cruz el Chol</option>
+                                            <option value="Granados">Granados</option>
+                                            <option value="Purulhá">Purulhá</option>
+                                            <option value="Rabinal">Rabinal</option>
+                                            <option value="Salamá">Salamá</option>
+                                            <option value="San Jerónimo">San Jerónimo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Warning Alert modal -->
+                                <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                        data-target="#warning-alert-modal"><i class="fas fa-check"></i> Guardar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
+    <!-- Warning Alert Modal -->
+    <div id="warning-alert-modal" class="modal fade" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <h4 class="mt-2"><i class="fas fa-info fa-2x"></i></h4>
+                        <p class="mt-3">La informacion anteriormente escrita sera almacenada puedes cancelar para
+                            modificar o aceptar para registrar.</p>
+                        <button type="button" class="btn btn-warning my-2"
+                                data-dismiss="modal">Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success my-2">Aceptar
+                        </button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </form>
 
 <!-- Para js de validaciones de campos -->
-<script src="{% static 'js/validador.js'%}"></script>
+<!--<script src="{% static 'js/validador.js'%}"></script>-->
 
 {%endblock body%}

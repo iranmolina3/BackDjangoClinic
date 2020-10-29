@@ -5,86 +5,72 @@ class FormRol(forms.ModelForm):
     class Meta:
         model = Rol
         fields = [
-            'NOMBRE', 'ESTADO'
-        ]
-
-class FormEstadoCivil(forms.ModelForm):
-    class Meta:
-        model = EstadoCivil
-        fields = [
-            'NOMBRE', 'ESTADO'
-        ]
-
-class FormMunicipio(forms.ModelForm):
-    class Meta:
-        model = Municipio
-        fields = [
-            'NOMBRE', 'ESTADO'
+            'nombre', 'estado'
         ]
 
 class FormPersona(forms.ModelForm):
     class Meta:
         model = Persona
         fields = [
-            'NOMBRE', 'APELLIDO', 'DPI', 'EDAD', 'TELEFONO', 'GENERO',
-            'FECHA_NACIMIENTO', 'ESTADO', 'FK_MUNICIPIO', 'FK_ESTADO_CIVIL'
+            'nombre', 'apellido', 'dpi', 'edad', 'telefono', 'genero',
+            'fecha_nacimiento', 'estado',
         ]
 
 class FormPregunta(forms.ModelForm):
     class Meta:
         model = Pregunta
         fields = [
-            'DESCRIPCION', 'ESTADO'
+            'descripcion', 'estado'
         ]
 
 class FormUsuario(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = [
-            'CARNET', 'CONTRASENIA', 'CORREO', 'ESTADO',
-            'FK_PERSONA', 'FK_ROL'
+            'carnet', 'contrasena', 'email', 'estado',
+            'fk_persona', 'fk_rol'
         ]
 
-class FormHistorialCsat(forms.ModelForm):
+class FormCsat(forms.ModelForm):
     class Meta:
-        model = HistorialCsat
+        model = Csat
         fields = [
-            'RESPUESTA', 'ESTADO', 'FK_PREGUNTA'
+            'respuesta', 'estado', 'fk_pregunta'
         ]
 
 class FormTipoEstado(forms.ModelForm):
     class Meta:
         model = TipoEstado
         fields = [
-            'NOMBRE', 'ESTADO'
+            'nombre', 'estado'
         ]
 
 class FormCita(forms.ModelForm):
     class Meta:
         model = Cita
         fields = [
-            'NUMERO', 'ESTADO', 'FK_PERSONA'
+            'numero', 'estado', 'fk_persona'
         ]
 
 class FormConsulta(forms.ModelForm):
     class Meta:
         model = Consulta
         fields = [
-            'MOTIVO_CONSULTA', 'HISTORIA', 'ESTADO'
+            'motivo_consulta', 'historia', 'estado'
         ]
 
 class FormExamenFisico(forms.ModelForm):
     class Meta:
         model = ExamenFisico
         fields = [
-            'PRESION_ARTERIAL', 'FRECUENCIA_CARDIACA', 'FRECUENCIA_RESPIRATORIA',
-            'TEMPERATURA', 'FRECUENCIA_CARDIACA_FETAL', 'IMPRESION_CLINCIA', 'ESTADO'
+            'presion_arterial', 'frecuencia_cardiaca', 'frecuencia_respitaroria',
+            'temperatura', 'frecuencia_cardiaca_fetal', 'impresion_clinica', 'estado'
         ]
 
 class FormAntecedente(forms.ModelForm):
     class Meta:
         model = Antecedente
         fields = [
-            'ULTIMA_REGLA', 'FECHA_PROBABLE_PARTO', 'GESTA', 'ABORTO', 'HIJOS_VIVOS',
-            'PESO', 'QUIRURGICO', 'MEDICO', 'ALERGIA', 'FAMILIAR', 'HABITO', 'CIGARRO', 'LICOR', 'ESTADO'
+            'ultima_regla', 'fecha_probable_parto', 'gesta', 'aborto', 'hijos_vivos',
+            'peso', 'quirurgico', 'medico', 'alergia', 'familiar', 'habito', 'cigarro', 'licor', 'estado'
         ]

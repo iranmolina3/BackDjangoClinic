@@ -1,11 +1,98 @@
-{%extends 'dashboard.html'%}
+{%extends 'index_dashboard.html'%}
 {%load staticfiles%}
 
 {%block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 {%endblock link%}
 
 {%block body%}
+<form method="GET" id="FORM">
+    {%csrf_token%}
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Busqueda de pacientes</h4>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" list="info_persona" class="form-control" id="nametext"
+                                               value=""
+                                               name="nombre"
+                                               aria-describedby="name"
+                                               placeholder="Ej: Juan Pedro Monserrat o Juan">
+                                        <datalist id="info_persona">
+                                            {%for list_persona in datalist_persona%}
+                                            <option value="{{list_persona.nombre}} {{list_persona.apellido}}">
+                                                {%endfor%}
+                                        </datalist>
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-outline-primary"
+                                                data-toggle="modal"
+                                                data-target="#staticBackdrop"><i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Listado de pacientes</h4>
+            <!--<h6 class="card-subtitle">To use add class <code>.bg-success .text-white</code> in the
+                <code>&lt;thead&gt;</code>.</h6>-->
+            <h6 class="card-subtitle">Lista de pacientes registrados en el sistema</h6>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Nombre(s)</th>
+                        <th>Apellido(s)</th>
+                        <th>Telefono</th>
+                        <th>Municipio</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%for list_persona in model_persona%}
+                    <tr>
+                        <td>{{list_persona.nombre}}</td>
+                        <td>{{list_persona.apellido}}</td>
+                        <td>{{list_persona.telefono}}</td>
+                        <td>{{list_persona.municipio}}</td>
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-primary"><i
+                                        class="fas fa-pencil-alt"></i></button>
+                            </a>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-danger"><i
+                                        class="far fa-trash-alt"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 {%if persona%}
 <div class="container-fluid">
     <h1 class="mt-4">Listado de pacientes</h1>

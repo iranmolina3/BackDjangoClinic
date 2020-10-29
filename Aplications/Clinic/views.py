@@ -3,7 +3,7 @@ from .forms import *
 from .models import *
 from django.db.models import Q
 from django.core.paginator import Paginator
-from datetime import date
+from datetime import date, datetime
 from random import choice
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -18,6 +18,7 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
+
 # -- METHOD -- > this is a funtions for load the number citas
 
 def span_numero_citas():
@@ -27,6 +28,7 @@ def span_numero_citas():
     for lista_cita in cita:
         contador = contador + 1
     return contador
+
 
 # -- METHOD -- > this is a functions for generate the password
 
@@ -38,6 +40,7 @@ def generator_password():
     _password = _password.join([choice(valores) for i in range(longitud)])
     print("CONTRASENIA DE USUARIO ", _password)
     return _password
+
 
 # -- METHOD -- > this is functions for init the options users
 
@@ -52,6 +55,7 @@ def generator_carnet(_nombre, contador):
     _carnet = str(_nombre) + str(year) + str(contador)
     return _carnet
 
+
 # -- METHOD CREATE PERSONA -- this is a functions to create a HISTORIAL PACIENTE pass this to (TRUE)
 
 def create_persona_hitorial(request):
@@ -60,45 +64,39 @@ def create_persona_hitorial(request):
     else:
         if (request.method == "POST"):
             print(request.POST)
-            _nombre1 = request.POST.get('NOMBRE1')
-            _nombre2 = request.POST.get('NOMBRE2')
-            _nombre = _nombre1 + ' ' + _nombre2
-            _apellido1 = request.POST.get('APELLIDO1')
-            _apellido2 = request.POST.get('APELLIDO2')
-            _apellido = _apellido1 + ' ' + _apellido2
-            _dpi = request.POST.get('DPI')
-            _genero = request.POST.get('GENERO')
-            _edad = request.POST.get('EDAD')
-            _fecha_nac = request.POST.get('FECHA_NACIMIENTO')
-            _fk_estado_civil = request.POST.get('FK_ESTADO_CIVIL')
+            _nombre = request.POST.get('nombre')
+            _apellido = request.POST.get('apellido')
+            _dpi = request.POST.get('dpi')
+            _fecha_nacimiento = request.POST.get('fecha')
             _telefono = request.POST.get('TELEFONO')
+            _genero = request.POST.get('GENERO')
             _direccion = request.POST.get('DIRECCION')
-            _fk_municipio = request.POST.get('MUNICIPIO')
-            municipio = Municipio.objects.get(PK_MUNICIPIO=_fk_municipio)
-            estado_civil = EstadoCivil.objects.get(PK_ESTADO_CIVIL=_fk_estado_civil)
-            print(_dpi, _edad, _genero, _nombre, _apellido, _direccion, _fecha_nac, _fk_estado_civil, estado_civil,
-                  municipio, _telefono)
-            _model_persona = Persona(NOMBRE=_nombre,
-                                     APELLIDO=_apellido,
-                                     DPI=_dpi,
-                                     EDAD=_edad,
-                                     FECHA_NACIMIENTO=_fecha_nac,
-                                     TELEFONO=_telefono,
-                                     GENERO=_genero,
-                                     DIRECCION=_direccion,
-                                     FK_MUNICIPIO=municipio,
-                                     FK_ESTADO_CIVIL=estado_civil)
-            _model_persona.save()
-            return _model_persona
-
+            _estado_civil = request.POST.get('FK_ESTADO_CIVIL')
+            _edad = _fecha_nacimiento.strftime("%Y")
+            _municipio = request.POST.get()
+            print(_dpi, _edad, _genero, _nombre, _apellido, _direccion, _fecha_nacimiento, _estado_civil, _municipio,
+                  _telefono)
+            # _model_persona = Persona(NOMBRE=_nombre,
+            #                         APELLIDO=_apellido,
+            #                         DPI=_dpi,
+            #                         EDAD=_edad,
+            #                         FECHA_NACIMIENTO=_fecha_nac,
+            #                         TELEFONO=_telefono,
+            #                         GENERO=_genero,
+            #                         DIRECCION=_direccion,
+            #                         FK_MUNICIPIO=municipio,
+            #                         FK_ESTADO_CIVIL=estado_civil)
+            # _model_persona.save()
+            # return _model_persona
 
 
 # -- INDEX -- VIEW -- > this is the VIEW for the index
 
 def home(request):
-    numero = span_numero_citas()
-    modelcontrolclinica = ControlClinica.objects.get(estado=True)
-    return render(request, 'index.html', {'numero': numero, 'modelcontrolclinica':modelcontrolclinica})
+    #    numero = span_numero_citas()
+    #    modelcontrolclinica = ControlClinica.objects.get(estado=True)
+    return render(request, 'index.html')
+
 
 # -- LOGIN -- VIEW -- > this is a functions to begin the system
 
@@ -113,7 +111,8 @@ def sing(request):
             return redirect('dashboard')
         else:
             pass
-    return render(request, 'login.html')
+    return render(request, 'authentication-login1.html')
+
 
 # -- VIEW -- this is functions for init the options users
 
@@ -121,12 +120,13 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        cita1 = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
-        cita2 = Cita.objects.filter(ESTADO=True).order_by('FECHA_INGRESO').exclude(FECHA_INGRESO=date.today())
-        paginator = Paginator(cita1, 10)
-        page = request.GET.get('page')
-        cita1 = paginator.get_page(page)
-        return render(request, 'dashboard.html', {'cita1': cita1, 'cita2': cita2})
+        #        cita1 = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
+        #        cita2 = Cita.objects.filter(ESTADO=True).order_by('FECHA_INGRESO').exclude(FECHA_INGRESO=date.today())
+        #        paginator = Paginator(cita1, 10)
+        #        page = request.GET.get('page')
+        #        cita1 = paginator.get_page(page)
+        return render(request, 'index_dashboard.html')
+
 
 # -- PERSONA -- VIEW CREATE -- > this is a functions for create a paciente
 
@@ -135,50 +135,34 @@ def create_persona(request):
         return redirect('sing')
     else:
         if (request.method == "POST"):
-            print(request.POST)
-            _nombre1 = request.POST.get('NOMBRE1')
-            _nombre2 = request.POST.get('NOMBRE2')
-            _nombre = _nombre1 + ' ' + _nombre2
-            _apellido1 = request.POST.get('APELLIDO1')
-            _apellido2 = request.POST.get('APELLIDO2')
-            _apellido = _apellido1 + ' ' + _apellido2
-            _dpi = request.POST.get('DPI')
-            _genero = request.POST.get('GENERO')
-            _edad = request.POST.get('EDAD')
-            _fecha_nac = request.POST.get('FECHA_NACIMIENTO')
-            _fk_estado_civil = request.POST.get('FK_ESTADO_CIVIL')
-            _telefono = request.POST.get('TELEFONO')
-            _direccion = request.POST.get('DIRECCION')
-            _fk_municipio = request.POST.get('MUNICIPIO')
-            municipio = Municipio.objects.get(PK_MUNICIPIO=_fk_municipio)
-            estado_civil = EstadoCivil.objects.get(PK_ESTADO_CIVIL=_fk_estado_civil)
-            print(_dpi, _edad, _genero, _nombre, _apellido, _direccion, _fecha_nac, _fk_estado_civil, estado_civil,
-                  municipio, _telefono)
-            _model_persona = Persona(NOMBRE=_nombre,
-                                     APELLIDO=_apellido,
-                                     DPI=_dpi,
-                                     EDAD=_edad,
-                                     FECHA_NACIMIENTO=_fecha_nac,
-                                     TELEFONO=_telefono,
-                                     GENERO=_genero,
-                                     DIRECCION=_direccion,
-                                     FK_MUNICIPIO=municipio,
-                                     FK_ESTADO_CIVIL=estado_civil)
-            _model_persona.save()
-    #        _carnet = generator_carnet(_nombre1, 1)
-    #        _password = generator_password()
-    #  ---   select rol Pk 1 becouse been paciente
-    #        rol = Rol.objects.get(PK_ROL=1)
-    #        user = User.objects.create_user(_carnet, 'ejemplo@gmail.com', _password)
-    #        user.first_name = _nombre
-    #        user.last_name = _apellido
-    #        user.save()
-    #        usuario = Usuario(CARNET=_carnet, CONTRASENIA=_password, FK_PERSONA=_model_persona, FK_ROL=rol)
-    #        usuario.save()
+            _nombre = request.POST.get('nombre')
+            _apellido = request.POST.get('apellido')
+            _dpi = request.POST.get('dpi')
+            _fecha_nacimiento = request.POST.get('fecha_nacimiento')
+            _telefono = request.POST.get('telefono')
+            _genero = request.POST.get('genero')
+            _direccion = request.POST.get('direccion')
+            _estado_civil = request.POST.get('estado_civil')
+            _municipio = request.POST.get('municipio')
+            fecha_nacimiento = datetime.strptime(_fecha_nacimiento, "%Y-%m-%d")
+            fecha_actual = datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")
+            # -- process to calculate Edad
+            # print(fecha_nacimiento.strftime("%Y"))
+            # print(fecha_actual.strftime("%Y"))
+            # -- remove int() to see the change type variable
+            # print(type(int(fecha_nacimiento.strftime("%Y"))))
+            # print(type(int(fecha_actual.strftime("%Y"))))
+            _edad = int(fecha_actual.strftime("%Y")) - int(fecha_nacimiento.strftime("%Y"))
+            # print('Mi edad es ', _edad)
+            # print(_dpi, _edad, _genero, _nombre, _apellido, _direccion, _fecha_nacimiento, _estado_civil, _municipio,
+            #      _telefono)
+            model_persona = Persona(nombre=_nombre, apellido=_apellido, dpi=_dpi, edad=_edad,
+                                    fecha_nacimiento=_fecha_nacimiento, telefono=_telefono, genero=_genero,
+                                    direccion=_direccion, municipio=_municipio, estado_civil=_estado_civil)
+            model_persona.save()
             return redirect('dashboard')
-        municipio = Municipio.objects.filter(ESTADO=True)
-        estado_civil = EstadoCivil.objects.filter(ESTADO=True)
-        return render(request, 'Clinic/Persona/create_persona.html', {'municipio': municipio, 'estado_civil': estado_civil})
+        return render(request, 'Clinic/Persona/create_persona.html')
+
 
 # -- PERSONA -- VIEW LIST -- > this is a functions to list Pacientes
 
@@ -186,11 +170,21 @@ def read_persona(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        persona = Persona.objects.filter(ESTADO=True)
-        paginator = Paginator(persona, 6)
-        page = request.GET.get('page')
-        persona = paginator.get_page(page)
-        return render(request, 'Clinic/Persona/read_persona.html', {'persona': persona})
+        nombre = request.GET.get('nombre')
+        model_persona = None
+        print(nombre)
+        print(type(nombre))
+        datalist_persona = Persona.objects.filter(estado=True)
+        if(nombre==None):
+            model_persona = Persona.objects.filter(estado=True)
+        else:
+            model_persona = Persona.objects.filter(
+                Q(estado=True) & Q(Q(nombre__icontains=nombre) | Q(apellido__icontains=nombre)))
+        # paginator = Paginator(persona, 6)
+        # page = request.GET.get('page')
+        # persona = paginator.get_page(page)
+        return render(request, 'Clinic/Persona/read_persona.html',
+                      {'datalist_persona': datalist_persona, 'model_persona': model_persona})
 
 # -- PERSONA -- VIEW UPDATE -- > this is a functions to update data all paciente
 
@@ -237,6 +231,7 @@ def update_persona(request, pk_persona):
             persona.save()
             return persona
 
+
 # -- PERSONA -- DELETE VIEW -- > this is a functions to delete (deactivate FALSE)
 
 def delete_persona(request, pk_persona):
@@ -250,6 +245,7 @@ def delete_persona(request, pk_persona):
             persona.ESTADO = False
             persona.save()
             return redirect('dashboard')
+
 
 # -- CONSULTA -- VIEW CREATE -- > this is a functions to create a consulta
 
@@ -267,6 +263,7 @@ def create_consulta(request):
             _model_consulta.save()
             return _model_consulta
 
+
 # -- CONSULTA -- VIEW LIST -- > this is a functions to show the data CONSULTAS HISTORIAL
 
 def read_consulta(request):
@@ -279,6 +276,7 @@ def read_consulta(request):
         page = request.GET.get('page')
         consulta = paginator.get_page(page)
         return render(request, 'Clinic/Consulta/read_consulta.html', {'consulta': consulta})
+
 
 # -- CONSULTA -- VIEW UPDATE -- > this is a functions to update the data CONSULTA
 
@@ -297,6 +295,7 @@ def update_consulta(request, pk_consulta):
             consulta.save()
             return redirect('dashboard')
 
+
 # -- CONSULTA -- VIEW DELETE -- > this is a functions to deactivate (pass FALSE)
 
 def delete_consulta(request, pk_consulta):
@@ -310,6 +309,7 @@ def delete_consulta(request, pk_consulta):
             consulta.ESTADO = False
             consulta.save()
             return redirect('dashboard')
+
 
 # -- EXAMEN_FISICO -- VIEW CREATE -- > this is a functions to EXAMEN FISICO
 
@@ -329,11 +329,13 @@ def create_examen_fisico(request):
                   _frecuencia_cardiaca_fetal, _impresion_clinica)
             _model_examen_fisico = ExamenFisico(PRESION_ARTERIAL=_presion_arterial,
                                                 FRECUENCIA_CARDIACA=_frecuencia_cardiaca,
-                                                FRECUENCIA_RESPIRATORIA=_frecuencia_respiratoria, TEMPERATURA=_temperatura,
+                                                FRECUENCIA_RESPIRATORIA=_frecuencia_respiratoria,
+                                                TEMPERATURA=_temperatura,
                                                 FRECUENCIA_CARDIACA_FETAL=_frecuencia_cardiaca_fetal,
                                                 IMPRESION_CLINCIA=_impresion_clinica)
             _model_examen_fisico.save()
             return _model_examen_fisico
+
 
 # -- EXAMEN_FISICO -- VIEW READ -- >  this is a functions to show data EXAMEN FISICO
 
@@ -347,6 +349,7 @@ def read_examen_fisico(request):
         page = request.GET.get('page')
         examen_fisico = paginator.get_page(page)
         return render(request, 'Clinic/ExamenFisico/read_examen_fisico.html', {'examen_fisico': examen_fisico})
+
 
 # -- EXAMEN_FISICO -- VIEW UPDATE -- > this is a funtcions updata data
 
@@ -373,6 +376,7 @@ def update_examen_fisico(request, pk_examen_fisico):
             examen_fisico.save()
             return redirect('dashboard')
 
+
 # -- EXAMEN_FISICO -- VIEW DELETE -- > this is a functions to deactivate ExamenFisico
 
 def delete_examen_fisico(request, pk_examen_fisico):
@@ -387,6 +391,7 @@ def delete_examen_fisico(request, pk_examen_fisico):
             examen_fisico.ESTADO = False
             examen_fisico.save()
             return redirect('dashboard')
+
 
 # -- ANTECEDENTE -- VIEW CREATE -- > this is a functions to create ANTECEDENTE
 
@@ -420,6 +425,7 @@ def create_antecedente(request):
             _model_antecedente.save()
             return _model_antecedente
 
+
 # -- ANTECEDENTE -- VIEW LIST -- > this is a functions to show data list Antecedente
 
 def read_antecedente(request):
@@ -431,6 +437,7 @@ def read_antecedente(request):
         page = request.GET.get('page')
         antecedente = paginator.get_page(page)
         return render(request, 'Clinic/Antecedente/read_antecedente.html', {'antecedente': antecedente})
+
 
 # -- ANTECEDENTE -- VIEW UPDATE -- > this is a functions to update data Antecedente
 
@@ -481,6 +488,7 @@ def update_antecedente(request, pk_antecedente):
             antecedente.save()
             return redirect('dashboard')
 
+
 # -- ANTECEDENTE -- VIEW DELETE -- > this is a functions to deactivate (FALSE)
 
 def delete_antecedente(request, pk_antecedente):
@@ -495,6 +503,7 @@ def delete_antecedente(request, pk_antecedente):
             antecedente.ESTADO = False
             antecedente.save()
             return redirect('dashboard')
+
 
 # -- CITA -- VIEW CREATE -- > this is a functions to create CITA
 
@@ -511,11 +520,13 @@ def create_cita(request):
         else:
             nombre = request.POST.get("NOMBRE")
             apellido = request.POST.get("APELLIDO")
-            persona = Persona.objects.filter(Q(ESTADO=True), Q(NOMBRE__icontains=nombre), Q(APELLIDO__icontains=apellido))
+            persona = Persona.objects.filter(Q(ESTADO=True), Q(NOMBRE__icontains=nombre),
+                                             Q(APELLIDO__icontains=apellido))
             paginator = Paginator(persona, 6)
             page = request.GET.get('page')
             persona = paginator.get_page(page)
             return render(request, 'Clinic/Cita/read_cita.html', {'persona': persona})
+
 
 # -- CITA -- VIEW LIST -- > this is a functions to show data CITA
 
@@ -532,7 +543,8 @@ def create_buscar(request):
         else:
             nombre = request.POST.get("NOMBRE")
             apellido = request.POST.get("APELLIDO")
-            persona = Persona.objects.filter(Q(ESTADO=True), Q(NOMBRE__icontains=nombre), Q(APELLIDO__icontains=apellido))
+            persona = Persona.objects.filter(Q(ESTADO=True), Q(NOMBRE__icontains=nombre),
+                                             Q(APELLIDO__icontains=apellido))
             paginator = Paginator(persona, 6)
             page = request.GET.get('page')
             persona = paginator.get_page(page)
@@ -548,6 +560,7 @@ def numero_cita(fecha_ingreso):
     for lista_cita in cita:
         contador = contador + 1
     return contador
+
 
 # -- CITA -- VIEW CREATE -- > this is a functions to create a CITA
 
@@ -565,6 +578,7 @@ def create_cita(request, pk_persona):
             cita.save()
             return redirect('dashboard')
 
+
 # -- CITA -- VIEW DELETE -- > this is a functions to deactivate (FALSE CITA)
 
 def delete_cita(request, pk_cita):
@@ -581,6 +595,7 @@ def delete_cita(request, pk_cita):
             cita.FK_TIPO_ESTADO = tipo_estado
             cita.save()
             return redirect('dashboard')
+
 
 # -- CITA -- VIEW UPDATE -- > this is a functions to update data to Cita
 
@@ -802,6 +817,7 @@ def edit_consulta(request, consulta):
             consulta.HISTORIA = _historia
             consulta.save()
 
+
 # -- > edit this funtions is from antecedente
 
 def edit_antecedente(request, antecedente):
@@ -836,6 +852,7 @@ def edit_antecedente(request, antecedente):
             antecedente.CIGARRO = _cigarro
             antecedente.LICOR = _licor
             antecedente.save()
+
 
 # -- > this funtion is from edit Examen Fisico
 
@@ -905,6 +922,7 @@ def update_historial_clinico(request, pk_historial_clinico):
             historial_clinico.save()
             return redirect('dashboard')
 
+
 # -- > CRUD pregunta models
 
 # -- > CREATE for the models Pregunta
@@ -953,6 +971,7 @@ def update_pregunta(request, pk_pregunta):
             pregunta.save()
             return redirect('dashboard')
 
+
 # -- > DELETE for the models Pregunta deactivate
 
 def delete_pregunta(request, pk_pregunta):
@@ -966,6 +985,7 @@ def delete_pregunta(request, pk_pregunta):
             pregunta.ESTADO = False
             pregunta.save()
             return redirect('dashboard')
+
 
 # -- > CRUD for the models Usuario only Read and Update
 
@@ -984,6 +1004,7 @@ def read_usuario(request):
         usuario = paginator.get_page(page)
         return render(request, 'Clinic/Usuario/read_usuario.html', {'usuario': usuario})
 
+
 # -- USUARIO -- VIEW UPDATE -- > this is a functions to update data Usuario
 
 def update_usuario(request, pk_usuario):
@@ -999,6 +1020,7 @@ def update_usuario(request, pk_usuario):
             usuario.save()
             return redirect('clinic:read_usuario')
 
+
 # -- control clinic - view select -- > this functions show data clinics
 
 def close_clinica(request):
@@ -1007,11 +1029,13 @@ def close_clinica(request):
     else:
         modelcontrolclinica = ControlClinica.objects.get(estado=True)
         if request.method == 'GET':
-            return render(request, 'Clinic/ControlClinica/close_clinica.html', {'modelcontrolclinica': modelcontrolclinica})
+            return render(request, 'Clinic/ControlClinica/close_clinica.html',
+                          {'modelcontrolclinica': modelcontrolclinica})
         else:
             modelcontrolclinica.servicio = False
             modelcontrolclinica.save()
             return redirect('dashboard')
+
 
 def open_clinica(request):
     if not request.user.is_authenticated:
@@ -1019,7 +1043,8 @@ def open_clinica(request):
     else:
         modelcontrolclinica = ControlClinica.objects.get(estado=True)
         if request.method == 'GET':
-            return render(request, 'Clinic/ControlClinica/open_clinica.html', {'modelcontrolclinica': modelcontrolclinica})
+            return render(request, 'Clinic/ControlClinica/open_clinica.html',
+                          {'modelcontrolclinica': modelcontrolclinica})
         else:
             modelcontrolclinica.servicio = True
             modelcontrolclinica.save()

@@ -29,5 +29,5 @@ urlpatterns = [
     path('', home, name = 'index'),
     path('sing/', sing, name ='sing'),
     path('dashboard/', dashboard, name='dashboard'),
-    path('logout_view/', logout_view, name = 'logout_view')
+    path('logout_view/', logout_view, name = 'logout')
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
