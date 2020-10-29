@@ -146,6 +146,13 @@ def create_persona(request):
             _municipio = request.POST.get('municipio')
             fecha_nacimiento = datetime.strptime(_fecha_nacimiento, "%Y-%m-%d")
             fecha_actual = datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")
+            print(type(fecha_nacimiento))
+
+            """
+            strftime is a functions convert var type date to str
+            strptime is a functions convert var type str to date
+            """
+
             # -- process to calculate Edad
             # print(fecha_nacimiento.strftime("%Y"))
             # print(fecha_actual.strftime("%Y"))
@@ -160,9 +167,8 @@ def create_persona(request):
                                     fecha_nacimiento=_fecha_nacimiento, telefono=_telefono, genero=_genero,
                                     direccion=_direccion, municipio=_municipio, estado_civil=_estado_civil)
             model_persona.save()
-            return redirect('dashboard')
-        return render(request, 'Clinic/Persona/create_persona.html')
-
+            return redirect('clinic:read_persona')
+        return render(request, 'Clinic/Pers ona/create_persona.html')
 
 # -- PERSONA -- VIEW LIST -- > this is a functions to list Pacientes
 
@@ -175,7 +181,7 @@ def read_persona(request):
         print(nombre)
         print(type(nombre))
         datalist_persona = Persona.objects.filter(estado=True)
-        if(nombre==None):
+        if (nombre == None):
             model_persona = Persona.objects.filter(estado=True)
         else:
             model_persona = Persona.objects.filter(
@@ -192,44 +198,37 @@ def update_persona(request, pk_persona):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        persona = Persona.objects.get(PK_PERSONA=pk_persona)
+        model_persona = Persona.objects.get(pk_persona=pk_persona)
         if (request.method == "GET"):
-            municipio = Municipio.objects.filter(ESTADO=True)
-            estado_civil = EstadoCivil.objects.filter(ESTADO=True)
-            fecha_nacimiento = persona.FECHA_NACIMIENTO.strftime("%Y-%m-%d")
-            print(fecha_nacimiento)
+
+            #print(type(model_persona.fecha_nacimiento.strftime("%Y-%m-%d")))
             return render(request, 'Clinic/Persona/update_persona.html',
-                          {'persona': persona, 'estado_civil': estado_civil, 'municipio': municipio,
-                           'fecha_nacimiento': fecha_nacimiento})
+                          {'model_persona': model_persona, 'fecha_nacimiento':model_persona.fecha_nacimiento.strftime("%Y-%m-%d")})
         else:
-            _nombre1 = request.POST.get('NOMBRE1')
-            _nombre2 = request.POST.get('NOMBRE2')
-            _nombre = _nombre1 + ' ' + _nombre2
-            _apellido1 = request.POST.get('APELLIDO1')
-            _apellido2 = request.POST.get('APELLIDO2')
-            _apellido = _apellido1 + ' ' + _apellido2
-            _dpi = request.POST.get('DPI')
-            _genero = request.POST.get('GENERO')
-            _edad = request.POST.get('EDAD')
-            _fecha_nac = request.POST.get('FECHA_NACIMIENTO')
-            _fk_estado_civil = request.POST.get('FK_ESTADO_CIVIL')
-            _telefono = request.POST.get('TELEFONO')
-            _direccion = request.POST.get('DIRECCION')
-            _fk_municipio = request.POST.get('MUNICIPIO')
-            municipio = Municipio.objects.get(PK_MUNICIPIO=_fk_municipio)
-            estado_civil = EstadoCivil.objects.get(PK_ESTADO_CIVIL=_fk_estado_civil)
-            persona.NOMBRE = _nombre
-            persona.APELLIDO = _apellido
-            persona.DPI = _dpi
-            persona.GENERO = _genero
-            persona.EDAD = _edad
-            persona.FECHA_NACIMIENTO = _fecha_nac
-            persona.TELEFONO = _telefono
-            persona.DIRECCION = _direccion
-            persona.FK_ESTADO_CIVIL = estado_civil
-            persona.FK_MUNICIPIO = municipio
-            persona.save()
-            return persona
+            _nombre = request.POST.get('nombre')
+            _apellido = request.POST.get('apellido')
+            _dpi = request.POST.get('dpi')
+            _fecha_nacimiento = request.POST.get('fecha_nacimiento')
+            _telefono = request.POST.get('telefono')
+            _genero = request.POST.get('genero')
+            _direccion = request.POST.get('direccion')
+            _estado_civil = request.POST.get('estado_civil')
+            _municipio = request.POST.get('municipio')
+            fecha_nacimiento = datetime.strptime(_fecha_nacimiento, "%Y-%m-%d")
+            fecha_actual = datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")
+            _edad = int(fecha_actual.strftime("%Y")) - int(fecha_nacimiento.strftime("%Y"))
+            model_persona.nombre = _nombre
+            model_persona.apellido = _apellido
+            model_persona.dpi = _dpi
+            model_persona.genero = _genero
+            model_persona.edad = _edad
+            model_persona.fecha_nacimiento = _fecha_nacimiento
+            model_persona.telefono = _telefono
+            model_persona.direccion = _direccion
+            model_persona.estado_civil = _estado_civil
+            model_persona.municipio = _municipio
+            model_persona.save()
+            return redirect('clinic:read_persona')
 
 
 # -- PERSONA -- DELETE VIEW -- > this is a functions to delete (deactivate FALSE)
