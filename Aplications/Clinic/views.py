@@ -127,9 +127,9 @@ def dashboard(request):
         #        cita1 = paginator.get_page(page)
         return render(request, 'index_dashboard.html')
 
-
-# -- PERSONA -- VIEW CREATE -- > this is a functions for create a paciente
-
+"""
+ -- CRUD MODEL PERSONA 
+"""
 def create_persona(request):
     if not request.user.is_authenticated:
         return redirect('sing')
@@ -168,9 +168,7 @@ def create_persona(request):
                                     direccion=_direccion, municipio=_municipio, estado_civil=_estado_civil)
             model_persona.save()
             return redirect('clinic:read_persona')
-        return render(request, 'Clinic/Pers ona/create_persona.html')
-
-# -- PERSONA -- VIEW LIST -- > this is a functions to list Pacientes
+        return render(request, 'Clinic/Persona/create_persona.html')
 
 def read_persona(request):
     if not request.user.is_authenticated:
@@ -191,8 +189,6 @@ def read_persona(request):
         # persona = paginator.get_page(page)
         return render(request, 'Clinic/Persona/read_persona.html',
                       {'datalist_persona': datalist_persona, 'model_persona': model_persona})
-
-# -- PERSONA -- VIEW UPDATE -- > this is a functions to update data all paciente
 
 def update_persona(request, pk_persona):
     if not request.user.is_authenticated:
@@ -230,20 +226,14 @@ def update_persona(request, pk_persona):
             model_persona.save()
             return redirect('clinic:read_persona')
 
-
-# -- PERSONA -- DELETE VIEW -- > this is a functions to delete (deactivate FALSE)
-
 def delete_persona(request, pk_persona):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        persona = Persona.objects.get(PK_PERSONA=pk_persona)
-        if (request.method == "GET"):
-            return render(request, 'Clinic/Persona/delete_persona.html', {'persona': persona})
-        else:
-            persona.ESTADO = False
-            persona.save()
-            return redirect('dashboard')
+        model_persona = Persona.objects.get(pk_persona=pk_persona)
+        model_persona.estado = False
+        model_persona.save()
+        return redirect('clinic:read_persona')
 
 
 # -- CONSULTA -- VIEW CREATE -- > this is a functions to create a consulta
