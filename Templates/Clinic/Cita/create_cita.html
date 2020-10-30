@@ -1,72 +1,150 @@
-{%extends 'dashboard.html'%}
+{%extends 'index_dashboard.html'%}
 {%load staticfiles%}
 
 {%block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 {%endblock link%}
 
 {%block body%}
-<form method="POST">
+<form method="GET" id="FORM">
     {%csrf_token%}
     <div class="container-fluid">
-        <h1 class="mt-4">Registrar cita</h1>
-        <div class="container backgroud-custom-opacity">
-            <div class="row">
-                <div class="col-sm-8">
-                    <label>Nombre del paciente</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" disabled class="form-control"
-                               placeholder="Nombre de paciente" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{persona.NOMBRE}} {{persona.APELLIDO}}">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Fecha de cita</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="date" name="FECHA_INGRESO" class="form-control" aria-label="Username"
-                               aria-describedby="basic-addon1">
-                    </div>
-                </div>
-            </div>
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Busqueda de pacientes</h4>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" list="info_persona" class="form-control" id="nametext"
+                                               value=""
+                                               name="nombreapellido"
+                                               aria-describedby="name"
+                                               placeholder="Ej: Juan Pedro Monserrat o Juan">
+                                        <datalist id="info_persona">
+                                            {%for list_persona in datalist_persona%}
+                                            <option value="{{list_persona.nombre}} {{list_persona.apellido}}">
+                                                {%endfor%}
+                                        </datalist>
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-outline-primary"
+                                                data-toggle="modal"
+                                                data-target="#staticBackdrop"><i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
 
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal"
-                    data-target="#staticBackdrop">
-                Registrar cita
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una cambio.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
-                                    data-dismiss="modal">Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
 </form>
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Listado de pacientes</h4>
+            <!--<h6 class="card-subtitle">To use add class <code>.bg-success .text-white</code> in the
+                <code>&lt;thead&gt;</code>.</h6>-->
+            <h6 class="card-subtitle">Lista de pacientes registrados en el sistema</h6>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Nombre(s)</th>
+                        <th>Apellido(s)</th>
+                        <th>Telefono</th>
+                        <th>Municipio</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%if model_persona%}
+                    {%for list_persona in model_persona%}
+                    <tr>
+                        <td>{{list_persona.nombre}}</td>
+                        <td>{{list_persona.apellido}}</td>
+                        <td>{{list_persona.telefono}}</td>
+                        <td>{{list_persona.municipio}}</td>
+                        <td>
+                            <!-- Custom width modal -->
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#registro-cita{{list_persona.pk_persona}}"><i
+                                    class="far fa-calendar-plus"></i>
+                            </button>
+                            <!-- Signup modal content -->
+                            <div id="registro-cita{{list_persona.pk_persona}}" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <div class="text-center mt-2 mb-4">
+                                                <a href="index.html" class="text-success">
+                                                    <span><i class="far fa-calendar-alt fa-2x"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <form class="pl-3 pr-3" action="#" method="POST">
+                                                {%csrf_token%}
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text"
+                                                           value="{{list_persona.pk_persona}}" name="pk_persona" hidden
+                                                           readonly>
+                                                    <label for="username">Nombre(s):</label>
+                                                    <input class="form-control" type="email" id="username"
+                                                           required="" placeholder="Ej: Juan Ramiro Jacinto Gutierrez"
+                                                           disabled
+                                                           value="{{list_persona.nombre}} {{list_persona.apellido}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="calendario">Calendario:</label>
+                                                    <input class="form-control" type="date"
+                                                           id="calendario" name="fecha">
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button type="button" class="btn btn-light my-2"
+                                                            data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td>No hay informacion</td>
+                        <td>No hay informacion</td>
+                        <td>No hay informacion</td>
+                        <td>No hay informacion</td>
+                        <td>
+                            <a href="">
+                                <button type="button" class="btn btn-success btn-rounded"><i
+                                        class="far fa-calendar-plus"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {%endblock body%}

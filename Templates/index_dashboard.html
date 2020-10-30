@@ -283,8 +283,9 @@
                                                 aria-expanded="false"><i class="fas fa-user-injured"></i><span
                             class="hide-menu">Pacientes </span></a>
                         <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                            <li class="sidebar-item"><a href="{%url 'clinic:create_persona'%}" class="sidebar-link"><span
-                                    class="hide-menu"> Ingresar paciente
+                            <li class="sidebar-item"><a href="{%url 'clinic:create_persona'%}"
+                                                        class="sidebar-link"><span
+                                    class="hide-menu"> Registrar paciente
                                         </span></a>
                             </li>
                             <li class="sidebar-item"><a href="{%url 'clinic:read_persona'%}" class="sidebar-link"><span
@@ -301,7 +302,21 @@
                             </li>-->
                         </ul>
                     </li>
-
+                    <li class="sidebar-item"><a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                                aria-expanded="false"><i data-feather="file-text"
+                                                                         class="feather-icon"></i><span
+                            class="hide-menu">Citas </span></a>
+                        <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                            <li class="sidebar-item"><a href="{%url 'clinic:create_cita'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Registrar cita
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:read_cita'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Ver citas
+                                        </span></a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="list-divider"></li>
                     <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
 
