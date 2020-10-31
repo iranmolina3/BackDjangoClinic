@@ -276,13 +276,13 @@ def reserve_cita(request, pk_persona):
     _numero = numero_cita(_fecha)
     model_cita = Cita(numero=_numero, fecha=_fecha, fk_persona=model_persona)
     model_cita.save()
-    return 'clinic:create_cita'
+    return 'clinic:read_cita'
 
 
 def numero_cita(fecha):
     print(fecha)
-    model_cita = Cita.objects.filter(Q(fecha=fecha) & Q(estado=True))
-    contador = 0
+    model_cita = Cita.objects.filter(Q(fecha=fecha) & Q(Q(estado=True) | Q(estado=False)))
+    contador = 1
     for lista_cita in model_cita:
         contador = contador + 1
     return contador
@@ -294,39 +294,16 @@ def read_cita(request):
     else:
         if (request.method == "GET"):
             _fecha = request.GET.get('fecha')
-            print(_fecha)
-            print("TIPO DE VALOR ", type(_fecha))
+            #print(_fecha)
+            #print("TIPO DE VALOR ", type(_fecha))
             if (_fecha is None):
                 model_cita = Cita.objects.filter(estado=True)
                 return render(request, 'Clinic/Cita/read_cita.html', {'model_cita': model_cita})
             else:
                 model_cita = Cita.objects.filter(Q(estado=True) & Q(fecha=_fecha))
                 return render(request, 'Clinic/Cita/read_cita.html', {'model_cita': model_cita})
-
-
-def update_cita(request, pk_cita):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        if (request.method == "GET"):
-            nombre = request.GET.get('nombreapellido')
-            # print(nombre)
-            # print(type(nombre))
-            datalist_persona = Persona.objects.filter(estado=True)
-            if (nombre == None):
-                model_persona = Persona.objects.filter(estado=True)
-            else:
-                model_persona = Persona.objects.filter(
-                    Q(estado=True) & Q(Q(nombre__icontains=nombre) | Q(apellido__icontains=nombre)))
-            # paginator = Paginator(persona, 6)
-            # page = request.GET.get('page')
-            # persona = paginator.get_page(page)
-            return render(request, 'Clinic/Cita/create_cita.html',
-                          {'datalist_persona': datalist_persona, 'model_persona': model_persona})
         else:
-            _pk_persona = request.POST.get('pk_persona')
-            print("id model persona ", _pk_persona)
-            return redirect(reserve_cita(request, _pk_persona))
+            return redirect(update_cita(request))
 
 
 def delete_cita(request, pk_cita):
@@ -334,13 +311,27 @@ def delete_cita(request, pk_cita):
         return redirect('sing')
     else:
         model_cita = Cita.objects.get(pk_cita=pk_cita)
+        model_cita.estado = False
+        model_cita.tipo_estado = False
+        model_cita.save()
+        return redirect('clinic:read_cita')
+
+
+def update_cita(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
         if request.method == "GET":
-            return render(request, '')
+            return 'clinic:read_cita'
         else:
-            model_cita.estado = False
-            model_cita.FK_TIPO_ESTADO = tipo_estado
+            _pk_cita = request.POST.get('pk_cita')
+            _fecha = request.POST.get('fecha')
+            _numero = numero_cita(_fecha)
+            model_cita = Cita.objects.get(pk_cita=_pk_cita)
+            model_cita.numero = _numero
+            model_cita.fecha = _fecha
             model_cita.save()
-            return redirect('dashboard')
+            return 'clinic:read_cita'
 
 
 # -- CONSULTA -- VIEW CREATE -- > this is a functions to create a consulta

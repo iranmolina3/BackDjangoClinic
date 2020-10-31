@@ -106,9 +106,9 @@
                                                            value="{{list_persona.nombre}} {{list_persona.apellido}}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="calendario">Calendario:</label>
+                                                    <label for="fecha">Calendario:</label>
                                                     <input class="form-control" type="date"
-                                                           id="calendario" name="fecha">
+                                                           id="fecha" name="fecha">
                                                 </div>
 
                                                 <div class="form-group text-center">
@@ -147,4 +147,16 @@
         </div>
     </div>
 </div>
+<script>
+$( document ).ready(function() {
+
+    var now = new Date();
+
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $("#fecha").val(today);
+});
+</script>
 {%endblock body%}

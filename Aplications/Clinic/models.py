@@ -98,15 +98,20 @@ class Cita(models.Model):
     fecha_finalizacion = models.DateTimeField(auto_now=True)
     estado = models.BooleanField(default=True, blank=False, null=False)
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
-    fk_tipo_estado = models.ForeignKey(TipoEstado, on_delete=models.CASCADE, blank=True, null=True)
+    tipo_estado = models.BooleanField(blank=True, null=True)
     class Meta:
         verbose_name = 'Cita'
         verbose_name_plural = 'Citas'
-        ordering = ['numero']
+        ordering = ['fecha']
 
     def __str__(self):
         return "{0},{1},{2}".format(self.numero, self.estado, self.fecha_finalizacion)
 
+# -- if estado is True is active
+# -- if estado is False is deactive
+
+# -- if tipo_estado is True cita is complete
+# -- if tipo_estado is False cita is cancel
 
 class Csat(models.Model):
     pk_csat = models.AutoField(primary_key=True)
