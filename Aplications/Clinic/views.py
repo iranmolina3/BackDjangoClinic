@@ -280,8 +280,7 @@ def reserve_cita(request, pk_persona):
 
 
 def numero_cita(fecha):
-    print(fecha)
-    model_cita = Cita.objects.filter(Q(fecha=fecha) & Q(Q(estado=True) | Q(estado=False)))
+    model_cita = Cita.objects.filter(fecha=fecha)
     contador = 1
     for lista_cita in model_cita:
         contador = contador + 1
@@ -325,13 +324,12 @@ def update_cita(request):
             return 'clinic:read_cita'
         else:
             _pk_cita = request.POST.get('pk_cita')
-            _fecha = request.POST.get('fecha')
-            _numero = numero_cita(_fecha)
+            _fk_persona = request.POST.get('fk_persona')
             model_cita = Cita.objects.get(pk_cita=_pk_cita)
-            model_cita.numero = _numero
-            model_cita.fecha = _fecha
+            model_cita.estado = False
+            model_cita.tipo_estado = False
             model_cita.save()
-            return 'clinic:read_cita'
+            return reserve_cita(request, _fk_persona)
 
 
 # -- CONSULTA -- VIEW CREATE -- > this is a functions to create a consulta
