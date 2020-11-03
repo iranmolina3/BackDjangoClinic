@@ -1,467 +1,130 @@
-{%extends 'dashboard.html'%}
+{%extends 'index_dashboard.html'%}
 {%load staticfiles%}
 
 {%block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 {%endblock link%}
 
 {%block body%}
-<form method="POST">
-    {%csrf_token%}
-    <div class="container-fluid">
-        <h1 class="mt-4">Completar cita</h1>
-        <div class="container backgroud-custom-opacity">
-            <h2>Datos personales</h2>
-            <div class="row">
-                <div class="col-sm-2">
-                    <label>Primer nombre</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="NOMBRE1" class="form-control" placeholder="Ingresar nombre"
-                               aria-label="Username" aria-describedby="basic-addon1" value="{{primer_nombre}}" required>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Segundo nombre</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="NOMBRE2" class="form-control" placeholder="Ingresar nombre"
-                               aria-label="Username" aria-describedby="basic-addon1" value="{{segundo_nombre}}">
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Primer apellido</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="APELLIDO1" class="form-control" placeholder="Ingresar apellido"
-                               aria-label="Username" aria-describedby="basic-addon1" value="{{primer_apellido}}"
-                               required>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Segundo apellido</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="APELLIDO2" class="form-control" placeholder="Ingresar apellido"
-                               aria-label="Username" aria-describedby="basic-addon1" value="{{segundo_apellido}}">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>DPI</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="DPI" class="form-control" placeholder="Ingresar DPI"
-                               aria-label="Username" aria-describedby="basic-addon1" value="{{persona.DPI}}">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label>Genero</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                        </div>
-                        <select class="custom-select" name="GENERO" id="inputGroupSelect01">
-                            <option selected value="{{persona.GENERO}}">{{persona.GENERO}}</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                            <option value="Indefinido">Indefinido</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <label>Edad</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="number" name="EDAD" class="form-control" placeholder="Ingresar edad"
-                               aria-label="Username" aria-describedby="basic-addon1" value="{{persona.EDAD}}" required>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Fecha nacimiento</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="date" name="FECHA_NACIMIENTO" class="form-control" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{fecha_nacimiento}}">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <label>Estado civil</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                        </div>
-                        <select class="custom-select" name="FK_ESTADO_CIVIL" id="inputGroupSelect01">
-                            <option selected value="{{persona.FK_ESTADO_CIVIL.PK_ESTADO_CIVIL}}">
-                                {{persona.FK_ESTADO_CIVIL.NOMBRE}}
-                            </option>
-                            {%for lista_estado_civil in estado_civil%}
-                            <option value="{{lista_estado_civil.PK_ESTADO_CIVIL}}">{{lista_estado_civil.NOMBRE}}
-                            </option>
-                            {%endfor%}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">
-                    <label>Telefono</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="TELEFONO" class="form-control" placeholder="Ingresar telefono"
-                               aria-label="Username" aria-describedby="basic-addon1" value="{{persona.TELEFONO}}">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label>Direccion</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="DIRECCION" class="form-control"
-                               placeholder="Ingresar direccion detallada" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{persona.DIRECCION}}">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Municipio</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                        </div>
-                        <select class="custom-select" name="MUNICIPIO" id="inputGroupSelect01">
-                            <option selected value="{{persona.FK_MUNICIPIO.PK_MUNICIPIO}}">
-                                {{persona.FK_MUNICIPIO.NOMBRE}}
-                            </option>
-                            {%for lista_municipio in municipio%}
-                            <option value="{{lista_municipio.PK_MUNICIPIO}}">{{lista_municipio.NOMBRE}}</option>
-                            {%endfor%}
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-
-            <h2>Motivo de su consulta</h2>
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>Motivo de consulta</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="MOTIVO_CONSULTA" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{consulta.MOTIVO_CONSULTA}}">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label>Historia</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea type="text" name="HISTORIA" class="form-control"
-                                  placeholder="Ingresar la historia del paciente" aria-label="Username"
-                                  aria-describedby="basic-addon1">{{consulta.HISTORIA}}</textarea>
-                    </div>
-                </div>
-            </div>
-
-
-            <h2>Antecedentes</h2>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label>Ultima regla</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="datetime-local" name="ULTIMA_REGLA" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{fecha_ultima_regla}}">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <label>Fecha probable parto</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="datetime-local" name="FECHA_PROBABLE_PARTO" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{fecha_probable_parto}}">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <label>Gesta</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="datetime-local" name="GESTA" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{gesta}}">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <label>Aborto</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="datetime-local" name="ABORTO" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{aborto}}">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label>Hijos vivos</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="number" name="HIJOS_VIVOS" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{antecedente.HIJOS_VIVOS}}" required>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <label>Peso</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="number" name="PESO" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{antecedente.PESO}}" required>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label>Quirurgico</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea name="QUIRURGICO" class="form-control"
-                                  placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1">{{antecedente.QUIRURGICO}}</textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>Medico</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea name="MEDICO" class="form-control"
-                                  placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1">{{antecedente.MEDICO}}</textarea>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label>Alergia</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea name="ALERGIA" class="form-control"
-                                  placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1">{{antecedente.ALERGIA}}</textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>Familiar</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea name="FAMILIAR" class="form-control"
-                                  placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1">{{antecedente.FAMILIAR}}</textarea>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label>Habito</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea name="HABITO" class="form-control"
-                                  placeholder="Ingresar motivo de consulta" aria-label="Username"
-                                  aria-describedby="basic-addon1">{{antecedente.HABITO}}</textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label>Cigarrillo</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                        </div>
-                        <select class="custom-select" name="CIGARRO" id="inputGroupSelect01">
-                            {%if antecedente.CIGARRO%}
-                            <option value="{{True}}" selected>SI</option>
-                            <option value="{{False}}">NO</option>
-                            {%else%}
-                            <option value="{{True}}">SI</option>
-                            <option value="{{False}}" selected>NO</option>
-                            {%endif%}
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <label>Licor</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                        </div>
-                        <select class="custom-select" name="LICOR" id="inputGroupSelect01">
-                            {%if antecedente.LICOR%}
-                            <option value="{{True}}" selected>SI</option>
-                            <option value="{{False}}">NO</option>
-                            {%else%}
-                            <option value="{{True}}">SI</option>
-                            <option value="{{False}}" selected>NO</option>
-                            {%endif%}
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-
-            <h2>Examen Fisico</h2>
-            <div class="row">
-                <div class="col-sm-4">
-                    <label>Presion arterial</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="number" name="PRESION_ARTERIAL" class="form-control"
-                               placeholder="Ingresar presion arterial" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{examen_fisico.PRESION_ARTERIAL}}" required>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Frecuencia cardiaca</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="number" name="FRECUENCIA_CARDIACA" class="form-control"
-                               placeholder="Ingresar frecuencia cardiaca" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{examen_fisico.FRECUENCIA_CARDIACA}}" required>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Frecuencia respiratoria</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="number" name="FRECUENCIA_RESPIRATORIA" class="form-control"
-                               placeholder="Ingresar frecuencua repiratoria" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{examen_fisico.FRECUENCIA_RESPIRATORIA}}"
-                               required>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label>Temperatura</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">ºC</span>
-                        </div>
-                        <input type="number" name="TEMPERATURA" class="form-control" placeholder="Ingresar temperatura"
-                               aria-label="Username" aria-describedby="basic-addon1" min="0" step="any"
-                               value="{{examen_fisico.TEMPERATURA}}" required>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label>Frecuencua cardiaca fetal</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="number" name="FRECUENCIA_CARDIACA_FETAL" class="form-control"
-                               placeholder="Ingresar frecuencia cardiaca fetal" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{examen_fisico.FRECUENCIA_CARDIACA_FETAL}}"
-                               required>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <label>Impresion clinica</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea type="text" name="IMPRESION_CLINCIA" class="form-control"
-                                  placeholder="Ingresar impresion clinica" aria-label="Username"
-                                  aria-describedby="basic-addon1">{{examen_fisico.IMPRESION_CLINCIA}}</textarea>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold"
-                    data-toggle="modal"
-                    data-target="#staticBackdrop">
-                Registrar consulta
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una
-                            cambio.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
-                                    data-dismiss="modal">Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar
-                            </button>
-                        </div>
-                    </div>
-                </div>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Historial clinico</h4>
+            <!--<h6 class="card-subtitle">To use add class <code>.bg-success .text-white</code> in the
+                <code>&lt;thead&gt;</code>.</h6>-->
+            <h6 class="card-subtitle">Historial clinico para completar informacion de la cita</h6>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Paciente</th>
+                        <th>Motivo consulta</th>
+                        <th>Antecedente</th>
+                        <th>Examen fisico</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {%if model_historial_clinico%}
+                        <td>{{model_historial_clinico.fk_persona.nombre}}
+                            {{model_historial_clinico.fk_persona.apellido}}
+                        </td>
+                        <!--condicional para verificar si ya se creo o no se ha creado color ver para ya creado y anarajado para no-->
+                        {%if model_historial_clinico.fk_persona is None%}
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-file-medical-alt"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-user-injured"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                        <!--segunda condicional para motivo-->
+                        {%if model_historial_clinico.fk_consulta is None%}
+                        <td>
+                            <a href="{%url 'clinic:create_consulta' model_historial_clinico.pk_historial_clinico%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="{%url 'clinic:update_consulta' model_historial_clinico.fk_consulta.pk_consulta%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                        <!--tercera condicional para antecedente-->
+                        {%if model_historial_clinico.fk_antecendente is None%}
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                        <!--cuarta condicional para examen fisico-->
+                        {%if model_historial_clinico.fk_examen_fisico is None%}
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                    </tr>
+                    {%endif%}
+                    </tbody>
+                </table>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
-</form>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+$( document ).ready(function() {
+
+    var now = new Date();
+
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $("#fecha").val(today);
+});
+
+
+
+
+</script>
 {%endblock body%}

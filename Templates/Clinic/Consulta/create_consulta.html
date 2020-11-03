@@ -1,73 +1,94 @@
-{%extends 'dashboard.html'%}
+{%extends 'index_dashboard.html'%}
 {%load staticfiles%}
 
 {%block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 {%endblock link%}
 
 {%block body%}
-<form method="POST">
+<form method="POST" id="FORM">
     {%csrf_token%}
     <div class="container-fluid">
-        <h1 class="mt-4">Registrar consulta</h1>
-        <div class="container backgroud-custom-opacity">
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>Motivo de consulta</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="MOTIVO_CONSULTA" class="form-control"
-                               placeholder="Ingresar motivo de consulta" aria-label="Username"
-                               aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label>Historia</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <textarea type="text" name="HISTORIA" class="form-control"
-                                  placeholder="Ingresar la historia del paciente" aria-label="Username"
-                                  aria-describedby="basic-addon1"></textarea>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal"
-                    data-target="#staticBackdrop">
-                Registrar consulta
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una cambio.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
-                                    data-dismiss="modal">Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar</button>
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Registro de consulta</h4>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <h6 class="card-title">Motivo de consulta:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="motivo"
+                                               aria-describedby="name" list="info-motivo"
+                                               placeholder="Ej: Motivo o razon del paciente">
+                                        <datalist id="info-motivo">
+                                            {%for list_consulta in model_consulta%}
+                                            <option value="{{list_consulta.motivo_consulta}}">
+                                                {%endfor%}
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <h6 class="card-title">Historia:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="historia"
+                                               aria-describedby="name" list="info-historia"
+                                               placeholder="Ej: Como empezaron los sintomas">
+                                        <datalist id="info-historia">
+                                            {%for list_consulta in model_consulta%}
+                                            <option value="{{list_consulta.historia}}">
+                                                {%endfor%}
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <!-- Warning Alert modal -->
+                                <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                        data-target="#warning-alert-modal"><i class="fas fa-save"></i> Guardar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
+    <!-- Warning Alert Modal -->
+    <div id="warning-alert-modal" class="modal fade" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <h4 class="mt-2"><i class="fas fa-info fa-2x"></i></h4>
+                        <p class="mt-3">La informacion anteriormente escrita sera almacenada puedes cancelar para
+                            modificar o aceptar para registrar.</p>
+                        <button type="button" class="btn btn-warning my-2"
+                                data-dismiss="modal">Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success my-2">Aceptar
+                        </button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </form>
 {%endblock body%}

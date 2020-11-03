@@ -19,6 +19,7 @@ class Rol(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.nombre, self.estado)
 
+
 class Persona(models.Model):
     pk_persona = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=50, blank=False, null=False)
@@ -36,7 +37,7 @@ class Persona(models.Model):
     class Meta:
         verbose_name = 'Persona'
         verbose_name_plural = 'Personas'
-        ordering = ['fecha_nacimiento']
+        ordering = ['pk_persona']
 
     def __str__(self):
         return "{0},{1},{2}".format(self.pk_persona, self.nombre, self.apellido)
@@ -99,13 +100,15 @@ class Cita(models.Model):
     estado = models.BooleanField(default=True, blank=False, null=False)
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
     tipo_estado = models.BooleanField(blank=True, null=True)
+
     class Meta:
         verbose_name = 'Cita'
         verbose_name_plural = 'Citas'
         ordering = ['fecha']
 
     def __str__(self):
-        return "{0},{1},{2}".format(self.numero, self.estado, self.fecha_finalizacion)
+        return "{0},{1},{2}".format(self.pk_cita, self.estado, self.fecha_finalizacion)
+
 
 # -- if estado is True is active
 # -- if estado is False is deactive
@@ -132,7 +135,7 @@ class Csat(models.Model):
 
 class Consulta(models.Model):
     pk_consulta = models.AutoField(primary_key=True)
-    motivo_consulta = models.CharField(max_length=200, blank=False, null=False)
+    motivo_consulta = models.TextField(max_length=200, blank=False, null=False)
     historia = models.TextField(blank=False, null=False)
     estado = models.BooleanField(default=True, blank=False, null=False)
 
@@ -192,10 +195,11 @@ class HistorialClinico(models.Model):
     pk_historial_clinico = models.AutoField(primary_key=True)
     fecha_creacion = models.DateField(auto_now_add=True, auto_now=False)
     estado = models.BooleanField(default=True, blank=False, null=False)
-    fk_consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE, blank=False, null=False)
-    fk_examen_fisico = models.ForeignKey(ExamenFisico, on_delete=models.CASCADE, blank=False, null=False)
-    fk_antecendente = models.ForeignKey(Antecedente, on_delete=models.CASCADE, blank=False, null=False)
-    fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
+    fk_consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE, blank=True, null=True)
+    fk_examen_fisico = models.ForeignKey(ExamenFisico, on_delete=models.CASCADE, blank=True, null=True)
+    fk_antecendente = models.ForeignKey(Antecedente, on_delete=models.CASCADE, blank=True, null=True)
+    fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=True, null=True)
+    fk_cita = models.OneToOneField(Cita, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Historial clinico'
@@ -203,6 +207,7 @@ class HistorialClinico(models.Model):
 
     def __str__(self):
         return "{0},{1},{2}".format(self.pk_historial_clinico, self.fecha_creacion, self.estado)
+
 
 class ControlClinica(models.Model):
     pk_control_clinica = models.AutoField(primary_key=True)

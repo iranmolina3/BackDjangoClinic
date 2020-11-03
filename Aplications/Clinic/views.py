@@ -1,12 +1,20 @@
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.core.paginator import Paginator
 from datetime import date, datetime
 from random import choice
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+
+"""
+ -- GLOBAL VARS
+"""
+
+_global_pk_cita = 0
+_global_pk_historial_clinico = 0
 
 
 # -- METHOD -- > THIS IS OTHER FUNCTIONS (NOT VIEWS ONLY LOAD DATA)
@@ -149,7 +157,7 @@ def create_persona(request):
             _municipio = request.POST.get('municipio')
             fecha_nacimiento = datetime.strptime(_fecha_nacimiento, "%Y-%m-%d")
             fecha_actual = datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")
-            print(type(_fecha_nacimiento))
+            # print(type(_fecha_nacimiento))
 
             # strftime is a functions convert var type date to str
             # strptime is a functions convert var type str to date
@@ -168,6 +176,7 @@ def create_persona(request):
                                     fecha_nacimiento=_fecha_nacimiento, telefono=_telefono, genero=_genero,
                                     direccion=_direccion, municipio=_municipio, estado_civil=_estado_civil)
             model_persona.save()
+            print(model_persona.pk_persona)
             return redirect('clinic:read_persona')
         return render(request, 'Clinic/Persona/create_persona.html')
 
@@ -293,8 +302,8 @@ def read_cita(request):
     else:
         if (request.method == "GET"):
             _fecha = request.GET.get('fecha')
-            #print(_fecha)
-            #print("TIPO DE VALOR ", type(_fecha))
+            # print(_fecha)
+            # print("TIPO DE VALOR ", type(_fecha))
             if (_fecha is None):
                 model_cita = Cita.objects.filter(estado=True)
                 return render(request, 'Clinic/Cita/read_cita.html', {'model_cita': model_cita})
@@ -332,56 +341,257 @@ def update_cita(request):
             return reserve_cita(request, _fk_persona)
 
 
-# -- CONSULTA -- VIEW CREATE -- > this is a functions to create a consulta
+"""
+ -- CRUD TO THE MODEL HISTORIAL CLINICO
+"""
 
-def create_consulta(request):
+
+def create_historial_clinico(request, pk_persona, pk_cita):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        if (request.method == "POST"):
-            #        print(request.POST)
-            _motivo_consulta = request.POST.get('MOTIVO_CONSULTA')
-            _historia = request.POST.get('HISTORIA')
-            print(_motivo_consulta, _historia)
-            _model_consulta = Consulta(MOTIVO_CONSULTA=_motivo_consulta,
-                                       HISTORIA=_historia)
-            _model_consulta.save()
-            return _model_consulta
+        try:
+            model_persona = Persona.objects.get(pk_persona=pk_persona)
+            model_historial_clinico = HistorialClinico.objects.get(Q(estado=True) & Q(fk_persona=model_persona))
+            # print("PACIENTE ", model_persona)                              #PACIENTE  8,edson franzua,andres gomez
+            # print("CONSULTA ", model_historial_clinico.fk_consulta)        #CONSULTA None
+            # print("TIPO ",type(model_historial_clinico.fk_consulta))       #TIPO <class 'NoneType'>
+            print("ENTRO EN EL TRY")
+            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                          {'model_historial_clinico': model_historial_clinico})
+        except ObjectDoesNotExist:
+            print("ENTRO EN EL EXCEPT")
+            model_cita = Cita.objects.get(pk_cita=pk_cita)
+            model_persona = Persona.objects.get(pk_persona=pk_persona)
+            model_historial_clinico = HistorialClinico(fk_persona=model_persona, fk_cita=model_cita)
+            model_historial_clinico.save()
+            # print(model_historial_clinico.pk_historial_clinico)
+            # print(model_persona)
+            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                          {'model_historial_clinico': model_historial_clinico})
 
 
-# -- CONSULTA -- VIEW LIST -- > this is a functions to show the data CONSULTAS HISTORIAL
+# -- > HISTORIAL CLINIC - LISTAR PEOPLE - HISTORIAL
 
-def read_consulta(request):
+#  -- > create this function for view person for the histori clinic
+
+def read_historial_clinico(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        consulta = Consulta.objects.filter(ESTADO=True)
-        print(consulta)
-        paginator = Paginator(consulta, 6)
+        nombre = request.GET.get("NOMBRE")
+        historial_clinico = HistorialClinico.objects.all().order_by('-ESTADO')
+        if nombre:
+            historial_clinico = HistorialClinico.objects.filter(Q(FILTRO_NOMBRE_COMPLETO__icontains=nombre)).order_by(
+                '-ESTADO')
+        paginator = Paginator(historial_clinico, 3)
         page = request.GET.get('page')
-        consulta = paginator.get_page(page)
-        return render(request, 'Clinic/Consulta/read_consulta.html', {'consulta': consulta})
+        historial_clinico = paginator.get_page(page)
+        return render(request, 'Clinic/HistorialClinico/read_historial_clinico.html',
+                      {'historial_clinico': historial_clinico})
 
 
-# -- CONSULTA -- VIEW UPDATE -- > this is a functions to update the data CONSULTA
+# --> HISTORIAL CLINIC - UPDATE
 
-def update_consulta(request, pk_consulta):
+# -- > edith is a functions for to update persona
+
+# -- > this funtion is to update only dont create object person
+
+def edit_persona(request, persona):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        consulta = Consulta.objects.get(PK_CONSULTA=pk_consulta)
-        if (request.method == "GET"):
-            return render(request, 'Clinic/Consulta/update_consulta.html', {'consulta': consulta})
-        else:
+        if request.method == "POST":
+            _nombre1 = request.POST.get('NOMBRE1')
+            _nombre2 = request.POST.get('NOMBRE2')
+            _nombre = _nombre1 + ' ' + _nombre2
+            _apellido1 = request.POST.get('APELLIDO1')
+            _apellido2 = request.POST.get('APELLIDO2')
+            _apellido = _apellido1 + ' ' + _apellido2
+            _dpi = request.POST.get('DPI')
+            _genero = request.POST.get('GENERO')
+            _edad = request.POST.get('EDAD')
+            _fecha_nac = request.POST.get('FECHA_NACIMIENTO')
+            _fk_estado_civil = request.POST.get('FK_ESTADO_CIVIL')
+            _telefono = request.POST.get('TELEFONO')
+            _direccion = request.POST.get('DIRECCION')
+            _fk_municipio = request.POST.get('MUNICIPIO')
+            municipio = Municipio.objects.get(PK_MUNICIPIO=_fk_municipio)
+            estado_civil = EstadoCivil.objects.get(PK_ESTADO_CIVIL=_fk_estado_civil)
+            persona.NOMBRE = _nombre
+            persona.APELLIDO = _apellido
+            persona.DPI = _dpi
+            persona.GENERO = _genero
+            persona.EDAD = _edad
+            persona.FECHA_NACIMIENTO = _fecha_nac
+            persona.TELEFONO = _telefono
+            persona.DIRECCION = _direccion
+            persona.FK_ESTADO_CIVIL = estado_civil
+            persona.FK_MUNICIPIO = municipio
+            persona.save()
+            return persona
+
+
+# -- > edit this functions is from consulta
+
+def edit_consulta(request, consulta):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        if request.method == "POST":
             _motivo_consulta = request.POST.get('MOTIVO_CONSULTA')
             _historia = request.POST.get('HISTORIA')
             consulta.MOTIVO_CONSULTA = _motivo_consulta
             consulta.HISTORIA = _historia
             consulta.save()
+
+
+# -- > edit this funtions is from antecedente
+
+def edit_antecedente(request, antecedente):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        if request.method == "POST":
+            _ultima_regla = request.POST.get('ULTIMA_REGLA')
+            _fecha_probable_parto = request.POST.get('FECHA_PROBABLE_PARTO')
+            _gesta = request.POST.get('GESTA')
+            _aborto = request.POST.get('ABORTO')
+            _hijos_vivos = request.POST.get('HIJOS_VIVOS')
+            _peso = request.POST.get('PESO')
+            _quirurgico = request.POST.get('QUIRURGICO')
+            _medico = request.POST.get('MEDICO')
+            _alergia = request.POST.get('ALERGIA')
+            _familiar = request.POST.get('FAMILIAR')
+            _habito = request.POST.get('HABITO')
+            _cigarro = request.POST.get('CIGARRO')
+            _licor = request.POST.get('LICOR')
+            antecedente.ULTIMA_REGLA = _ultima_regla
+            antecedente.FECHA_PROBABLE_PARTO = _fecha_probable_parto
+            antecedente.GESTA = _gesta
+            antecedente.ABORTO = _aborto
+            antecedente.HIJOS_VIVOS = _hijos_vivos
+            antecedente.PESO = _peso
+            antecedente.QUIRURGICO = _quirurgico
+            antecedente.MEDICO = _medico
+            antecedente.ALERGIA = _alergia
+            antecedente.FAMILIAR = _familiar
+            antecedente.HABITO = _habito
+            antecedente.CIGARRO = _cigarro
+            antecedente.LICOR = _licor
+            antecedente.save()
+
+
+# -- > this funtion is from edit Examen Fisico
+
+def edit_examen_fisico(request, examen_fisico):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        if (request.method == "POST"):
+            _presion_arterial = request.POST.get('PRESION_ARTERIAL')
+            _frecuencia_cardiaca = request.POST.get('FRECUENCIA_CARDIACA')
+            _frecuencia_respiratoria = request.POST.get('FRECUENCIA_RESPIRATORIA')
+            _temperatura = request.POST.get('TEMPERATURA')
+            _frecuencia_cardiaca_fetal = request.POST.get('FRECUENCIA_CARDIACA_FETAL')
+            _impresion_clinica = request.POST.get('IMPRESION_CLINCIA')
+            examen_fisico.PRESION_ARTERIAL = _presion_arterial
+            examen_fisico.FRECUENCIA_CARDIACA = _frecuencia_cardiaca
+            examen_fisico.FRECUENCIA_RESPIRATORIA = _frecuencia_respiratoria
+            examen_fisico.TEMPERATURA = _temperatura
+            examen_fisico.FRECUENCIA_CARDIACA_FETAL = _frecuencia_cardiaca_fetal
+            examen_fisico.IMPRESION_CLINCIA = _impresion_clinica
+            examen_fisico.save()
+
+
+# -- HISTORIAL_CLINICO -- VIEW UPDATE-- > this methods is to update the 4 tables in the BD
+
+def update_historial_clinico(request, pk_historial_clinico):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        print(pk_historial_clinico)
+        historial_clinico = HistorialClinico.objects.get(PK_HISTORIAL_CLINICO=pk_historial_clinico)
+        persona = Persona.objects.get(PK_PERSONA=historial_clinico.FK_PERSONA.PK_PERSONA)
+        consulta = Consulta.objects.get(PK_CONSULTA=historial_clinico.FK_CONSULTA.PK_CONSULTA)
+        antecedente = Antecedente.objects.get(PK_ANTECEDENTE=historial_clinico.FK_ANTECEDENTE.PK_ANTECEDENTE)
+        examen_fisico = ExamenFisico.objects.get(PK_EXAMEN_FISICO=historial_clinico.FK_EXAMEN_FISICO.PK_EXAMEN_FISICO)
+        if request.method == "GET":
+            fecha_nacimiento = persona.FECHA_NACIMIENTO.strftime("%Y-%m-%d")
+            nombres = persona.NOMBRE.split(" ")
+            apellidos = persona.APELLIDO.split(" ")
+            primer_nombre = nombres[0]
+            segundo_nombre = nombres[1]
+            primer_apellido = apellidos[0]
+            segundo_apellido = apellidos[1]
+
+            municipio = Municipio.objects.filter(ESTADO=True)
+            estado_civil = EstadoCivil.objects.filter(ESTADO=True)
+
+            fecha_ultima_regla = antecedente.ULTIMA_REGLA.strftime("%Y-%m-%dT%H:%M")
+            fecha_probable_parto = antecedente.FECHA_PROBABLE_PARTO.strftime("%Y-%m-%dT%H:%M")
+            gesta = antecedente.GESTA.strftime("%Y-%m-%dT%H:%M")
+            aborto = antecedente.ABORTO.strftime("%Y-%m-%dT%H:%M")
+            print("CONVERSION FECHA Y HORA =", fecha_ultima_regla)
+
+            return render(request, 'Clinic/HistorialClinico/update_historial_clinico.html',
+                          {'persona': persona, 'primer_nombre': primer_nombre,
+                           'segundo_nombre': segundo_nombre, 'primer_apellido': primer_apellido,
+                           'segundo_apellido': segundo_apellido, 'fecha_nacimiento': fecha_nacimiento,
+                           'municipio': municipio, 'estado_civil': estado_civil, 'consulta': consulta,
+                           'antecedente': antecedente, 'fecha_ultima_regla': fecha_ultima_regla,
+                           'fecha_probable_parto': fecha_probable_parto, 'gesta': gesta, 'aborto': aborto,
+                           'examen_fisico': examen_fisico})
+        else:
+            edit_persona(request, persona)
+            edit_consulta(request, consulta)
+            edit_antecedente(request, antecedente)
+            edit_examen_fisico(request, examen_fisico)
+            historial_clinico.save()
             return redirect('dashboard')
 
 
-# -- CONSULTA -- VIEW DELETE -- > this is a functions to deactivate (pass FALSE)
+"""
+ -- CRUD TO THE MODEL CONSULTA
+"""
+
+
+def create_consulta(request, pk_historial_clinico):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        if request.method == "POST":
+            model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
+            _motivo = request.POST.get('motivo')
+            _historia = request.POST.get('historia')
+            model_consulta = Consulta(motivo_consulta=_motivo, historia=_historia)
+            model_consulta.save()
+            model_historial_clinico.fk_consulta = model_consulta
+            model_historial_clinico.save()
+            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                          {'model_historial_clinico': model_historial_clinico})
+        else:
+            model_consulta = Consulta.objects.filter(estado=True)
+            return render(request, 'Clinic/Consulta/create_consulta.html', {'model_consulta': model_consulta})
+
+
+def update_consulta(request, pk_consulta):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_consulta = Consulta.objects.get(pk_consulta=pk_consulta)
+        if request.method == "GET":
+            return render(request, 'Clinic/Consulta/update_consulta.html', {'model_consulta': model_consulta})
+        else:
+            model_historial_clinico = HistorialClinico.objects.get(fk_consulta=model_consulta)
+            _motivo = request.POST.get('motivo')
+            _historia = request.POST.get('historia')
+            model_consulta.motivo_consulta = _motivo
+            model_consulta.historia = _historia
+            model_consulta.save()
+            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                          {'model_historial_clinico': model_historial_clinico})
+
 
 def delete_consulta(request, pk_consulta):
     if not request.user.is_authenticated:
@@ -396,7 +606,21 @@ def delete_consulta(request, pk_consulta):
             return redirect('dashboard')
 
 
-# -- EXAMEN_FISICO -- VIEW CREATE -- > this is a functions to EXAMEN FISICO
+def read_consulta(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        consulta = Consulta.objects.filter(ESTADO=True)
+        print(consulta)
+        paginator = Paginator(consulta, 6)
+        page = request.GET.get('page')
+        consulta = paginator.get_page(page)
+        return render(request, 'Clinic/Consulta/read_consulta.html', {'consulta': consulta})
+
+
+"""
+ -- CRUD TO THE MODEL EXAMEN FISICO
+"""
 
 def create_examen_fisico(request):
     if not request.user.is_authenticated:
@@ -591,290 +815,6 @@ def delete_antecedente(request, pk_antecedente):
 
 
 # < --
-
-# -- > CREATE HISTORIAL - DASHBOARD COMPLETE INFO
-
-# -- > query to menu (completar) in dashboard
-
-def create_historial_clinico(request, pk_cita):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        cita = Cita.objects.get(PK_CITA=pk_cita)
-        persona = Persona.objects.get(PK_PERSONA=cita.FK_PERSONA.PK_PERSONA, ESTADO=True)
-        if request.method == 'GET':
-            if HistorialClinico.objects.filter(ESTADO=True, FK_PERSONA=persona).exists():
-                print("HISTORIAL CLINICO - NO VACIO - METHOD GET")
-                historial_clinico = HistorialClinico.objects.get(ESTADO=True, FK_PERSONA=persona)
-                fecha_nacimiento = persona.FECHA_NACIMIENTO.strftime("%Y-%m-%d")
-                nombres = persona.NOMBRE.split(" ")
-                apellidos = persona.APELLIDO.split(" ")
-                primer_nombre = nombres[0]
-                segundo_nombre = nombres[1]
-                primer_apellido = apellidos[0]
-                segundo_apellido = apellidos[1]
-
-                municipio = Municipio.objects.filter(ESTADO=True)
-
-                estado_civil = EstadoCivil.objects.filter(ESTADO=True)
-
-                consulta = Consulta.objects.get(PK_CONSULTA=historial_clinico.FK_CONSULTA.PK_CONSULTA)
-
-                antecedente = Antecedente.objects.get(PK_ANTECEDENTE=historial_clinico.FK_ANTECEDENTE.PK_ANTECEDENTE)
-                fecha_ultima_regla = antecedente.ULTIMA_REGLA.strftime("%Y-%m-%dT%H:%M")
-                fecha_probable_parto = antecedente.FECHA_PROBABLE_PARTO.strftime("%Y-%m-%dT%H:%M")
-                gesta = antecedente.GESTA.strftime("%Y-%m-%dT%H:%M")
-                aborto = antecedente.ABORTO.strftime("%Y-%m-%dT%H:%M")
-                print("CONVERSION FECHA Y HORA =", fecha_ultima_regla)
-
-                examen_fisico = ExamenFisico.objects.get(
-                    PK_EXAMEN_FISICO=historial_clinico.FK_EXAMEN_FISICO.PK_EXAMEN_FISICO)
-
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'cita': cita, 'persona': persona, 'primer_nombre': primer_nombre,
-                               'segundo_nombre': segundo_nombre, 'primer_apellido': primer_apellido,
-                               'segundo_apellido': segundo_apellido, 'fecha_nacimiento': fecha_nacimiento,
-                               'municipio': municipio, 'estado_civil': estado_civil, 'consulta': consulta,
-                               'antecedente': antecedente, 'fecha_ultima_regla': fecha_ultima_regla,
-                               'fecha_probable_parto': fecha_probable_parto, 'gesta': gesta, 'aborto': aborto,
-                               'examen_fisico': examen_fisico})
-            else:
-                print("HISTORIAL CLINICO - VACIO - METHOD GET")
-                municipio = Municipio.objects.filter(ESTADO=True)
-                estado_civil = EstadoCivil.objects.filter(ESTADO=True)
-                fecha_nacimiento = persona.FECHA_NACIMIENTO.strftime("%Y-%m-%d")
-                nombres = persona.NOMBRE.split(" ")
-                apellidos = persona.APELLIDO.split(" ")
-                primer_nombre = nombres[0]
-                segundo_nombre = nombres[1]
-                primer_apellido = apellidos[0]
-                segundo_apellido = apellidos[1]
-                fecha_ultima_regla = "0001-01-01T00:00"
-                fecha_probable_parto = "0001-01-01T00:00"
-                gesta = "0001-01-01T00:00"
-                aborto = "0001-01-01T00:00"
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'cita': cita, 'persona': persona, 'primer_nombre': primer_nombre,
-                               'segundo_nombre': segundo_nombre, 'primer_apellido': primer_apellido,
-                               'segundo_apellido': segundo_apellido, 'fecha_nacimiento': fecha_nacimiento,
-                               'municipio': municipio, 'estado_civil': estado_civil,
-                               'fecha_ultima_regla': fecha_ultima_regla,
-                               'fecha_probable_parto': fecha_probable_parto, 'gesta': gesta, 'aborto': aborto,
-                               })
-        else:
-            if HistorialClinico.objects.filter(ESTADO=True, FK_PERSONA=persona).exists():
-                print('HISTORIAL CLINICO - NO VACIO - METHOD POST')
-                _update_historial_clinico = HistorialClinico.objects.get(ESTADO=True, FK_PERSONA=persona)
-                _update_historial_clinico.ESTADO = False
-                _update_historial_clinico.save()
-                persona = Persona.objects.get(PK_PERSONA=cita.FK_PERSONA.PK_PERSONA)
-                filtro_nombre_completo = persona.NOMBRE + ' ' + persona.APELLIDO
-                persona.ESTADO = False
-                persona.save()
-                _persona = create_persona_hitorial(request)
-                _consulta = create_consulta(request)
-                _antecedente = create_antecedente(request)
-                _examen_fisico = create_examen_fisico(request)
-                _create_historial_clinico = HistorialClinico(FK_CONSULTA=_consulta, FK_EXAMEN_FISICO=_examen_fisico,
-                                                             FK_ANTECEDENTE=_antecedente, FK_PERSONA=_persona,
-                                                             FILTRO_NOMBRE_COMPLETO=filtro_nombre_completo)
-                _create_historial_clinico.save()
-                cita.ESTADO = False
-                cita.save()
-            else:
-                print('HISTORIAL CLINICO - VACIO - METHOD POST')
-                filtro_nombre_completo = persona.NOMBRE + ' ' + persona.APELLIDO
-                _persona = update_persona(request, persona.PK_PERSONA)
-                _consulta = create_consulta(request)
-                _antecedente = create_antecedente(request)
-                _examen_fisico = create_examen_fisico(request)
-                _create_historial_clinico = HistorialClinico(FK_CONSULTA=_consulta, FK_EXAMEN_FISICO=_examen_fisico,
-                                                             FK_ANTECEDENTE=_antecedente, FK_PERSONA=_persona,
-                                                             FILTRO_NOMBRE_COMPLETO=filtro_nombre_completo)
-                _create_historial_clinico.save()
-                cita.ESTADO = False
-                cita.save()
-            return redirect('dashboard')
-
-
-# -- > HISTORIAL CLINIC - LISTAR PEOPLE - HISTORIAL
-
-#  -- > create this function for view person for the histori clinic
-
-def read_historial_clinico(request):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        nombre = request.GET.get("NOMBRE")
-        historial_clinico = HistorialClinico.objects.all().order_by('-ESTADO')
-        if nombre:
-            historial_clinico = HistorialClinico.objects.filter(Q(FILTRO_NOMBRE_COMPLETO__icontains=nombre)).order_by(
-                '-ESTADO')
-        paginator = Paginator(historial_clinico, 3)
-        page = request.GET.get('page')
-        historial_clinico = paginator.get_page(page)
-        return render(request, 'Clinic/HistorialClinico/read_historial_clinico.html',
-                      {'historial_clinico': historial_clinico})
-
-
-# --> HISTORIAL CLINIC - UPDATE
-
-# -- > edith is a functions for to update persona
-
-# -- > this funtion is to update only dont create object person
-
-def edit_persona(request, persona):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        if request.method == "POST":
-            _nombre1 = request.POST.get('NOMBRE1')
-            _nombre2 = request.POST.get('NOMBRE2')
-            _nombre = _nombre1 + ' ' + _nombre2
-            _apellido1 = request.POST.get('APELLIDO1')
-            _apellido2 = request.POST.get('APELLIDO2')
-            _apellido = _apellido1 + ' ' + _apellido2
-            _dpi = request.POST.get('DPI')
-            _genero = request.POST.get('GENERO')
-            _edad = request.POST.get('EDAD')
-            _fecha_nac = request.POST.get('FECHA_NACIMIENTO')
-            _fk_estado_civil = request.POST.get('FK_ESTADO_CIVIL')
-            _telefono = request.POST.get('TELEFONO')
-            _direccion = request.POST.get('DIRECCION')
-            _fk_municipio = request.POST.get('MUNICIPIO')
-            municipio = Municipio.objects.get(PK_MUNICIPIO=_fk_municipio)
-            estado_civil = EstadoCivil.objects.get(PK_ESTADO_CIVIL=_fk_estado_civil)
-            persona.NOMBRE = _nombre
-            persona.APELLIDO = _apellido
-            persona.DPI = _dpi
-            persona.GENERO = _genero
-            persona.EDAD = _edad
-            persona.FECHA_NACIMIENTO = _fecha_nac
-            persona.TELEFONO = _telefono
-            persona.DIRECCION = _direccion
-            persona.FK_ESTADO_CIVIL = estado_civil
-            persona.FK_MUNICIPIO = municipio
-            persona.save()
-            return persona
-
-
-# -- > edit this functions is from consulta
-
-def edit_consulta(request, consulta):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        if request.method == "POST":
-            _motivo_consulta = request.POST.get('MOTIVO_CONSULTA')
-            _historia = request.POST.get('HISTORIA')
-            consulta.MOTIVO_CONSULTA = _motivo_consulta
-            consulta.HISTORIA = _historia
-            consulta.save()
-
-
-# -- > edit this funtions is from antecedente
-
-def edit_antecedente(request, antecedente):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        if request.method == "POST":
-            _ultima_regla = request.POST.get('ULTIMA_REGLA')
-            _fecha_probable_parto = request.POST.get('FECHA_PROBABLE_PARTO')
-            _gesta = request.POST.get('GESTA')
-            _aborto = request.POST.get('ABORTO')
-            _hijos_vivos = request.POST.get('HIJOS_VIVOS')
-            _peso = request.POST.get('PESO')
-            _quirurgico = request.POST.get('QUIRURGICO')
-            _medico = request.POST.get('MEDICO')
-            _alergia = request.POST.get('ALERGIA')
-            _familiar = request.POST.get('FAMILIAR')
-            _habito = request.POST.get('HABITO')
-            _cigarro = request.POST.get('CIGARRO')
-            _licor = request.POST.get('LICOR')
-            antecedente.ULTIMA_REGLA = _ultima_regla
-            antecedente.FECHA_PROBABLE_PARTO = _fecha_probable_parto
-            antecedente.GESTA = _gesta
-            antecedente.ABORTO = _aborto
-            antecedente.HIJOS_VIVOS = _hijos_vivos
-            antecedente.PESO = _peso
-            antecedente.QUIRURGICO = _quirurgico
-            antecedente.MEDICO = _medico
-            antecedente.ALERGIA = _alergia
-            antecedente.FAMILIAR = _familiar
-            antecedente.HABITO = _habito
-            antecedente.CIGARRO = _cigarro
-            antecedente.LICOR = _licor
-            antecedente.save()
-
-
-# -- > this funtion is from edit Examen Fisico
-
-def edit_examen_fisico(request, examen_fisico):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        if (request.method == "POST"):
-            _presion_arterial = request.POST.get('PRESION_ARTERIAL')
-            _frecuencia_cardiaca = request.POST.get('FRECUENCIA_CARDIACA')
-            _frecuencia_respiratoria = request.POST.get('FRECUENCIA_RESPIRATORIA')
-            _temperatura = request.POST.get('TEMPERATURA')
-            _frecuencia_cardiaca_fetal = request.POST.get('FRECUENCIA_CARDIACA_FETAL')
-            _impresion_clinica = request.POST.get('IMPRESION_CLINCIA')
-            examen_fisico.PRESION_ARTERIAL = _presion_arterial
-            examen_fisico.FRECUENCIA_CARDIACA = _frecuencia_cardiaca
-            examen_fisico.FRECUENCIA_RESPIRATORIA = _frecuencia_respiratoria
-            examen_fisico.TEMPERATURA = _temperatura
-            examen_fisico.FRECUENCIA_CARDIACA_FETAL = _frecuencia_cardiaca_fetal
-            examen_fisico.IMPRESION_CLINCIA = _impresion_clinica
-            examen_fisico.save()
-
-
-# -- HISTORIAL_CLINICO -- VIEW UPDATE-- > this methods is to update the 4 tables in the BD
-
-def update_historial_clinico(request, pk_historial_clinico):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        print(pk_historial_clinico)
-        historial_clinico = HistorialClinico.objects.get(PK_HISTORIAL_CLINICO=pk_historial_clinico)
-        persona = Persona.objects.get(PK_PERSONA=historial_clinico.FK_PERSONA.PK_PERSONA)
-        consulta = Consulta.objects.get(PK_CONSULTA=historial_clinico.FK_CONSULTA.PK_CONSULTA)
-        antecedente = Antecedente.objects.get(PK_ANTECEDENTE=historial_clinico.FK_ANTECEDENTE.PK_ANTECEDENTE)
-        examen_fisico = ExamenFisico.objects.get(PK_EXAMEN_FISICO=historial_clinico.FK_EXAMEN_FISICO.PK_EXAMEN_FISICO)
-        if request.method == "GET":
-            fecha_nacimiento = persona.FECHA_NACIMIENTO.strftime("%Y-%m-%d")
-            nombres = persona.NOMBRE.split(" ")
-            apellidos = persona.APELLIDO.split(" ")
-            primer_nombre = nombres[0]
-            segundo_nombre = nombres[1]
-            primer_apellido = apellidos[0]
-            segundo_apellido = apellidos[1]
-
-            municipio = Municipio.objects.filter(ESTADO=True)
-            estado_civil = EstadoCivil.objects.filter(ESTADO=True)
-
-            fecha_ultima_regla = antecedente.ULTIMA_REGLA.strftime("%Y-%m-%dT%H:%M")
-            fecha_probable_parto = antecedente.FECHA_PROBABLE_PARTO.strftime("%Y-%m-%dT%H:%M")
-            gesta = antecedente.GESTA.strftime("%Y-%m-%dT%H:%M")
-            aborto = antecedente.ABORTO.strftime("%Y-%m-%dT%H:%M")
-            print("CONVERSION FECHA Y HORA =", fecha_ultima_regla)
-
-            return render(request, 'Clinic/HistorialClinico/update_historial_clinico.html',
-                          {'persona': persona, 'primer_nombre': primer_nombre,
-                           'segundo_nombre': segundo_nombre, 'primer_apellido': primer_apellido,
-                           'segundo_apellido': segundo_apellido, 'fecha_nacimiento': fecha_nacimiento,
-                           'municipio': municipio, 'estado_civil': estado_civil, 'consulta': consulta,
-                           'antecedente': antecedente, 'fecha_ultima_regla': fecha_ultima_regla,
-                           'fecha_probable_parto': fecha_probable_parto, 'gesta': gesta, 'aborto': aborto,
-                           'examen_fisico': examen_fisico})
-        else:
-            edit_persona(request, persona)
-            edit_consulta(request, consulta)
-            edit_antecedente(request, antecedente)
-            edit_examen_fisico(request, examen_fisico)
-            historial_clinico.save()
-            return redirect('dashboard')
 
 
 # -- > CRUD pregunta models

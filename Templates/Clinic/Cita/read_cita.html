@@ -95,7 +95,8 @@
                                                            value="{{list_cita.pk_cita}}" name="pk_cita" hidden
                                                            readonly>
                                                     <input class="form-control" type="number"
-                                                           value="{{list_cita.fk_persona.pk_persona}}" name="fk_persona" hidden
+                                                           value="{{list_cita.fk_persona.pk_persona}}" name="fk_persona"
+                                                           hidden
                                                            readonly>
                                                     <label for="username">Nombre(s):</label>
                                                     <input class="form-control" type="email" id="username"
@@ -121,7 +122,6 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
-
 
                             <button type="button"
                                     class="btn waves-effect waves-light btn-rounded btn-danger" data-toggle="modal"
@@ -151,6 +151,11 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
+                            <a href="{%url 'clinic:create_historial_clinico' list_cita.fk_persona.pk_persona list_cita.pk_cita%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-file-medical-alt"></i></button>
+                            </a>
                         </td>
                     </tr>
                     {%endfor%}
@@ -193,6 +198,5 @@ $( document ).ready(function() {
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     $("#fecha").val(today);
 });
-
 </script>
 {%endblock body%}
