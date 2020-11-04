@@ -622,31 +622,60 @@ def read_consulta(request):
  -- CRUD TO THE MODEL EXAMEN FISICO
 """
 
-def create_examen_fisico(request):
+
+def create_examen_fisico(request, pk_historial_clinico):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        if (request.method == "POST"):
-            #        print(request.POST)
-            _presion_arterial = request.POST.get('PRESION_ARTERIAL')
-            _frecuencia_cardiaca = request.POST.get('FRECUENCIA_CARDIACA')
-            _frecuencia_respiratoria = request.POST.get('FRECUENCIA_RESPIRATORIA')
-            _temperatura = request.POST.get('TEMPERATURA')
-            _frecuencia_cardiaca_fetal = request.POST.get('FRECUENCIA_CARDIACA_FETAL')
-            _impresion_clinica = request.POST.get('IMPRESION_CLINCIA')
-            print(_presion_arterial, _frecuencia_cardiaca, _frecuencia_respiratoria, _temperatura,
-                  _frecuencia_cardiaca_fetal, _impresion_clinica)
-            _model_examen_fisico = ExamenFisico(PRESION_ARTERIAL=_presion_arterial,
-                                                FRECUENCIA_CARDIACA=_frecuencia_cardiaca,
-                                                FRECUENCIA_RESPIRATORIA=_frecuencia_respiratoria,
-                                                TEMPERATURA=_temperatura,
-                                                FRECUENCIA_CARDIACA_FETAL=_frecuencia_cardiaca_fetal,
-                                                IMPRESION_CLINCIA=_impresion_clinica)
-            _model_examen_fisico.save()
-            return _model_examen_fisico
+        if request.method == "POST":
+            model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
+            _presion_arterial = int(request.POST.get('presion_arterial'))
+            _frecuencia_cardiaca = int(request.POST.get('frecuencia_cardiaca'))
+            _frecuencia_respitaroria = int(request.POST.get('frecuencia_respitaroria'))
+            _temperatura = int(request.POST.get('temperatura'))
+            _frecuencia_cardiaca_fetal = int(request.POST.get('frecuencia_cardiaca_fetal'))
+            _impresion_clinica = request.POST.get('impresion_clinica')
+            model_examen_fisico = ExamenFisico(presion_arterial=_presion_arterial,
+                                               frecuencia_cardiaca=_frecuencia_cardiaca,
+                                               frecuencia_respitaroria=_frecuencia_respitaroria,
+                                               temperatura=_temperatura,
+                                               frecuencia_cardiaca_fetal=_frecuencia_cardiaca_fetal,
+                                               impresion_clinica=_impresion_clinica)
+            model_examen_fisico.save()
+            model_historial_clinico.fk_examen_fisico = model_examen_fisico
+            model_historial_clinico.save()
+            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                          {'model_historial_clinico': model_historial_clinico})
+        else:
+            return render(request, 'Clinic/ExamenFisico/create_examen_fisico.html')
 
 
-# -- EXAMEN_FISICO -- VIEW READ -- >  this is a functions to show data EXAMEN FISICO
+def update_examen_fisico(request, pk_examen_fisico):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_examen_fisico = ExamenFisico.objects.get(pk_examen_fisico=pk_examen_fisico)
+        if request.method == "GET":
+            return render(request, 'Clinic/ExamenFisico/update_examen_fisico.html',
+                          {'model_examen_fisico': model_examen_fisico})
+        else:
+            model_historial_clinico = HistorialClinico.objects.get(fk_examen_fisico=model_examen_fisico)
+            _presion_arterial = int(request.POST.get('presion_arterial'))
+            _frecuencia_cardiaca = int(request.POST.get('frecuencia_cardiaca'))
+            _frecuencia_respitaroria = int(request.POST.get('frecuencia_respitaroria'))
+            _temperatura = int(request.POST.get('temperatura'))
+            _frecuencia_cardiaca_fetal = int(request.POST.get('frecuencia_cardiaca_fetal'))
+            _impresion_clinica = request.POST.get('impresion_clinica')
+            model_examen_fisico.presion_arterial = _presion_arterial
+            model_examen_fisico.frecuencia_cardiaca = _frecuencia_cardiaca
+            model_examen_fisico.frecuencia_respitaroria = _frecuencia_respitaroria
+            model_examen_fisico.temperatura = _temperatura
+            model_examen_fisico.frecuencia_cardiaca_fetal = _frecuencia_cardiaca_fetal
+            model_examen_fisico.impresion_clinica = _impresion_clinica
+            model_examen_fisico.save()
+            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                          {'model_historial_clinico': model_historial_clinico})
+
 
 def read_examen_fisico(request):
     if not request.user.is_authenticated:
@@ -659,34 +688,6 @@ def read_examen_fisico(request):
         examen_fisico = paginator.get_page(page)
         return render(request, 'Clinic/ExamenFisico/read_examen_fisico.html', {'examen_fisico': examen_fisico})
 
-
-# -- EXAMEN_FISICO -- VIEW UPDATE -- > this is a funtcions updata data
-
-def update_examen_fisico(request, pk_examen_fisico):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        examen_fisico = ExamenFisico.objects.get(PK_EXAMEN_FISICO=pk_examen_fisico)
-        if (request.method == "GET"):
-            return render(request, 'Clinic/ExamenFisico/update_examen_fisico.html', {'examen_fisico': examen_fisico})
-        else:
-            _presion_arterial = request.POST.get('PRESION_ARTERIAL')
-            _frecuencia_cardiaca = request.POST.get('FRECUENCIA_CARDIACA')
-            _frecuencia_respiratoria = request.POST.get('FRECUENCIA_RESPIRATORIA')
-            _temperatura = request.POST.get('TEMPERATURA')
-            _frecuencia_cardiaca_fetal = request.POST.get('FRECUENCIA_CARDIACA_FETAL')
-            _impresion_clinica = request.POST.get('IMPRESION_CLINCIA')
-            examen_fisico.MOTIVO_CONSULTA = _presion_arterial
-            examen_fisico.HISTORIA = _frecuencia_cardiaca
-            examen_fisico.FRECUENCIA_RESPIRATORIA = _frecuencia_respiratoria
-            examen_fisico.TEMPERATURA = _temperatura
-            examen_fisico.FRECUENCIA_CARDIACA_FETAL = _frecuencia_cardiaca_fetal
-            examen_fisico.IMPRESION_CLINCIA = _impresion_clinica
-            examen_fisico.save()
-            return redirect('dashboard')
-
-
-# -- EXAMEN_FISICO -- VIEW DELETE -- > this is a functions to deactivate ExamenFisico
 
 def delete_examen_fisico(request, pk_examen_fisico):
     if not request.user.is_authenticated:
@@ -702,37 +703,54 @@ def delete_examen_fisico(request, pk_examen_fisico):
             return redirect('dashboard')
 
 
-# -- ANTECEDENTE -- VIEW CREATE -- > this is a functions to create ANTECEDENTE
+"""
+ -- CRUD TO THE MODEL ANTECEDENTE
+"""
 
-def create_antecedente(request):
+def create_antecedente(request, pk_historial_clinico, tipo_antecedente):
+    print("tipo ", type(tipo_antecedente))
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        if (request.method == "POST"):
-            #        print(request.POST)
-            _ultima_regla = request.POST.get('ULTIMA_REGLA')
-            _fecha_probable_parto = request.POST.get('FECHA_PROBABLE_PARTO')
-            _gesta = request.POST.get('GESTA')
-            _aborto = request.POST.get('ABORTO')
-            _hijos_vivos = request.POST.get('HIJOS_VIVOS')
-            _peso = request.POST.get('PESO')
-            _quirurgico = request.POST.get('QUIRURGICO')
-            _medico = request.POST.get('MEDICO')
-            _alergia = request.POST.get('ALERGIA')
-            _familiar = request.POST.get('FAMILIAR')
-            _habito = request.POST.get('HABITO')
-            _cigarro = request.POST.get('CIGARRO')
-            _licor = request.POST.get('LICOR')
-            print(_ultima_regla, _fecha_probable_parto, _gesta,
-                  _aborto, _hijos_vivos, _peso, _quirurgico, _medico, _alergia, _familiar, _habito,
-                  _cigarro, _licor)
-            _model_antecedente = Antecedente(ULTIMA_REGLA=_ultima_regla, FECHA_PROBABLE_PARTO=_fecha_probable_parto,
-                                             GESTA=_gesta, ABORTO=_aborto, HIJOS_VIVOS=_hijos_vivos,
-                                             PESO=_peso, QUIRURGICO=_quirurgico, MEDICO=_medico, ALERGIA=_alergia,
-                                             FAMILIAR=_familiar, HABITO=_habito, CIGARRO=_cigarro,
-                                             LICOR=_licor)
-            _model_antecedente.save()
-            return _model_antecedente
+        model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
+        if request.method == "POST":
+            _ultima_regla = isBlank(request.POST.get('ultima_regla'))
+            _fecha_probable_parto = isBlank(request.POST.get('fecha_probable_parto'))
+            _gesta = isBlank(request.POST.get('gesta'))
+            _aborto = isBlank(request.POST.get('aborto'))
+            print(type(_ultima_regla), ' ', _ultima_regla)
+            print(type(_fecha_probable_parto), ' ', _fecha_probable_parto)
+            print(type(_gesta), ' ', _gesta)
+            print(type(_aborto), ' ', _aborto)
+            _hijos_vivos = int(request.POST.get('hijos_vivos'))
+            print(type(_hijos_vivos), ' ', _hijos_vivos)
+            _peso = request.POST.get('peso')
+            _quirurgicos = request.POST.get('quirurgicos')
+            _medicos = request.POST.get('medicos')
+            _alergias = request.POST.get('alergias')
+            _familiares = request.POST.get('familiares')
+            _habitos = request.POST.get('habitos')
+            _cigarrillos = request.POST.get('cigarrillos')
+            _licor = request.POST.get('licor')
+            model_antecedente = Antecedente(ultima_regla=_ultima_regla, fecha_probable_parto=_fecha_probable_parto,
+                                               gesta=_gesta, aborto=_aborto, hijos_vivos=_hijos_vivos, peso=_peso,
+                                               quirurgico=_quirurgicos, medico=_medicos, alergia=_alergias,
+                                               familiar=_familiares, habito=_habitos, cigarro=_cigarrillos,
+                                               licor=_licor)
+            #model_antecedente.save()
+            #model_historial_clinico.fk_antecendente = model_antecedente
+            #model_historial_clinico.save()
+            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                          {'model_historial_clinico': model_historial_clinico})
+        else:
+            return render(request, 'Clinic/Antecedente/create_antecedente.html', {'model_historial_clinico':model_historial_clinico, 'tipo_antecedente':tipo_antecedente})
+
+
+def isBlank(myString):
+    if not (myString and myString.strip()):
+        return ""
+    else:
+        return myString
 
 
 # -- ANTECEDENTE -- VIEW LIST -- > this is a functions to show data list Antecedente

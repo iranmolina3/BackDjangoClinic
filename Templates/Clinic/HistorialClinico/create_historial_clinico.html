@@ -68,14 +68,24 @@
                         <!--tercera condicional para antecedente-->
                         {%if model_historial_clinico.fk_antecendente is None%}
                         <td>
-                            <a href="">
+                            <a href="{%url 'clinic:create_antecedente' model_historial_clinico.pk_historial_clinico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
                             </a>
+                            <a href="{%url 'clinic:create_antecedente' model_historial_clinico.pk_historial_clinico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
                         </td>
                         {%else%}
                         <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
                             <a href="">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
@@ -86,7 +96,7 @@
                         <!--cuarta condicional para examen fisico-->
                         {%if model_historial_clinico.fk_examen_fisico is None%}
                         <td>
-                            <a href="">
+                            <a href="{%url 'clinic:create_examen_fisico' model_historial_clinico.pk_historial_clinico%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
@@ -94,7 +104,7 @@
                         </td>
                         {%else%}
                         <td>
-                            <a href="">
+                            <a href="{%url 'clinic:update_examen_fisico' model_historial_clinico.fk_examen_fisico.pk_examen_fisico%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
@@ -122,6 +132,7 @@ $( document ).ready(function() {
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     $("#fecha").val(today);
 });
+
 
 
 

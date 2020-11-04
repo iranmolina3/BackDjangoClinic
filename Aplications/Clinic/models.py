@@ -168,10 +168,10 @@ class ExamenFisico(models.Model):
 
 class Antecedente(models.Model):
     pk_antecedente = models.AutoField(primary_key=True)
-    ultima_regla = models.DateTimeField()
-    fecha_probable_parto = models.DateTimeField()
-    gesta = models.DateTimeField()
-    aborto = models.DateTimeField()
+    ultima_regla = models.DateTimeField(blank=True, null=True)
+    fecha_probable_parto = models.DateTimeField(blank=True, null=True)
+    gesta = models.DateTimeField(blank=True, null=True)
+    aborto = models.DateTimeField(blank=True, null=True)
     hijos_vivos = models.IntegerField(blank=True, null=True)
     peso = models.IntegerField(blank=True, null=True)
     quirurgico = models.TextField(blank=True, null=True)
@@ -179,8 +179,8 @@ class Antecedente(models.Model):
     alergia = models.TextField(blank=True, null=True)
     familiar = models.TextField(blank=True, null=True)
     habito = models.TextField(blank=True, null=True)
-    cigarro = models.BooleanField(default=False, blank=False, null=False)
-    licor = models.BooleanField(default=False, blank=False, null=False)
+    cigarro = models.TextField(blank=True, null=True)
+    licor = models.TextField(blank=True, null=True)
     estado = models.BooleanField(default=True, blank=False, null=False)
 
     class Meta:
@@ -188,7 +188,7 @@ class Antecedente(models.Model):
         verbose_name_plural = 'Antecedentes'
 
     def __str__(self):
-        return "{0},{1},{2}".format(self.pk_antecedente, self.familiar, self.estado)
+        return "{0},{1}".format(self.pk_antecedente, self.estado)
 
 
 class HistorialClinico(models.Model):
