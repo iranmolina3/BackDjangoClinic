@@ -371,10 +371,6 @@ def create_historial_clinico(request, pk_persona, pk_cita):
                           {'model_historial_clinico': model_historial_clinico})
 
 
-# -- > HISTORIAL CLINIC - LISTAR PEOPLE - HISTORIAL
-
-#  -- > create this function for view person for the histori clinic
-
 def read_historial_clinico(request):
     if not request.user.is_authenticated:
         return redirect('sing')
@@ -390,12 +386,6 @@ def read_historial_clinico(request):
         return render(request, 'Clinic/HistorialClinico/read_historial_clinico.html',
                       {'historial_clinico': historial_clinico})
 
-
-# --> HISTORIAL CLINIC - UPDATE
-
-# -- > edith is a functions for to update persona
-
-# -- > this funtion is to update only dont create object person
 
 def edit_persona(request, persona):
     if not request.user.is_authenticated:
@@ -432,8 +422,6 @@ def edit_persona(request, persona):
             return persona
 
 
-# -- > edit this functions is from consulta
-
 def edit_consulta(request, consulta):
     if not request.user.is_authenticated:
         return redirect('sing')
@@ -445,8 +433,6 @@ def edit_consulta(request, consulta):
             consulta.HISTORIA = _historia
             consulta.save()
 
-
-# -- > edit this funtions is from antecedente
 
 def edit_antecedente(request, antecedente):
     if not request.user.is_authenticated:
@@ -482,8 +468,6 @@ def edit_antecedente(request, antecedente):
             antecedente.save()
 
 
-# -- > this funtion is from edit Examen Fisico
-
 def edit_examen_fisico(request, examen_fisico):
     if not request.user.is_authenticated:
         return redirect('sing')
@@ -503,8 +487,6 @@ def edit_examen_fisico(request, examen_fisico):
             examen_fisico.IMPRESION_CLINCIA = _impresion_clinica
             examen_fisico.save()
 
-
-# -- HISTORIAL_CLINICO -- VIEW UPDATE-- > this methods is to update the 4 tables in the BD
 
 def update_historial_clinico(request, pk_historial_clinico):
     if not request.user.is_authenticated:
@@ -707,43 +689,67 @@ def delete_examen_fisico(request, pk_examen_fisico):
  -- CRUD TO THE MODEL ANTECEDENTE
 """
 
+
 def create_antecedente(request, pk_historial_clinico, tipo_antecedente):
     print("tipo ", type(tipo_antecedente))
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
         model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
+
         if request.method == "POST":
-            _ultima_regla = isBlank(request.POST.get('ultima_regla'))
-            _fecha_probable_parto = isBlank(request.POST.get('fecha_probable_parto'))
-            _gesta = isBlank(request.POST.get('gesta'))
-            _aborto = isBlank(request.POST.get('aborto'))
-            print(type(_ultima_regla), ' ', _ultima_regla)
-            print(type(_fecha_probable_parto), ' ', _fecha_probable_parto)
-            print(type(_gesta), ' ', _gesta)
-            print(type(_aborto), ' ', _aborto)
-            _hijos_vivos = int(request.POST.get('hijos_vivos'))
-            print(type(_hijos_vivos), ' ', _hijos_vivos)
-            _peso = request.POST.get('peso')
-            _quirurgicos = request.POST.get('quirurgicos')
-            _medicos = request.POST.get('medicos')
-            _alergias = request.POST.get('alergias')
-            _familiares = request.POST.get('familiares')
-            _habitos = request.POST.get('habitos')
-            _cigarrillos = request.POST.get('cigarrillos')
-            _licor = request.POST.get('licor')
-            model_antecedente = Antecedente(ultima_regla=_ultima_regla, fecha_probable_parto=_fecha_probable_parto,
-                                               gesta=_gesta, aborto=_aborto, hijos_vivos=_hijos_vivos, peso=_peso,
-                                               quirurgico=_quirurgicos, medico=_medicos, alergia=_alergias,
-                                               familiar=_familiares, habito=_habitos, cigarro=_cigarrillos,
-                                               licor=_licor)
-            #model_antecedente.save()
-            #model_historial_clinico.fk_antecendente = model_antecedente
-            #model_historial_clinico.save()
-            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                          {'model_historial_clinico': model_historial_clinico})
+            if tipo_antecedente == 1:
+                _ultima_regla = isBlank(request.POST.get('ultima_regla'))
+                _fecha_probable_parto = isBlank(request.POST.get('fecha_probable_parto'))
+                _gesta = isBlank(request.POST.get('gesta'))
+                _aborto = isBlank(request.POST.get('aborto'))
+                print(type(_ultima_regla), ' ', _ultima_regla)
+                print(type(_fecha_probable_parto), ' ', _fecha_probable_parto)
+                print(type(_gesta), ' ', _gesta)
+                print(type(_aborto), ' ', _aborto)
+                _hijos_vivos = int(request.POST.get('hijos_vivos'))
+                print(type(_hijos_vivos), ' ', _hijos_vivos)
+                _peso = request.POST.get('peso')
+                _quirurgicos = request.POST.get('quirurgicos')
+                _medicos = request.POST.get('medicos')
+                _alergias = request.POST.get('alergias')
+                _familiares = request.POST.get('familiares')
+                _habitos = request.POST.get('habitos')
+                _cigarrillos = request.POST.get('cigarrillos')
+                _licor = request.POST.get('licor')
+                model_antecedente = Antecedente(ultima_regla=_ultima_regla, fecha_probable_parto=_fecha_probable_parto,
+                                                gesta=_gesta, aborto=_aborto, hijos_vivos=_hijos_vivos, peso=_peso,
+                                                quirurgico=_quirurgicos, medico=_medicos, alergia=_alergias,
+                                                familiar=_familiares, habito=_habitos, cigarro=_cigarrillos,
+                                                licor=_licor, tipo_antecedente=tipo_antecedente)
+                model_antecedente.save()
+                model_historial_clinico.fk_antecedente = model_antecedente
+                model_historial_clinico.save()
+                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                              {'model_historial_clinico': model_historial_clinico})
+            else:
+                _hijos_vivos = int(request.POST.get('hijos_vivos'))
+                print(type(_hijos_vivos), ' ', _hijos_vivos)
+                _peso = request.POST.get('peso')
+                _quirurgicos = request.POST.get('quirurgicos')
+                _medicos = request.POST.get('medicos')
+                _alergias = request.POST.get('alergias')
+                _familiares = request.POST.get('familiares')
+                _habitos = request.POST.get('habitos')
+                _cigarrillos = request.POST.get('cigarrillos')
+                _licor = request.POST.get('licor')
+                model_antecedente = Antecedente(hijos_vivos=_hijos_vivos, peso=_peso,
+                                                quirurgico=_quirurgicos, medico=_medicos, alergia=_alergias,
+                                                familiar=_familiares, habito=_habitos, cigarro=_cigarrillos,
+                                                licor=_licor, tipo_antecedente=tipo_antecedente)
+                model_antecedente.save()
+                model_historial_clinico.fk_antecedente = model_antecedente
+                model_historial_clinico.save()
+                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                              {'model_historial_clinico': model_historial_clinico})
         else:
-            return render(request, 'Clinic/Antecedente/create_antecedente.html', {'model_historial_clinico':model_historial_clinico, 'tipo_antecedente':tipo_antecedente})
+            return render(request, 'Clinic/Antecedente/create_antecedente.html',
+                          {'model_historial_clinico': model_historial_clinico, 'tipo_antecedente': tipo_antecedente})
 
 
 def isBlank(myString):
@@ -753,7 +759,82 @@ def isBlank(myString):
         return myString
 
 
-# -- ANTECEDENTE -- VIEW LIST -- > this is a functions to show data list Antecedente
+def update_antecedente(request, pk_antecedente, tipo_antecedente):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_antecedente = Antecedente.objects.get(pk_antecedente=pk_antecedente)
+        ultima_regla = model_antecedente.ultima_regla.strftime("%Y-%m-%dT%H:%M")
+        fecha_probable_parto = model_antecedente.fecha_probable_parto.strftime("%Y-%m-%dT%H:%M")
+        gesta = model_antecedente.gesta.strftime("%Y-%m-%dT%H:%M")
+        aborto = model_antecedente.aborto.strftime("%Y-%m-%dT%H:%M")
+        # print(type(ultima_regla), ' -valor- ', ultima_regla)
+        if request.method == "GET":
+            return render(request, 'Clinic/Antecedente/update_antecedente.html',
+                          {'model_antecedente': model_antecedente, 'tipo_antecedente': tipo_antecedente,
+                           'ultima_regla': ultima_regla, 'fecha_probable_parto': fecha_probable_parto, 'gesta': gesta,
+                           'aborto': aborto})
+        else:
+            model_historial_clinico = HistorialClinico.objects.get(fk_antecedente=model_antecedente)
+            if tipo_antecedente == 1:
+                _ultima_regla = isBlank(request.POST.get('ultima_regla'))
+                _fecha_probable_parto = isBlank(request.POST.get('fecha_probable_parto'))
+                _gesta = isBlank(request.POST.get('gesta'))
+                _aborto = isBlank(request.POST.get('aborto'))
+                _hijos_vivos = request.POST.get('hijos_vivos')
+                _peso = request.POST.get('peso')
+                _quirurgicos = request.POST.get('quirurgicos')
+                _medicos = request.POST.get('medicos')
+                _alergias = request.POST.get('alergias')
+                _familiares = request.POST.get('familiares')
+                _habitos = request.POST.get('habitos')
+                _cigarrillos = request.POST.get('cigarrillos')
+                _licor = request.POST.get('licor')
+                model_antecedente.ultima_regla = _ultima_regla
+                model_antecedente.fecha_probable_parto = _fecha_probable_parto
+                model_antecedente.gesta = _gesta
+                model_antecedente.aborto = _aborto
+                model_antecedente.hijos_vivos = _hijos_vivos
+                model_antecedente.peso = _peso
+                model_antecedente.quirurgico = _quirurgicos
+                model_antecedente.medico = _medicos
+                model_antecedente.alergia = _alergias
+                model_antecedente.familiar = _familiares
+                model_antecedente.habito = _habitos
+                model_antecedente.cigarro = _cigarrillos
+                model_antecedente.licor = _licor
+                model_antecedente.tipo_antecedente = tipo_antecedente
+                model_antecedente.save()
+                model_historial_clinico.fk_antecedente = model_antecedente
+                model_historial_clinico.save()
+                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                              {'model_historial_clinico': model_historial_clinico})
+            else:
+                _hijos_vivos = request.POST.get('hijos_vivos')
+                _peso = request.POST.get('peso')
+                _quirurgicos = request.POST.get('quirurgicos')
+                _medicos = request.POST.get('medicos')
+                _alergias = request.POST.get('alergias')
+                _familiares = request.POST.get('familiares')
+                _habitos = request.POST.get('habitos')
+                _cigarrillos = request.POST.get('cigarrillos')
+                _licor = request.POST.get('licor')
+                model_antecedente.hijos_vivos = _hijos_vivos
+                model_antecedente.peso = _peso
+                model_antecedente.quirurgico = _quirurgicos
+                model_antecedente.medico = _medicos
+                model_antecedente.alergia = _alergias
+                model_antecedente.familiar = _familiares
+                model_antecedente.habito = _habitos
+                model_antecedente.cigarro = _cigarrillos
+                model_antecedente.licor = _licor
+                model_antecedente.tipo_antecedente = tipo_antecedente
+                model_antecedente.save()
+                model_historial_clinico.fk_antecedente = model_antecedente
+                model_historial_clinico.save()
+                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
+                              {'model_historial_clinico': model_historial_clinico})
+
 
 def read_antecedente(request):
     if not request.user.is_authenticated:
@@ -765,58 +846,6 @@ def read_antecedente(request):
         antecedente = paginator.get_page(page)
         return render(request, 'Clinic/Antecedente/read_antecedente.html', {'antecedente': antecedente})
 
-
-# -- ANTECEDENTE -- VIEW UPDATE -- > this is a functions to update data Antecedente
-
-def update_antecedente(request, pk_antecedente):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        antecedente = Antecedente.objects.get(PK_ANTECEDENTE=pk_antecedente)
-        if (request.method == "GET"):
-            fecha_ultima_regla = antecedente.ULTIMA_REGLA.strftime("%Y-%m-%dT%H:%M")
-            fecha_probable_parto = antecedente.FECHA_PROBABLE_PARTO.strftime("%Y-%m-%dT%H:%M")
-            gesta = antecedente.GESTA.strftime("%Y-%m-%dT%H:%M")
-            aborto = antecedente.ABORTO.strftime("%Y-%m-%dT%H:%M")
-            print("CONVERSION FECHA Y HORA =", fecha_ultima_regla)
-            return render(request, 'Clinic/Antecedente/update_antecedente.html',
-                          {'antecedente': antecedente,
-                           'fecha_ultima_regla': fecha_ultima_regla,
-                           'fecha_probable_parto': fecha_probable_parto,
-                           'gesta': gesta,
-                           'aborto': aborto})
-        else:
-            _ultima_regla = request.POST.get('ULTIMA_REGLA')
-            _fecha_probable_parto = request.POST.get('FECHA_PROBABLE_PARTO')
-            _gesta = request.POST.get('GESTA')
-            _aborto = request.POST.get('ABORTO')
-            _hijos_vivos = request.POST.get('HIJOS_VIVOS')
-            _peso = request.POST.get('PESO')
-            _quirurgico = request.POST.get('QUIRURGICO')
-            _medico = request.POST.get('MEDICO')
-            _alergia = request.POST.get('ALERGIA')
-            _familiar = request.POST.get('FAMILIAR')
-            _habito = request.POST.get('HABITO')
-            _cigarro = request.POST.get('CIGARRO')
-            _licor = request.POST.get('LICOR')
-            antecedente.ULTIMA_REGLA = _ultima_regla
-            antecedente.FECHA_PROBABLE_PARTO = _fecha_probable_parto
-            antecedente.GESTA = _gesta
-            antecedente.ABORTO = _aborto
-            antecedente.HIJOS_VIVOS = _hijos_vivos
-            antecedente.PESO = _peso
-            antecedente.QUIRURGICO = _quirurgico
-            antecedente.MEDICO = _medico
-            antecedente.ALERGIA = _alergia
-            antecedente.FAMILIAR = _familiar
-            antecedente.HABITO = _habito
-            antecedente.CIGARRO = _cigarro
-            antecedente.LICOR = _licor
-            antecedente.save()
-            return redirect('dashboard')
-
-
-# -- ANTECEDENTE -- VIEW DELETE -- > this is a functions to deactivate (FALSE)
 
 def delete_antecedente(request, pk_antecedente):
     if not request.user.is_authenticated:

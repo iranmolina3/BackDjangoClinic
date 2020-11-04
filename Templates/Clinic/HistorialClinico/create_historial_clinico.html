@@ -66,8 +66,15 @@
                         </td>
                         {%endif%}
                         <!--tercera condicional para antecedente-->
-                        {%if model_historial_clinico.fk_antecendente is None%}
+                        {%if model_historial_clinico.fk_antecedente is None%}
                         <td>
+                            {%if model_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:create_antecedente' model_historial_clinico.pk_historial_clinico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                            {%else%}
                             <a href="{%url 'clinic:create_antecedente' model_historial_clinico.pk_historial_clinico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
@@ -78,20 +85,42 @@
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-baby-carriage"></i></button>
                             </a>
+                            {%endif%}
                         </td>
                         {%else%}
                         <td>
-                            <a href="">
-                                <button type="button"
-                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
-                                        class="fas fa-baby-carriage"></i></button>
-                            </a>
-                            <a href="">
+                            {%if model_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:update_antecedente' model_historial_clinico.fk_antecedente.pk_antecedente 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
+                            {%else%}
+                            {% if model_historial_clinico.fk_antecedente.tipo_antecedente == 1%}
+                            <a href="{%url 'clinic:update_antecedente' model_historial_clinico.fk_antecedente.pk_antecedente 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_antecedente' model_historial_clinico.fk_antecedente.pk_antecedente 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%else%}
+                            <a href="{%url 'clinic:update_antecedente' model_historial_clinico.fk_antecedente.pk_antecedente 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_antecedente' model_historial_clinico.fk_antecedente.pk_antecedente 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%endif%}
                         </td>
+                        {%endif%}
                         {%endif%}
                         <!--cuarta condicional para examen fisico-->
                         {%if model_historial_clinico.fk_examen_fisico is None%}
@@ -132,6 +161,11 @@ $( document ).ready(function() {
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     $("#fecha").val(today);
 });
+
+
+
+
+
 
 
 

@@ -28,7 +28,7 @@ urlpatterns = [
 
     path('create_antecedente/<int:pk_historial_clinico>/<int:tipo_antecedente>', create_antecedente, name='create_antecedente'),
     path('read_antecedente/', read_antecedente, name='read_antecedente'),
-    path('update_antecedente/<int:pk_antecedente>', update_antecedente, name='update_antecedente'),
+    path('update_antecedente/<int:pk_antecedente>/<int:tipo_antecedente>', update_antecedente, name='update_antecedente'),
     path('delete_antecedente/<int:pk_antecedente>', delete_antecedente, name='delete_antecedente'),
 
     path('create_pregunta/', create_pregunta, name = 'create_pregunta'),

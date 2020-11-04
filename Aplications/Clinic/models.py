@@ -157,6 +157,7 @@ class ExamenFisico(models.Model):
     frecuencia_cardiaca_fetal = models.IntegerField(blank=True, null=True)
     impresion_clinica = models.TextField(blank=True, null=True)
     estado = models.BooleanField(default=True, blank=False, null=False)
+    tipo_examen_fisico = models.IntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Examene Fisico'
@@ -182,6 +183,7 @@ class Antecedente(models.Model):
     cigarro = models.TextField(blank=True, null=True)
     licor = models.TextField(blank=True, null=True)
     estado = models.BooleanField(default=True, blank=False, null=False)
+    tipo_antecedente = models.IntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Antecedente'
@@ -190,14 +192,16 @@ class Antecedente(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.pk_antecedente, self.estado)
 
+# tipo_antecedente value 0 is not woman pregnant
+# tipo_antecedente value 1 is woman pregnant
 
 class HistorialClinico(models.Model):
     pk_historial_clinico = models.AutoField(primary_key=True)
     fecha_creacion = models.DateField(auto_now_add=True, auto_now=False)
     estado = models.BooleanField(default=True, blank=False, null=False)
-    fk_consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE, blank=True, null=True)
-    fk_examen_fisico = models.ForeignKey(ExamenFisico, on_delete=models.CASCADE, blank=True, null=True)
-    fk_antecendente = models.ForeignKey(Antecedente, on_delete=models.CASCADE, blank=True, null=True)
+    fk_consulta = models.OneToOneField(Consulta, on_delete=models.CASCADE, blank=True, null=True)
+    fk_examen_fisico = models.OneToOneField(ExamenFisico, on_delete=models.CASCADE, blank=True, null=True)
+    fk_antecedente = models.OneToOneField(Antecedente, on_delete=models.CASCADE, blank=True, null=True)
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=True, null=True)
     fk_cita = models.OneToOneField(Cita, on_delete=models.CASCADE, blank=True, null=True)
 
