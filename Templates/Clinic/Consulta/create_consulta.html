@@ -29,13 +29,9 @@
                                                 </span>
                                         </div>
                                         <input type="text" class="form-control" id="nametext" name="motivo"
-                                               aria-describedby="name" list="info-motivo"
+                                               aria-describedby="name"
                                                placeholder="Ej: Motivo o razon del paciente">
-                                        <datalist id="info-motivo">
-                                            {%for list_consulta in model_consulta%}
-                                            <option value="{{list_consulta.motivo_consulta}}">
-                                                {%endfor%}
-                                        </datalist>
+
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -48,14 +44,9 @@
                                                     </div>
                                                 </span>
                                         </div>
-                                        <input type="text" class="form-control" id="nametext" name="historia"
-                                               aria-describedby="name" list="info-historia"
-                                               placeholder="Ej: Como empezaron los sintomas">
-                                        <datalist id="info-historia">
-                                            {%for list_consulta in model_consulta%}
-                                            <option value="{{list_consulta.historia}}">
-                                                {%endfor%}
-                                        </datalist>
+                                        <textarea type="text" class="form-control" id="nametext" name="historia"
+                                               aria-describedby="name"
+                                                  placeholder="Ej: Como empezaron los sintomas"></textarea>
                                     </div>
                                 </div>
                                 <!-- Warning Alert modal -->

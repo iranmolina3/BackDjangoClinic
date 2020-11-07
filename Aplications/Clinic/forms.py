@@ -33,7 +33,7 @@ class FormUsuario(forms.ModelForm):
 
 class FormCsat(forms.ModelForm):
     class Meta:
-        model = Csat
+        model = Nps
         fields = [
             'respuesta', 'estado', 'fk_pregunta'
         ]

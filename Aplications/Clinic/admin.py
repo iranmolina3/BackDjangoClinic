@@ -31,7 +31,7 @@ class ResourcePersona(resources.ModelResource):
 
 class AdminPersona(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['nombre']
-    list_display = ['pk_persona', 'nombre', 'apellido', 'estado']
+    list_display = ['pk_persona', 'nombre', 'apellido', 'estado', 'hora_inicio', 'hora_final']
     resource_class = ResourcePersona
 
 
@@ -72,18 +72,18 @@ admin.site.register(Usuario, AdminPregunta)
 
 # IranDev this is the model admin HISTORIAL_CSAT
 
-class ResourceCsat(resources.ModelResource):
+class ResourceNps(resources.ModelResource):
     class Meta:
-        model = Csat
+        model = Nps
 
 
-class AdminHistorialCsat(ImportExportModelAdmin, admin.ModelAdmin):
+class AdminNps(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['respuesta']
     list_display = ['fk_pregunta', 'respuesta', 'estado']
-    resource_class = ResourceCsat
+    resource_class = ResourceNps
 
 
-admin.site.register(Csat, AdminHistorialCsat)
+admin.site.register(Nps, AdminNps)
 
 
 # IranDev this is the model admin TIPO_CITA
@@ -111,7 +111,7 @@ class ResourceCita(resources.ModelResource):
 
 class AdminCita(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['numero']
-    list_display = ['pk_cita', 'numero', 'fecha_creacion', 'estado', 'fk_persona']
+    list_display = ['pk_cita', 'numero', 'fecha_creacion', 'estado', 'fk_persona', 'hora_inicio', 'hora_final']
     resource_class = ResourceCita
 
 
@@ -175,7 +175,7 @@ class ResourceHistorialClinico(resources.ModelResource):
 
 class AdminHistorialClinico(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['fecha_creacion']
-    list_display = ['pk_historial_clinico', 'fecha_creacion', 'estado']
+    list_display = ['pk_historial_clinico', 'fk_persona', 'fecha_creacion', 'estado', 'hora_inicio', 'hora_final']
     resource_class = ResourceHistorialClinico
 
 
@@ -196,3 +196,34 @@ class AdminControlClinica(ImportExportModelAdmin, admin.ModelAdmin):
 
 
 admin.site.register(ControlClinica, AdminControlClinica)
+
+
+# Irandev this is a model admin MEDICAMENTO
+
+class ResourceMedicamento(resources.ModelResource):
+    class Meta:
+        model = Medicamento
+
+
+class AdminMedicamento(ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = ['nombre', ]
+    list_display = ['pk_medicamento', 'nombre', 'estado']
+    resource_class = ResourceMedicamento
+
+
+admin.site.register(Medicamento, AdminMedicamento)
+
+# Irandev this is a model admin
+
+class ResourceReceta(resources.ModelResource):
+    class Meta:
+        model = Receta
+
+
+class AdminReceta(ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = ['recomendacion', ]
+    list_display = ['pk_receta', 'recomendacion', 'fk_medicamento']
+    resource_class = ResourceReceta
+
+
+admin.site.register(Receta, AdminReceta)

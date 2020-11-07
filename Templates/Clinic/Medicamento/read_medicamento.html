@@ -15,14 +15,14 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Busqueda de preguntas NPS</h4>
-                        <h6 class="card-subtitle">Puedes escribir palabras claves o completa la pregunta</h6>
+                        <h4 class="card-title">Busqueda de medicamentos</h4>
+                        <h6 class="card-subtitle">Escribe abreviado o el nombre completo del medicamento</h6>
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control"
-                                               name="descripcion">
+                                               name="nombre">
                                         <button type="submit"
                                                 class="btn waves-effect waves-light btn-outline-primary"
                                                 data-toggle="modal"
@@ -43,7 +43,7 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Listado de preguntas NPS</h4>
+            <h4 class="card-title">Listado de medicamentos</h4>
             <!--<h6 class="card-subtitle">To use add class <code>.bg-success .text-white</code> in the
                 <code>&lt;thead&gt;</code>.</h6>-->
             <h6 class="card-subtitle">Lista de medicamentos registrados en el sistema</h6>
@@ -52,19 +52,19 @@
                     <thead class="bg-primary text-white">
                     <tr>
                         <th>#</th>
-                        <th>Pregunta</th>
+                        <th>Nombre</th>
                         <th>Opciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {%if model_pregunta%}
-                    {%for list_pregunta in model_pregunta%}
+                    {%if model_medicamento%}
+                    {%for list_medicamento in model_medicamento%}
                     <tr>
-                        <td>{{list_pregunta.pk_pregunta}}</td>
-                        <td>{{list_pregunta.descripcion}}</td>
+                        <td>{{list_medicamento.pk_medicamento}}</td>
+                        <td>{{list_medicamento.nombre}}</td>
                         <td>
                             <!-- Custom width modal -->
-                            <a href="{%url 'clinic:update_pregunta' list_pregunta.pk_pregunta%}">
+                            <a href="{%url 'clinic:update_medicamento' list_medicamento.pk_medicamento%}">
                                 <button type="button" class="btn btn-primary btn-rounded"><i
                                     class="fas fa-pencil-alt"></i>
                                 </button>
@@ -73,10 +73,10 @@
 
                             <button type="button"
                                     class="btn waves-effect waves-light btn-rounded btn-danger" data-toggle="modal"
-                                    data-target="#delete-cita{{list_pregunta.pk_pregunta}}"><i
+                                    data-target="#delete-cita{{list_medicamento.pk_medicamento}}"><i
                                     class="far fa-trash-alt"></i></button>
                             <!-- Danger Alert Modal -->
-                            <div id="delete-cita{{list_pregunta.pk_pregunta}}" class="modal fade" tabindex="-1"
+                            <div id="delete-cita{{list_medicamento.pk_medicamento}}" class="modal fade" tabindex="-1"
                                  role="dialog"
                                  aria-hidden="true">
                                 <div class="modal-dialog modal-sm">
@@ -90,7 +90,7 @@
                                                 <button type="button" class="btn btn-light my-2"
                                                         data-dismiss="modal">Cancelar
                                                 </button>
-                                                <a href="{%url 'clinic:delete_pregunta' list_pregunta.pk_pregunta%}">
+                                                <a href="{%url 'clinic:delete_medicamento' list_medicamento.pk_medicamento%}">
                                                     <button type="submit" class="btn btn-success my-2">Aceptar
                                                     </button>
                                                 </a>

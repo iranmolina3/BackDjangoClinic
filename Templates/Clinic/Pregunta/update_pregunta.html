@@ -1,62 +1,74 @@
-{%extends 'dashboard.html'%}
+{%extends 'index_dashboard.html'%}
 {%load staticfiles%}
 
 {%block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 {%endblock link%}
 
 {%block body%}
-<form method="POST">
+
+<form method="POST" id="FORM">
     {%csrf_token%}
     <div class="container-fluid">
-        <h1 class="mt-4">Actualizar pregunta</h1>
-        <div class="container backgroud-custom-opacity">
-            <div class="row">
-                <div class="col-sm-12">
-                    <label>Pregunta</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="DESCRIPCION" class="form-control"
-                               placeholder="Escribe una pregunta..." aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{pregunta.DESCRIPCION}}">
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold" data-toggle="modal"
-                    data-target="#staticBackdrop">
-                Registrar pregunta
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una cambio.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
-                                    data-dismiss="modal">Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar</button>
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Actulizacion de pregunta</h4>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-12">
+                                    <div class="form-group mb-0">
+                                        <input type="text" class="form-control" id="nametext4" aria-describedby="name"
+                                               placeholder="acetaminofén o acetaminofeno" name="descripcion" value="{{model_pregunta.descripcion}}">
+                                        {%if estado_text_helper%}
+                                        <p class="text-center mb-0">
+                                            <small id="name45"
+                                                   class="badge badge-default badge-danger form-text text-white">Este medicamento ya fue registrado</small>
+                                        </p>
+                                        {%else%}
+                                        <p class="text-center mb-0">
+                                        </p>
+                                        {%endif%}
+                                    </div>
+                                    <hr class="solid">
+                                    <!-- Warning Alert modal -->
+                                    <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                            data-target="#warning-alert-modal"><i class="fas fa-save"></i> Guardar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Warning Alert Modal -->
+        <div id="warning-alert-modal" class="modal fade" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body p-4">
+                        <div class="text-center">
+                            <h4 class="mt-2"><i class="fas fa-info fa-2x"></i></h4>
+                            <p class="mt-3">La informacion anteriormente escrita sera almacenada puedes cancelar para
+                                modificar o aceptar para registrar.</p>
+                            <button type="button" class="btn btn-warning my-2"
+                                    data-dismiss="modal">Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-success my-2">Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
-    <!-- /#page-content-wrapper -->
 </form>
+
+<!-- Para js de validaciones de campos -->
+<!--<script src="{% static 'js/validador.js'%}"></script>-->
+
 {%endblock body%}

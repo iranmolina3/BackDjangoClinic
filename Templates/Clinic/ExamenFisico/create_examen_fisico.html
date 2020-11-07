@@ -17,6 +17,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Registro de examen fisico</h4>
+                        {%if tipo_examen_fisico == 1%}
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-4">
@@ -51,7 +52,7 @@
                                                placeholder="Ej: 0, 1, 2.. 100">
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                <div class="col-sm-12 col-md-12 col-lg-4">
                                     <h6 class="card-title">Frecuencia respiratoria:</h6>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -101,7 +102,7 @@
                                                placeholder="Ej: 0, 1, 2.. 100">
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                <div class="col-sm-12 col-md-12 col-lg-4">
                                     <h6 class="card-title">Impresion clinica:</h6>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -123,6 +124,98 @@
                                     data-target="#warning-alert-modal"><i class="fas fa-save"></i> Guardar
                             </button>
                         </div>
+                        {%else%}
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Presion arterial:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="nametext"
+                                               name="presion_arterial"
+                                               aria-describedby="name" value="0"
+                                               placeholder="Ej: 0, 1, 2.. 100">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Frecuencia cardiaca:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="nametext"
+                                               name="frecuencia_cardiaca"
+                                               aria-describedby="name" value="0"
+                                               placeholder="Ej: 0, 1, 2.. 100">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-4">
+                                    <h6 class="card-title">Frecuencia respiratoria:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="nametext"
+                                               name="frecuencia_respitaroria"
+                                               aria-describedby="name" value="0"
+                                               placeholder="Ej: 0, 1, 2.. 100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Temperatura:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="nametext"
+                                               name="temperatura"
+                                               aria-describedby="name" value="0"
+                                               placeholder="Ej: 0, 1, 2.. 100">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-4">
+                                    <h6 class="card-title">Impresion clinica:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <i class="fas fa-asterisk fa-sm"></i>
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <textarea type="number" class="form-control" id="nametext"
+                                                  name="impresion_clinica"
+                                                  aria-describedby="name"
+                                                  placeholder="Ej: Descripcion del Doctor"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Warning Alert modal -->
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#warning-alert-modal"><i class="fas fa-save"></i> Guardar
+                            </button>
+                        </div>
+                        {%endif%}
                     </div>
                 </div>
             </div>

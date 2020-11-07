@@ -33,6 +33,8 @@ class Persona(models.Model):
     municipio = models.CharField(max_length=50, blank=True, null=True)
     estado_civil = models.CharField(default="Soltero(a)", max_length=10, blank=True, null=True)
     estado = models.BooleanField(default=True, blank=False, null=False)
+    hora_inicio = models.DateTimeField(blank=True, null=True)
+    hora_final = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Persona'
@@ -41,21 +43,6 @@ class Persona(models.Model):
 
     def __str__(self):
         return "{0},{1},{2}".format(self.pk_persona, self.nombre, self.apellido)
-
-
-class Pregunta(models.Model):
-    pk_pregunta = models.AutoField(primary_key=True)
-    descripcion = models.CharField(max_length=200, blank=False, null=False)
-    fecha_creacion = models.DateField(auto_now_add=True, auto_now=False)
-    estado = models.BooleanField(default=True, blank=False, null=False)
-
-    class Meta:
-        verbose_name = 'Pregunta'
-        verbose_name_plural = 'Preguntas'
-        ordering = ['fecha_creacion']
-
-    def __str__(self):
-        return "{0},{1}".format(self.descripcion, self.estado)
 
 
 class Usuario(models.Model):
@@ -100,6 +87,8 @@ class Cita(models.Model):
     estado = models.BooleanField(default=True, blank=False, null=False)
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=False, null=False)
     tipo_estado = models.BooleanField(blank=True, null=True)
+    hora_inicio = models.DateTimeField(blank=True, null=True)
+    hora_final = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Cita'
@@ -116,21 +105,36 @@ class Cita(models.Model):
 # -- if tipo_estado is True cita is complete
 # -- if tipo_estado is False cita is cancel
 
-class Csat(models.Model):
-    pk_csat = models.AutoField(primary_key=True)
-    respuesta = models.IntegerField(blank=False, null=False)
+
+class Pregunta(models.Model):
+    pk_pregunta = models.AutoField(primary_key=True)
+    descripcion = models.TextField(blank=False, null=False)
     fecha_creacion = models.DateField(auto_now_add=True, auto_now=False)
     estado = models.BooleanField(default=True, blank=False, null=False)
-    fk_pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, blank=False, null=False)
-    fk_cita = models.OneToOneField(Cita, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
-        verbose_name = 'HistorialCsat'
-        verbose_name_plural = 'HistorialCsat'
+        verbose_name = 'Pregunta'
+        verbose_name_plural = 'Preguntas'
         ordering = ['fecha_creacion']
 
     def __str__(self):
-        return "{0},{1}".format(self.fk_pregunta, self.respuesta)
+        return "{0},{1}".format(self.descripcion, self.estado)
+
+
+class Nps(models.Model):
+    pk_nps = models.AutoField(primary_key=True)
+    respuesta = models.IntegerField(blank=True, null=True)
+    fecha_creacion = models.DateField(auto_now_add=True, auto_now=False)
+    estado = models.BooleanField(default=True, blank=False, null=False)
+    fk_pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Nps'
+        verbose_name_plural = 'Nps'
+        ordering = ['respuesta']
+
+    def __str__(self):
+        return "{0},{1}".format(self.respuesta, self.fk_pregunta)
 
 
 class Consulta(models.Model):
@@ -153,7 +157,7 @@ class ExamenFisico(models.Model):
     presion_arterial = models.IntegerField(blank=True, null=True)
     frecuencia_cardiaca = models.IntegerField(blank=True, null=True)
     frecuencia_respitaroria = models.IntegerField(blank=True, null=True)
-    temperatura = models.IntegerField(blank=False, null=True)
+    temperatura = models.IntegerField(blank=True, null=True)
     frecuencia_cardiaca_fetal = models.IntegerField(blank=True, null=True)
     impresion_clinica = models.TextField(blank=True, null=True)
     estado = models.BooleanField(default=True, blank=False, null=False)
@@ -192,18 +196,40 @@ class Antecedente(models.Model):
     def __str__(self):
         return "{0},{1}".format(self.pk_antecedente, self.estado)
 
+
 # tipo_antecedente value 0 is not woman pregnant
 # tipo_antecedente value 1 is woman pregnant
 
+
+class Medicamento(models.Model):
+    pk_medicamento = models.AutoField(primary_key=True)
+    nombre = models.CharField('Nombre del medicamento', max_length=400, blank=True, null=True)
+    estado = models.BooleanField('Activa/Desactivada', default=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Medicamento'
+        verbose_name_plural = 'Medicamentos'
+
+    def __str__(self):
+        return "{0}".format(self.nombre)
+
+
+# -- this is a property from model =   unique=True
+
 class HistorialClinico(models.Model):
     pk_historial_clinico = models.AutoField(primary_key=True)
+    nombre = models.CharField('Nombre de paciente', max_length=400, blank=False, null=False)
     fecha_creacion = models.DateField(auto_now_add=True, auto_now=False)
     estado = models.BooleanField(default=True, blank=False, null=False)
     fk_consulta = models.OneToOneField(Consulta, on_delete=models.CASCADE, blank=True, null=True)
     fk_examen_fisico = models.OneToOneField(ExamenFisico, on_delete=models.CASCADE, blank=True, null=True)
     fk_antecedente = models.OneToOneField(Antecedente, on_delete=models.CASCADE, blank=True, null=True)
     fk_persona = models.ForeignKey(Persona, on_delete=models.CASCADE, blank=True, null=True)
+    fk_nps = models.ForeignKey(Nps, on_delete=models.CASCADE, blank=True, null=True)
     fk_cita = models.OneToOneField(Cita, on_delete=models.CASCADE, blank=True, null=True)
+    estado_receta = models.BooleanField(default=False, blank=False, null=False)
+    hora_inicio = models.DateTimeField(blank=True, null=True)
+    hora_final = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Historial clinico'
@@ -211,6 +237,24 @@ class HistorialClinico(models.Model):
 
     def __str__(self):
         return "{0},{1},{2}".format(self.pk_historial_clinico, self.fecha_creacion, self.estado)
+
+# DateTimeField.auto_now_add is when create object and save only one time
+# DateTimeField.auto_now is when update object and save always
+
+class Receta(models.Model):
+    pk_receta = models.AutoField(primary_key=True)
+    recomendacion = models.TextField(blank=True, null=True)
+    fk_medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE, blank=True, null=True)
+    fk_historialclinico = models.ForeignKey(HistorialClinico, on_delete=models.CASCADE, blank=True, null=True)
+    estado = models.BooleanField('Activa/Desactivada', default=True, blank=False, null=False)
+
+    class Meta:
+        verbose_name = 'Receta'
+        verbose_name_plural = 'Recetas'
+        ordering = ['pk_receta']
+
+    def __str__(self):
+        return "{0}".format(self.recomendacion)
 
 
 class ControlClinica(models.Model):

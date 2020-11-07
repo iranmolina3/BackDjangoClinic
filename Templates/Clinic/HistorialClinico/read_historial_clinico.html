@@ -1,60 +1,120 @@
-{%extends 'dashboard.html'%}
+{%extends 'index_dashboard.html'%}
 {%load staticfiles%}
 
 {%block link%}
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css'%}">
 {%endblock link%}
 
 {%block body%}
-{%if historial_clinico%}
-<form method="GET">
+<style type="text/css">
+			/* =============================================
+			* RADIO BUTTONS
+			=============================================== */
+
+			#radios label {
+				cursor: pointer;
+				position: relative;
+			}
+
+			#radios label + label {
+				margin-left: 15px;
+			}
+
+			input[type="radio"] {
+				opacity: 0; /* hidden but still tabable */
+				position: absolute;
+			}
+
+			input[type="radio"] + span {
+				font-family: 'Material Icons';
+				color: #B3CEFB;
+				border-radius: 100%;
+				padding: 12px;
+				transition: all 0.4s;
+				-webkit-transition: all 0.4s;
+			}
+
+			input[type="radio"]:checked + span {
+				color: #D9E7FD;
+			  background-color: #E1E1E1;
+			}
+
+			input[type="radio"]:focus + span {
+				color: #fff;
+			}
+
+			/* ================ TOOLTIPS ================= */
+
+			#radios label:hover::before {
+				content: attr(for);
+				font-family: Roboto, -apple-system, sans-serif;
+				text-transform: capitalize;
+				font-size: 11px;
+				position: absolute;
+				top: 170%;
+				left: 0;
+				right: 0;
+				opacity: 0.75;
+				background-color: #323232;
+				color: #fff;
+				padding: 4px;
+				border-radius: 3px;
+			  display: block;
+			}
+
+			/* =============================================
+			* CENTERING, CONTAINER STYLING ETC || IGNORE
+			=============================================== */
+
+			h1 {
+				font-weight: 300;
+				color: #D9E7FD;
+				text-align: center;
+				margin-bottom: 50px;
+			}
+
+			#radios {
+				text-align: center;
+				margin 0 auto;
+			}
+
+			.container {
+				margin: 0 auto;
+			}
+
+			html {
+				height: 100%;
+				font-family: Roboto, -apple-system, sans-serif;
+			}
+
+</style>
+
+
+<form method="GET" id="FORM">
     {%csrf_token%}
     <div class="container-fluid">
-        <h1 class="mt-4">Buscar paciente</h1>
-        <div class="container backgroud-custom-opacity">
-            <div class="row">
-                <div class="col-sm-8">
-                    <label>Nombre paciente</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">*</span>
-                        </div>
-                        <input type="text" name="NOMBRE" class="form-control"
-                               placeholder="Buscar por nombre" aria-label="Username"
-                               aria-describedby="basic-addon1" value="{{request.GET.NOMBRE}}">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <label></label>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-form-custom mbtn btn-lg btn-block font-weight-bold"
-                            data-toggle="modal"
-                            data-target="#staticBackdrop">
-                        Buscar paciente
-                    </button>
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Busqueda de historiales</h4>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="nametext"
+                                               name="nombre"
+                                               aria-describedby="name"
+                                               placeholder="Ej: Juan Pedro Monserrat o Juan">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-outline-primary"
+                                                data-toggle="modal"
+                                                data-target="#staticBackdrop"><i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false"
-                         tabindex="-1"
-                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">¿Esta seguro de continuar?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Para registrar a un paciente debes de continuar o cancelar si necesitar realizar una
-                                    cambio.
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-form-custom mbtn font-weight-bold"
-                                            data-dismiss="modal">Cancelar
-                                    </button>
-                                    <button type="submit" class="btn btn-form-custom mbtn font-weight-bold">Continuar
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -63,71 +123,229 @@
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
 </form>
-<div class="container-fluid">
-    <div class="container list-backgroud-custom-opacity">
-        <div class="container-fluid">
+
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Historial clinico</h4>
+            <!--<h6 class="card-subtitle">To use add class <code>.bg-success .text-white</code> in the
+                <code>&lt;thead&gt;</code>.</h6>-->
+            <h6 class="card-subtitle">Historial clinico para completar informacion de la cita</h6>
             <div class="table-responsive">
-                <table class="table table-striped ">
-                    <thead>
+                <table class="table">
+                    <thead class="bg-primary text-white">
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Fecha de creacion</th>
-                        <th scope="col">DPI</th>
-                        <th scope="col">Ver o editar historial clinico</th>
+                        <th>Nombre</th>
+                        <th>Fecha de creacion</th>
+                        <th>Paciente</th>
+                        <th>Motivo consulta</th>
+                        <th>Antecedente</th>
+                        <th>Examen fisico</th>
+                        <th>Recetario</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {%for lista_historial_clinico in historial_clinico%}
                     <tr>
-                        <th scope="row">{{lista_historial_clinico.FK_PERSONA}}</th>
-                        <td>{{lista_historial_clinico.FECHA_CREACION}}</td>
-                        {%if lista_historial_clinico.ESTADO%}
-                            <td>Reciente</td>
-                        {%else%}
-                            <td>Antiguo</td>
-                        {%endif%}
-                        <td>
-                            <a href="{%url 'clinic:update_historial_clinico' lista_historial_clinico.PK_HISTORIAL_CLINICO%}" class="a-custom">Ver o editar</a>
+                        {%for list_historial_clinico in model_historial_clinico%}
+                        <td>{{list_historial_clinico.fk_persona.nombre}}
+                            {{list_historial_clinico.fk_persona.apellido}}
                         </td>
-                        {%endfor%}
+                        <td>{{list_historial_clinico.fecha_creacion}}
+                        </td>
+                        <!--condicional para verificar si ya se creo o no se ha creado color ver para ya creado y anarajado para no-->
+                        {%if list_historial_clinico.fk_persona is None%}
+                        <td>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-file-medical-alt"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="{%url 'clinic:updatePersona' list_historial_clinico.pk_historial_clinico%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-user-injured"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                        <!--segunda condicional para motivo-->
+                        {%if list_historial_clinico.fk_consulta is None%}
+                        <td>
+                            <a href="{%url 'clinic:create_consulta' list_historial_clinico.pk_historial_clinico%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="{%url 'clinic:update_consulta' list_historial_clinico.fk_consulta.pk_consulta%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                        <!--tercera condicional para antecedente-->
+                        {%if list_historial_clinico.fk_antecedente is None%}
+                        <td>
+                            {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:create_antecedente' list_historial_clinico.pk_historial_clinico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                            {%else%}
+                            <a href="{%url 'clinic:create_antecedente' list_historial_clinico.pk_historial_clinico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:create_antecedente' list_historial_clinico.pk_historial_clinico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%endif%}
+                        </td>
+                        {%else%}
+                        <td>
+                            {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            {%else%}
+                            {% if list_historial_clinico.fk_antecedente.tipo_antecedente == 1%}
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%else%}
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%endif%}
+                        </td>
+                        {%endif%}
+                        {%endif%}
+                        <!--cuarta condicional para examen fisico-->
+                        {%if list_historial_clinico.fk_examen_fisico is None%}
+                        <td>
+                            {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:create_examen_fisico' list_historial_clinico.pk_historial_clinico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                            {%else%}
+                            <a href="{%url 'clinic:create_examen_fisico' list_historial_clinico.pk_historial_clinico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:create_examen_fisico' list_historial_clinico.pk_historial_clinico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%endif%}
+                        </td>
+                        {%else%}
+                        <td>
+                            {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            {%else%}
+                            {% if list_historial_clinico.fk_examen_fisico.tipo_examen_fisico == 1%}
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%else%}
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%endif%}
+                        </td>
+                        {%endif%}
+                        {%endif%}
+                        {%if not list_historial_clinico.estado_receta%}
+                        <td>
+                            <a href="{%url 'clinic:create_receta' list_historial_clinico.pk_historial_clinico%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-capsules"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="{%url 'clinic:create_receta' list_historial_clinico.pk_historial_clinico%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-capsules"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                    </tr>
+                    {%endfor%}
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="col-md-6 float-left">
-                    {%if historial_clinico.has_previous%}
-                    <div class="clearfix">
-                        <a href="?page={{historial_clinico.previous_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
-                           class="btn a-custom float-left">Anterior</a>
-                    </div>
-                    {%endif%}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="col-md-6 float-right">
-                    {%if historial_clinico.has_next%}
-                    <div class="clearfix">
-                        <a href="?page={{historial_clinico.next_page_number}}{%if request.GET.search%}&q={{request.GET.search}}{%endif%}"
-                           class="btn a-custom float-right">Siguiente</a>
-                    </div>
-                    {%endif%}
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-{%else%}
-<div class="container-fluid">
-    <h1 class="mt-4">Buscar paciente</h1>
-    <div class="container backgroud-custom-opacity">
-        <h2 class="mt-4"><i class="fas fa-info-circle"></i> No hay pacientes registrados</h2>
-    </div>
-</div>
-{%endif%}
-<!-- /#page-content-wrapper -->
+<script>
+$( document ).ready(function() {
+
+    var now = new Date();
+
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $("#fecha").val(today);
+});
+
+
+
+
+
+</script>
 {%endblock body%}

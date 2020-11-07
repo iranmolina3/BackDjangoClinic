@@ -5,6 +5,92 @@
 {%endblock link%}
 
 {%block body%}
+<style type="text/css">
+			/* =============================================
+			* RADIO BUTTONS
+			=============================================== */
+
+			#radios label {
+				cursor: pointer;
+				position: relative;
+			}
+
+			#radios label + label {
+				margin-left: 15px;
+			}
+
+			input[type="radio"] {
+				opacity: 0; /* hidden but still tabable */
+				position: absolute;
+			}
+
+			input[type="radio"] + span {
+				font-family: 'Material Icons';
+				color: #B3CEFB;
+				border-radius: 100%;
+				padding: 12px;
+				transition: all 0.4s;
+				-webkit-transition: all 0.4s;
+			}
+
+			input[type="radio"]:checked + span {
+				color: #D9E7FD;
+			  background-color: #E1E1E1;
+			}
+
+			input[type="radio"]:focus + span {
+				color: #fff;
+			}
+
+			/* ================ TOOLTIPS ================= */
+
+			#radios label:hover::before {
+				content: attr(for);
+				font-family: Roboto, -apple-system, sans-serif;
+				text-transform: capitalize;
+				font-size: 11px;
+				position: absolute;
+				top: 170%;
+				left: 0;
+				right: 0;
+				opacity: 0.75;
+				background-color: #323232;
+				color: #fff;
+				padding: 4px;
+				border-radius: 3px;
+			  display: block;
+			}
+
+			/* =============================================
+			* CENTERING, CONTAINER STYLING ETC || IGNORE
+			=============================================== */
+
+			h1 {
+				font-weight: 300;
+				color: #D9E7FD;
+				text-align: center;
+				margin-bottom: 50px;
+			}
+
+			#radios {
+				text-align: center;
+				margin 0 auto;
+			}
+
+			.container {
+				margin: 0 auto;
+			}
+
+			html {
+				height: 100%;
+				font-family: Roboto, -apple-system, sans-serif;
+			}
+
+
+
+
+
+</style>
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
@@ -21,6 +107,9 @@
                         <th>Motivo consulta</th>
                         <th>Antecedente</th>
                         <th>Examen fisico</th>
+                        <th>Recetario</th>
+                        <th>Satisfaccion</th>
+                        <th>Terminar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,7 +129,7 @@
                         </td>
                         {%else%}
                         <td>
-                            <a href="">
+                            <a href="{%url 'clinic:updatePersona' model_historial_clinico.pk_historial_clinico%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-user-injured"></i></button>
@@ -125,21 +214,609 @@
                         <!--cuarta condicional para examen fisico-->
                         {%if model_historial_clinico.fk_examen_fisico is None%}
                         <td>
-                            <a href="{%url 'clinic:create_examen_fisico' model_historial_clinico.pk_historial_clinico%}">
+                            {%if model_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:create_examen_fisico' model_historial_clinico.pk_historial_clinico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
                             </a>
+                            {%else%}
+                            <a href="{%url 'clinic:create_examen_fisico' model_historial_clinico.pk_historial_clinico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="far fa-clipboard"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:create_examen_fisico' model_historial_clinico.pk_historial_clinico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%endif%}
                         </td>
                         {%else%}
                         <td>
-                            <a href="{%url 'clinic:update_examen_fisico' model_historial_clinico.fk_examen_fisico.pk_examen_fisico%}">
+                            {%if model_historial_clinico.fk_persona.genero == 'Masculino'%}
+                            <a href="{%url 'clinic:update_examen_fisico' model_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
+                            {%else%}
+                            {% if model_historial_clinico.fk_examen_fisico.tipo_examen_fisico == 1%}
+                            <a href="{%url 'clinic:update_examen_fisico' model_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_examen_fisico' model_historial_clinico.fk_examen_fisico.pk_examen_fisico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%else%}
+                            <a href="{%url 'clinic:update_examen_fisico' model_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-notes-medical"></i></button>
+                            </a>
+                            <a href="{%url 'clinic:update_examen_fisico' model_historial_clinico.fk_examen_fisico.pk_examen_fisico 1%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-baby-carriage"></i></button>
+                            </a>
+                            {%endif%}
                         </td>
                         {%endif%}
+                        {%endif%}
+                        {%if not model_historial_clinico.estado_receta%}
+                        <td>
+                            <a href="{%url 'clinic:create_receta' model_historial_clinico.pk_historial_clinico%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-secondary"><i
+                                        class="fas fa-capsules"></i></button>
+                            </a>
+                        </td>
+                        {%else%}
+                        <td>
+                            <a href="{%url 'clinic:create_receta' model_historial_clinico.pk_historial_clinico%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-success"><i
+                                        class="fas fa-capsules"></i></button>
+                            </a>
+                        </td>
+                        {%endif%}
+                        {%if model_historial_clinico.fk_nps is None%}
+                        <td>
+
+                            <button type="button" class="btn btn-secondary btn-rounded" data-toggle="modal"
+                                    data-target="#registro-cita"><i
+                                    class="fas fa-grin-stars" data-toggle="modal"
+                                    data-target="#staticBackdrop"></i>
+                            </button>
+                            <!-- Signup modal content -->
+                            <div id="registro-cita" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <div class="text-center mt-2 mb-4">
+                                                <a href="" class="text-success">
+                                                    <span><i class="fas fa-tasks fa-3x"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <form class="pl-3 pr-3" method="POST">
+                                                {%csrf_token%}
+                                                <div class="form-group">
+                                                    <label for="select-pregunta">Pregunta:</label>
+                                                    <select class="custom-select" id="select-pregunta"
+                                                            name="pk_pregunta">
+                                                        <option value="" disabled selected>Selecciona...</option>
+                                                        {%for lista_pregunta in model_pregunta%}
+                                                        <option value="{{lista_pregunta.pk_pregunta}}">
+                                                            {{lista_pregunta.descripcion}}
+                                                        </option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="text-center">
+                                                        <label for="select-pregunta">Respuesta</label>
+                                                        <div id="radios">
+                                                            <label for="1" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="1" value="1"
+                                                                       checked/>
+                                                                <span style="font-size: 1.5em; color: #E8270C;"><i
+                                                                        class="far fa-tired"></i></span>
+                                                            </label>
+                                                            <label for="2" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="2"
+                                                                       value="2"/>
+                                                                <span style="font-size: 1.5em; color: #F9A51B;"><i
+                                                                        class="far fa-frown"></i></span>
+                                                            </label>
+                                                            <label for="3" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="3"
+                                                                       value="3"/>
+                                                                <span style="font-size: 1.5em; color: #EAB70B;"><i
+                                                                        class="far fa-meh"></i></span>
+                                                            </label>
+                                                            <label for="4" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="4"
+                                                                       value="4"/>
+                                                                <span style="font-size: 1.5em; color: #9BD739;"><i
+                                                                        class="far fa-smile-beam"></i></span>
+                                                            </label>
+                                                            <label for="5" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="5"
+                                                                       value="5"/>
+                                                                <span style="font-size: 1.5em; color: #5ED615;"><i
+                                                                        class="far fa-laugh-beam"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button type="button" class="btn btn-light my-2"
+                                                            data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                        {%else%}
+                        {%if model_historial_clinico.fk_nps.respuesta == 1%}
+                        <td>
+
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#registro-cita"><i
+                                    class="fas fa-grin-stars" data-toggle="modal"
+                                    data-target="#staticBackdrop"></i>
+                            </button>
+                            <!-- Signup modal content -->
+                            <div id="registro-cita" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <div class="text-center mt-2 mb-4">
+                                                <a href="" class="text-success">
+                                                    <span><i class="fas fa-tasks fa-3x"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <form class="pl-3 pr-3" action="#" method="POST">
+                                                {%csrf_token%}
+                                                <div class="form-group">
+                                                    <label for="select-pregunta">Pregunta:</label>
+                                                    <select class="custom-select" id="select-pregunta"
+                                                            name="pk_pregunta">
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        {%for lista_pregunta in model_pregunta%}
+                                                        <option value="{{lista_pregunta.pk_pregunta}}">
+                                                            {{lista_pregunta.descripcion}}
+                                                        </option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="text-center">
+                                                        <label for="select-pregunta">Respuesta</label>
+                                                        <div id="radios">
+                                                            <label for="1" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="1" value="1"
+                                                                       checked/>
+                                                                <span style="font-size: 1.5em; color: #E8270C;"><i
+                                                                        class="far fa-tired"></i></span>
+                                                            </label>
+                                                            <label for="2" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="2"
+                                                                       value="2"/>
+                                                                <span style="font-size: 1.5em; color: #F9A51B;"><i
+                                                                        class="far fa-frown"></i></span>
+                                                            </label>
+                                                            <label for="3" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="3"
+                                                                       value="3"/>
+                                                                <span style="font-size: 1.5em; color: #EAB70B;"><i
+                                                                        class="far fa-meh"></i></span>
+                                                            </label>
+                                                            <label for="4" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="4"
+                                                                       value="4"/>
+                                                                <span style="font-size: 1.5em; color: #9BD739;"><i
+                                                                        class="far fa-smile-beam"></i></span>
+                                                            </label>
+                                                            <label for="5" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="5"
+                                                                       value="5"/>
+                                                                <span style="font-size: 1.5em; color: #5ED615;"><i
+                                                                        class="far fa-laugh-beam"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button type="button" class="btn btn-light my-2"
+                                                            data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                        {%elif model_historial_clinico.fk_nps.respuesta == 2%}
+                        <td>
+
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#registro-cita"><i
+                                    class="fas fa-grin-stars" data-toggle="modal"
+                                    data-target="#staticBackdrop"></i>
+                            </button>
+                            <!-- Signup modal content -->
+                            <div id="registro-cita" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <div class="text-center mt-2 mb-4">
+                                                <a href="" class="text-success">
+                                                    <span><i class="fas fa-tasks fa-3x"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <form class="pl-3 pr-3" action="#" method="POST">
+                                                {%csrf_token%}
+                                                <div class="form-group">
+                                                    <label for="select-pregunta">Pregunta:</label>
+                                                    <select class="custom-select" id="select-pregunta"
+                                                            name="pk_pregunta">
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        {%for lista_pregunta in model_pregunta%}
+                                                        <option value="{{lista_pregunta.pk_pregunta}}">
+                                                            {{lista_pregunta.descripcion}}
+                                                        </option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="text-center">
+                                                        <label for="select-pregunta">Respuesta</label>
+                                                        <div id="radios">
+                                                            <label for="1" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="1" value="1"
+                                                                       />
+                                                                <span style="font-size: 1.5em; color: #E8270C;"><i
+                                                                        class="far fa-tired"></i></span>
+                                                            </label>
+                                                            <label for="2" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="2"
+                                                                       value="2" checked/>
+                                                                <span style="font-size: 1.5em; color: #F9A51B;"><i
+                                                                        class="far fa-frown"></i></span>
+                                                            </label>
+                                                            <label for="3" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="3"
+                                                                       value="3"/>
+                                                                <span style="font-size: 1.5em; color: #EAB70B;"><i
+                                                                        class="far fa-meh"></i></span>
+                                                            </label>
+                                                            <label for="4" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="4"
+                                                                       value="4"/>
+                                                                <span style="font-size: 1.5em; color: #9BD739;"><i
+                                                                        class="far fa-smile-beam"></i></span>
+                                                            </label>
+                                                            <label for="5" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="5"
+                                                                       value="5"/>
+                                                                <span style="font-size: 1.5em; color: #5ED615;"><i
+                                                                        class="far fa-laugh-beam"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button type="button" class="btn btn-light my-2"
+                                                            data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                        {%elif model_historial_clinico.fk_nps.respuesta == 3%}
+                        <td>
+
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#registro-cita"><i
+                                    class="fas fa-grin-stars" data-toggle="modal"
+                                    data-target="#staticBackdrop"></i>
+                            </button>
+                            <!-- Signup modal content -->
+                            <div id="registro-cita" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <div class="text-center mt-2 mb-4">
+                                                <a href="" class="text-success">
+                                                    <span><i class="fas fa-tasks fa-3x"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <form class="pl-3 pr-3" action="#" method="POST">
+                                                {%csrf_token%}
+                                                <div class="form-group">
+                                                    <label for="select-pregunta">Pregunta:</label>
+                                                    <select class="custom-select" id="select-pregunta"
+                                                            name="pk_pregunta">
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        {%for lista_pregunta in model_pregunta%}
+                                                        <option value="{{lista_pregunta.pk_pregunta}}">
+                                                            {{lista_pregunta.descripcion}}
+                                                        </option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="text-center">
+                                                        <label for="select-pregunta">Respuesta</label>
+                                                        <div id="radios">
+                                                            <label for="1" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="1" value="1"
+                                                                       />
+                                                                <span style="font-size: 1.5em; color: #E8270C;"><i
+                                                                        class="far fa-tired"></i></span>
+                                                            </label>
+                                                            <label for="2" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="2"
+                                                                       value="2"/>
+                                                                <span style="font-size: 1.5em; color: #F9A51B;"><i
+                                                                        class="far fa-frown"></i></span>
+                                                            </label>
+                                                            <label for="3" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="3"
+                                                                       value="3" checked/>
+                                                                <span style="font-size: 1.5em; color: #EAB70B;"><i
+                                                                        class="far fa-meh"></i></span>
+                                                            </label>
+                                                            <label for="4" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="4"
+                                                                       value="4"/>
+                                                                <span style="font-size: 1.5em; color: #9BD739;"><i
+                                                                        class="far fa-smile-beam"></i></span>
+                                                            </label>
+                                                            <label for="5" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="5"
+                                                                       value="5"/>
+                                                                <span style="font-size: 1.5em; color: #5ED615;"><i
+                                                                        class="far fa-laugh-beam"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button type="button" class="btn btn-light my-2"
+                                                            data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                        {%elif model_historial_clinico.fk_nps.respuesta == 4%}
+                        <td>
+
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#registro-cita"><i
+                                    class="fas fa-grin-stars" data-toggle="modal"
+                                    data-target="#staticBackdrop"></i>
+                            </button>
+                            <!-- Signup modal content -->
+                            <div id="registro-cita" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <div class="text-center mt-2 mb-4">
+                                                <a href="" class="text-success">
+                                                    <span><i class="fas fa-tasks fa-3x"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <form class="pl-3 pr-3" action="#" method="POST">
+                                                {%csrf_token%}
+                                                <div class="form-group">
+                                                    <label for="select-pregunta">Pregunta:</label>
+                                                    <select class="custom-select" id="select-pregunta"
+                                                            name="pk_pregunta">
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        {%for lista_pregunta in model_pregunta%}
+                                                        <option value="{{lista_pregunta.pk_pregunta}}">
+                                                            {{lista_pregunta.descripcion}}
+                                                        </option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="text-center">
+                                                        <label for="select-pregunta">Respuesta</label>
+                                                        <div id="radios">
+                                                            <label for="1" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="1" value="1"
+                                                                       />
+                                                                <span style="font-size: 1.5em; color: #E8270C;"><i
+                                                                        class="far fa-tired"></i></span>
+                                                            </label>
+                                                            <label for="2" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="2"
+                                                                       value="2"/>
+                                                                <span style="font-size: 1.5em; color: #F9A51B;"><i
+                                                                        class="far fa-frown"></i></span>
+                                                            </label>
+                                                            <label for="3" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="3"
+                                                                       value="3"/>
+                                                                <span style="font-size: 1.5em; color: #EAB70B;"><i
+                                                                        class="far fa-meh"></i></span>
+                                                            </label>
+                                                            <label for="4" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="4"
+                                                                       value="4" checked/>
+                                                                <span style="font-size: 1.5em; color: #9BD739;"><i
+                                                                        class="far fa-smile-beam"></i></span>
+                                                            </label>
+                                                            <label for="5" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="5"
+                                                                       value="5"/>
+                                                                <span style="font-size: 1.5em; color: #5ED615;"><i
+                                                                        class="far fa-laugh-beam"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button type="button" class="btn btn-light my-2"
+                                                            data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                        {%else%}
+                        <td>
+
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#registro-cita"><i
+                                    class="fas fa-grin-stars" data-toggle="modal"
+                                    data-target="#staticBackdrop"></i>
+                            </button>
+                            <!-- Signup modal content -->
+                            <div id="registro-cita" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+                                            <div class="text-center mt-2 mb-4">
+                                                <a href="" class="text-success">
+                                                    <span><i class="fas fa-tasks fa-3x"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <form class="pl-3 pr-3" action="#" method="POST">
+                                                {%csrf_token%}
+                                                <div class="form-group">
+                                                    <label for="select-pregunta">Pregunta:</label>
+                                                    <select class="custom-select" id="select-pregunta"
+                                                            name="pk_pregunta">
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        {%for lista_pregunta in model_pregunta%}
+                                                        <option value="{{lista_pregunta.pk_pregunta}}">
+                                                            {{lista_pregunta.descripcion}}
+                                                        </option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="text-center">
+                                                        <label for="select-pregunta">Respuesta</label>
+                                                        <div id="radios">
+                                                            <label for="1" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="1" value="1"
+                                                                       />
+                                                                <span style="font-size: 1.5em; color: #E8270C;"><i
+                                                                        class="far fa-tired"></i></span>
+                                                            </label>
+                                                            <label for="2" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="2"
+                                                                       value="2"/>
+                                                                <span style="font-size: 1.5em; color: #F9A51B;"><i
+                                                                        class="far fa-frown"></i></span>
+                                                            </label>
+                                                            <label for="3" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="3"
+                                                                       value="3"/>
+                                                                <span style="font-size: 1.5em; color: #EAB70B;"><i
+                                                                        class="far fa-meh"></i></span>
+                                                            </label>
+                                                            <label for="4" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="4"
+                                                                       value="4"/>
+                                                                <span style="font-size: 1.5em; color: #9BD739;"><i
+                                                                        class="far fa-smile-beam"></i></span>
+                                                            </label>
+                                                            <label for="5" class="material-icons">
+                                                                <input type="radio" name="respuesta" id="5"
+                                                                       value="5" checked/>
+                                                                <span style="font-size: 1.5em; color: #5ED615;"><i
+                                                                        class="far fa-laugh-beam"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button type="button" class="btn btn-light my-2"
+                                                            data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                        {%endif%}
+                        {%endif%}
+                        <td>
+                            <a href="{%url 'clinic:delete_historial_clinico' model_historial_clinico.pk_historial_clinico model_historial_clinico.fk_cita.pk_cita%}">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-danger"><i
+                                        class="far fa-trash-alt"></i></button>
+                            </a>
+                        </td>
                     </tr>
                     {%endif%}
                     </tbody>
@@ -161,12 +838,6 @@ $( document ).ready(function() {
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     $("#fecha").val(today);
 });
-
-
-
-
-
-
 
 
 

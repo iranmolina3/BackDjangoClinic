@@ -16,13 +16,22 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Registro de preguntas NPS</h4>
+                        <h4 class="card-title">Registro de medicamento</h4>
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-12">
                                     <div class="form-group mb-0">
                                         <input type="text" class="form-control" id="nametext4" aria-describedby="name"
-                                               placeholder="Le gusto el servicio al cliente?" name="descripcion">
+                                               placeholder="acetaminofén o acetaminofeno" name="descripcion">
+                                        {%if estado_text_helper%}
+                                        <p class="text-center mb-0">
+                                            <small id="name45"
+                                                   class="badge badge-default badge-danger form-text text-white">Este medicamento ya fue registrado</small>
+                                        </p>
+                                        {%else%}
+                                        <p class="text-center mb-0">
+                                        </p>
+                                        {%endif%}
                                     </div>
                                     <hr class="solid">
                                     <!-- Warning Alert modal -->
