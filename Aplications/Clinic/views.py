@@ -608,6 +608,11 @@ def isBlank(myString):
     else:
         return myString
 
+def isStr(myString):
+    if not (myString and myString.strip()):
+        return ""
+    else:
+        return myString
 
 def isNone(myDate):
     print(type(myDate), ' -valor- ', myDate)
@@ -858,7 +863,7 @@ def create_medicamento(request):
         return redirect('sing')
     else:
         if request.method == "POST":
-            _nombre = request.POST.get('nombre')
+            _nombre = request.POST.get('descripcion')
             if Medicamento.objects.filter(Q(nombre__icontains=_nombre) & Q(estado=True)).exists():
                 estado_text_helper = True
                 return render(request, 'Clinic/Medicamento/create_medicamento.html',
@@ -882,7 +887,7 @@ def read_medicamento(request):
         if request.method == "POST":
             return render(request, 'dashboard')
         else:
-            _nombre = isBlank(request.GET.get('nombre'))
+            _nombre = isStr(request.GET.get('descripcion'))
             model_medicamento = Medicamento.objects.filter(Q(estado=True) & Q(nombre__icontains=_nombre))
             return render(request, 'Clinic/Medicamento/read_medicamento.html', {'model_medicamento': model_medicamento})
 
