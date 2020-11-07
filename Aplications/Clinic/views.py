@@ -93,12 +93,26 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
+        _citas_atendidas = numberModelarray(Cita.objects.filter(
+            Q(tipo_estado=True) & Q(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d"))))
+        _citas_pendientes = numberModelarray(Cita.objects.filter(
+            Q(Q(estado=True) & Q(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))))
+        _pacientes = numberModelarray(Persona.objects.filter(estado=True))
+        _citas_futuras = numberModelarray(Cita.objects.filter(estado=True).exclude(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))
+
         #        cita1 = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
         #        cita2 = Cita.objects.filter(ESTADO=True).order_by('FECHA_INGRESO').exclude(FECHA_INGRESO=date.today())
         #        paginator = Paginator(cita1, 10)
         #        page = request.GET.get('page')
         #        cita1 = paginator.get_page(page)
-        return render(request, 'index_dashboard.html')
+        return render(request, 'index_dashboard.html', {'citas_atendidas': _citas_atendidas, 'citas_pendientes':_citas_pendientes, 'pacientes':_pacientes, 'citas_futuras':_citas_futuras})
+
+
+def numberModelarray(model):
+    count = 0
+    for list_model in model:
+        count = count + 1
+    return count
 
 
 """
@@ -448,6 +462,7 @@ def delete_historial_clinico(request, pk_historial_clinico, pk_cita):
         _model_historial_clinico.save()
         _model_cita = Cita.objects.get(pk_cita=pk_cita)
         _model_cita.estado = False
+        _model_cita.tipo_estado = True
         _model_cita.save()
         return redirect('clinic:read_cita')
 
@@ -589,7 +604,7 @@ def create_antecedente(request, pk_historial_clinico, tipo_antecedente):
 
 def isBlank(myString):
     if not (myString and myString.strip()):
-        return ""
+        return None
     else:
         return myString
 
