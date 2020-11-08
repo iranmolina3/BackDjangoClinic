@@ -101,7 +101,7 @@ from decouple import config
 DATABASES = {
     'default':dj_database_url.config(
         default=config('DATABASE_URL')
-   )
+    )
 }
 
 
@@ -130,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-gt'
 
-TIME_ZONE = 'GMT'
+TIME_ZONE = 'America/Guatemala'
 
 USE_I18N = True
 
