@@ -78,6 +78,20 @@ class TipoEstado(models.Model):
         return "{0},{1}".format(self.nombre, self.estado)
 
 
+class Servicio(models.Model):
+    pk_servicio = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=150, blank=True, null=True)
+    brev_descripcion = models.TextField(blank=True, null=True)
+    estado = models.BooleanField(default=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Servicio'
+        verbose_name_plural = 'Servicios'
+        ordering = ['nombre']
+
+    def __str__(self):
+        return "{0}".format(self.nombre)
+
 class Cita(models.Model):
     pk_cita = models.AutoField(primary_key=True)
     numero = models.IntegerField(blank=False, null=True)
@@ -139,17 +153,17 @@ class Nps(models.Model):
 
 class Consulta(models.Model):
     pk_consulta = models.AutoField(primary_key=True)
-    motivo_consulta = models.TextField(max_length=200, blank=False, null=False)
-    historia = models.TextField(blank=False, null=False)
-    estado = models.BooleanField(default=True, blank=False, null=False)
+    fk_servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, blank=True, null=True)
+    historia = models.TextField(blank=True, null=True)
+    estado = models.BooleanField(default=True, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Consulta'
         verbose_name_plural = 'Consultas'
-        ordering = ['motivo_consulta']
+        ordering = ['pk_consulta']
 
     def __str__(self):
-        return "{0},{1}".format(self.motivo_consulta, self.estado)
+        return "{0},{1}".format(self.fk_servicio, self.estado)
 
 
 class ExamenFisico(models.Model):

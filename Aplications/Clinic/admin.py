@@ -143,7 +143,7 @@ class ResourceConsulta(resources.ModelResource):
 
 class AdminConsulta(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['estado']
-    list_display = ['motivo_consulta', 'estado']
+    list_display = ['fk_servicio', 'estado']
     resource_class = ResourceConsulta
 
 
@@ -227,3 +227,18 @@ class AdminReceta(ImportExportModelAdmin, admin.ModelAdmin):
 
 
 admin.site.register(Receta, AdminReceta)
+
+# Irandev this is a model admin
+
+class ResourceServicio(resources.ModelResource):
+    class Meta:
+        model = Servicio
+
+
+class AdminServicio(ImportExportModelAdmin, admin.ModelAdmin):
+    search_fields = ['nombre', ]
+    list_display = ['pk_servicio', 'nombre', 'estado']
+    resource_class = ResourceServicio
+
+
+admin.site.register(Servicio, AdminServicio)

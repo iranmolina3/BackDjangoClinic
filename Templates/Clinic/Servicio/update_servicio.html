@@ -5,6 +5,7 @@
 {%endblock link%}
 
 {%block body%}
+
 <form method="POST" id="FORM">
     {%csrf_token%}
     <div class="container-fluid">
@@ -15,28 +16,26 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Registro de consulta</h4>
+                        <h4 class="card-title">Registro de pacientes</h4>
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="card-title">Motivo de consulta:</h6>
+                                    <h6 class="card-title">Nombre:</h6>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                                 <span class="input-group-text">
                                                     <div style="font-size: 0.5rem;">
-                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                        <i class="fas fa-asterisk fa-sm"></i>
                                                     </div>
                                                 </span>
                                         </div>
-                                        <select type="text" class="form-control" id="nametext" name="fk_servicio"
+                                        <input type="text" class="form-control" id="nametext" name="nombre"
                                                aria-describedby="name"
-                                               placeholder="Ej: Motivo o razon del paciente">
-
-                                        </select>
+                                               placeholder="Ej: Sutura de heridas" value="{{model_servicio.nombre}}">
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="card-title">Historia:</h6>
+                                    <h6 class="card-title">Breve descripcion:</h6>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                                 <span class="input-group-text">
@@ -45,21 +44,38 @@
                                                     </div>
                                                 </span>
                                         </div>
-                                        <textarea type="text" class="form-control" id="nametext" name="historia"
-                                               aria-describedby="name"
-                                                  placeholder="Ej: Como empezaron los sintomas"></textarea>
+                                        <textarea type="text" class="form-control" id="nametext" name="brev_descripcion"
+                                                  aria-describedby="name"
+                                                  placeholder="Ej:  El conocimiento y el dominio de la técnica quirúrgica son también ineludibles para la realización correcta de las suturas en cirugía menor">{{model_servicio.brev_descripcion}}</textarea>
                                     </div>
                                 </div>
-                                <!-- Warning Alert modal -->
-                                <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
-                                        data-target="#warning-alert-modal"><i class="fas fa-save"></i> Guardar
-                                </button>
+                                <!--
+                                <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                    <h6 class="card-title">Documento de identificacion:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="nametext" name="dpi"
+                                               aria-describedby="name"
+                                               placeholder="Dpi: 1234123451234">
+                                    </div>
+                                </div>
+                                -->
                             </div>
+                            <!-- Warning Alert modal -->
+                            <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
+                                    data-target="#warning-alert-modal"><i class="fas fa-save"></i> Guardar
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Warning Alert Modal -->
     <div id="warning-alert-modal" class="modal fade" tabindex="-1" role="dialog"
@@ -83,4 +99,8 @@
     </div><!-- /.modal -->
 
 </form>
+
+<!-- Para js de validaciones de campos -->
+<!--<script src="{% static 'js/validador.js'%}"></script>-->
+
 {%endblock body%}

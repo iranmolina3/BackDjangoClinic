@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{%static 'dashboard/assets/images/favicon.png'%}">
-    <title>Adminmart Template - The Ultimate Multipurpose admin template</title>
+    <title>ClinicaPineda</title>
     <!-- Custom CSS -->
     <link href="{%static 'dashboard/assets/extra-libs/c3/c3.min.css'%}" rel="stylesheet">
     <link href="{%static 'dashboard/assets/libs/chartist/dist/chartist.min.css'%}" rel="stylesheet">
@@ -96,6 +96,7 @@
                 <!-- ============================================================== -->
                 <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
                     <!-- Notification -->
+                    <!--
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
                            id="bell" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -107,7 +108,6 @@
                             <ul class="list-style-none">
                                 <li>
                                     <div class="message-center notifications position-relative">
-                                        <!-- Message -->
                                         <a href="javascript:void(0)"
                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                             <div class="btn btn-danger rounded-circle btn-circle"><i
@@ -120,7 +120,6 @@
                                                 <span class="font-12 text-nowrap d-block text-muted">9:30 AM</span>
                                             </div>
                                         </a>
-                                        <!-- Message -->
                                         <a href="javascript:void(0)"
                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                 <span class="btn btn-success text-white rounded-circle btn-circle"><i
@@ -133,7 +132,6 @@
                                                 <span class="font-12 text-nowrap d-block text-muted">9:10 AM</span>
                                             </div>
                                         </a>
-                                        <!-- Message -->
                                         <a href="javascript:void(0)"
                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                 <span class="btn btn-info rounded-circle btn-circle"><i
@@ -147,7 +145,6 @@
                                                 <span class="font-12 text-nowrap d-block text-muted">9:08 AM</span>
                                             </div>
                                         </a>
-                                        <!-- Message -->
                                         <a href="javascript:void(0)"
                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                 <span class="btn btn-primary rounded-circle btn-circle"><i
@@ -169,11 +166,12 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> -->
                     <!-- End Notification -->
                     <!-- ============================================================== -->
                     <!-- create new -->
                     <!-- ============================================================== -->
+                    <!--
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -186,6 +184,7 @@
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                     </li>
+                    -->
                     <!--
                     <li class="nav-item d-none d-md-block">
                         <a class="nav-link" href="javascript:void(0)">
@@ -234,6 +233,7 @@
                                                                                        class="svg-icon"></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                            <!--
                             <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
                                                                                   class="svg-icon mr-2 ml-1"></i>
                                 My Profile</a>
@@ -248,12 +248,16 @@
                                                                                   class="svg-icon mr-2 ml-1"></i>
                                 Account Setting</a>
                             <div class="dropdown-divider"></div>
+                            -->
                             <a class="dropdown-item" href="{%url 'logout'%}"><i data-feather="power"
                                                                                 class="svg-icon mr-2 ml-1"></i>
+
                                 Cerrar sesion</a>
+                            <!--
                             <div class="dropdown-divider"></div>
                             <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">View
                                 Profile</a></div>
+                            -->
                         </div>
                     </li>
                     <!-- ============================================================== -->
@@ -355,6 +359,20 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                aria-expanded="false"><i class="fas fa-hand-holding-medical"></i><span
+                                    class="hide-menu">Servicios </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="{%url 'clinic:create_servicio'%}" class="sidebar-link"><span
+                                            class="hide-menu"> Registrar servicio
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="{%url 'clinic:read_servicio'%}" class="sidebar-link"><span
+                                            class="hide-menu"> Ver servicios
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </li>
                     <!--Enlaces para sistema de clinica-->
                     <li class="list-divider"></li>
                     <li class="nav-small-cap"><span class="hide-menu">Sistema de control</span></li>
@@ -364,7 +382,7 @@
                                 </span></a>
                         <ul aria-expanded="false" class="collapse first-level base-level-line">
                             <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><span
-                                    class="hide-menu"> Controles clinicos</span></a></li>
+                                    class="hide-menu"> Controles</span></a></li>
                         </ul>
                     </li>
                     <li class="list-divider"></li>
@@ -474,7 +492,8 @@
                             <div>
                                 <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium"><!--<sup
                                         class="set-doller">$</sup>-->{{citas_pendientes}}</h2>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Citas actuales pendientes
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Citas actuales
+                                    pendientes
                                 </h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
@@ -507,7 +526,8 @@
                         <div class="d-flex d-lg-flex d-md-block align-items-center">
                             <div>
                                 <h2 class="text-dark mb-1 font-weight-medium">{{citas_atendidas}}</h2>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Citas actuales atendidas</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Citas actuales
+                                    atendidas</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
                                 <span class="opacity-7 text-muted"><i class="fas fa-calendar-check fa-2x"></i></span>
@@ -523,30 +543,14 @@
             <!-- *************************************************************** -->
             <!-- Start Sales Charts Section -->
             <!-- *************************************************************** -->
-            <!--
+
             <div class="row">
                 <div class="col-lg-4 col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Total Sales</h4>
-                            <div id="campaign-v2" class="mt-2" style="height:283px; width:100%;"></div>
-                            <ul class="list-style-none mb-0">
-                                <li>
-                                    <i class="fas fa-circle text-primary font-10 mr-2"></i>
-                                    <span class="text-muted">Direct Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$2346</span>
-                                </li>
-                                <li class="mt-3">
-                                    <i class="fas fa-circle text-danger font-10 mr-2"></i>
-                                    <span class="text-muted">Referral Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$2108</span>
-                                </li>
-                                <li class="mt-3">
-                                    <i class="fas fa-circle text-cyan font-10 mr-2"></i>
-                                    <span class="text-muted">Affiliate Sales</span>
-                                    <span class="text-dark float-right font-weight-medium">$1204</span>
-                                </li>
-                            </ul>
+                            <h4 class="card-title">Nps de pacientes</h4>
+                            <canvas id="myChart" width="400" height="400"></canvas>
+
                         </div>
                     </div>
                 </div>
@@ -575,7 +579,7 @@
                                 <div class="col-5">
                                     <div class="progress" style="height: 5px;">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: 100%"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="col-3 text-right">
@@ -589,7 +593,7 @@
                                 <div class="col-5">
                                     <div class="progress" style="height: 5px;">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 74%"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="col-3 text-right">
@@ -603,7 +607,7 @@
                                 <div class="col-5">
                                     <div class="progress" style="height: 5px;">
                                         <div class="progress-bar bg-cyan" role="progressbar" style="width: 60%"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="col-3 text-right">
@@ -617,7 +621,7 @@
                                 <div class="col-5">
                                     <div class="progress" style="height: 5px;">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <div class="col-3 text-right">
@@ -628,14 +632,14 @@
                     </div>
                 </div>
             </div>
-            -->
+
             <!-- *************************************************************** -->
             <!-- End Sales Charts Section -->
             <!-- *************************************************************** -->
             <!-- *************************************************************** -->
             <!-- Start Location and Earnings Charts Section -->
             <!-- *************************************************************** -->
-            <!--
+
             <div class="row">
                 <div class="col-md-6 col-lg-8">
                     <div class="card">
@@ -645,8 +649,8 @@
                                 <div class="ml-auto">
                                     <div class="dropdown sub-dropdown">
                                         <button class="btn btn-link text-muted dropdown-toggle" type="button"
-                                            id="dd1" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                                id="dd1" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
                                             <i data-feather="more-vertical"></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
@@ -688,7 +692,7 @@
                                 <div class="d-flex align-items-start border-left-line pb-3">
                                     <div>
                                         <a href="javascript:void(0)"
-                                            class="btn btn-danger btn-circle mb-2 btn-item">
+                                           class="btn btn-danger btn-circle mb-2 btn-item">
                                             <i data-feather="message-square"></i>
                                         </a>
                                     </div>
@@ -711,7 +715,8 @@
                                         <p class="font-14 mb-2 text-muted">One Pending order from Ryne <br> Doe</p>
                                         <span class="font-weight-light font-14 mb-1 d-block text-muted">2 Hours
                                             Ago</span>
-                                        <a href="javascript:void(0)" class="font-14 border-bottom pb-1 border-info">Load More</a>
+                                        <a href="javascript:void(0)" class="font-14 border-bottom pb-1 border-info">Load
+                                            More</a>
                                     </div>
                                 </div>
                             </div>
@@ -719,7 +724,7 @@
                     </div>
                 </div>
             </div>
-            -->
+
             <!-- *************************************************************** -->
             <!-- End Location and Earnings Charts Section -->
             <!-- *************************************************************** -->
@@ -964,6 +969,54 @@
 <script src="{%static 'dashboard/dist/js/pages/dashboards/dashboard1.min.js'%}"></script>
 <!-- Fontawesome access icons -->
 <script src="https://kit.fontawesome.com/00f20dde71.js" crossorigin="anonymous"></script>
+<!-- Charts.js grafics stadistic -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous"></script>
+
+<!-- IRAN PONE ATENCION AQUI UNA DE LAS PARTES MAS FUNDAMENTALES PARA USAR ESTOS GRAFICOS ES CON EL TAG  safe-->
+<!-- Ejemplo {{label_name|safe}}    =  label_name es un array en las wievs y safe es el tag para que se pueda visualizar-->
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{labels_nps|safe}},
+        datasets: [{
+            label: '{{label_nps}} Votos',
+            data: {{data_nps|safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
 </body>
 
 </html>

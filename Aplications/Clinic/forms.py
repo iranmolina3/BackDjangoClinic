@@ -56,7 +56,7 @@ class FormConsulta(forms.ModelForm):
     class Meta:
         model = Consulta
         fields = [
-            'motivo_consulta', 'historia', 'estado'
+            'fk_servicio', 'historia', 'estado'
         ]
 
 class FormExamenFisico(forms.ModelForm):

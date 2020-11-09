@@ -98,14 +98,27 @@ def dashboard(request):
         _citas_pendientes = numberModelarray(Cita.objects.filter(
             Q(Q(estado=True) & Q(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))))
         _pacientes = numberModelarray(Persona.objects.filter(estado=True))
-        _citas_futuras = numberModelarray(Cita.objects.filter(estado=True).exclude(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))
+        _citas_futuras = numberModelarray(Cita.objects.filter(estado=True).exclude(
+            fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))
+        # -- data stadistic Charts.js with Django - model Pacientes satisfechos
+        _labels_nps = ['Muy malo', 'Malo', 'Normal', 'Bueno', 'Muy bueno']
+        _label_nps = numberModelarray(Nps.objects.filter(estado=True))
+        _data_nps = []
+        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=1)))
+        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=2)))
+        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=3)))
+        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=4)))
+        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=5)))
 
         #        cita1 = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
         #        cita2 = Cita.objects.filter(ESTADO=True).order_by('FECHA_INGRESO').exclude(FECHA_INGRESO=date.today())
         #        paginator = Paginator(cita1, 10)
         #        page = request.GET.get('page')
         #        cita1 = paginator.get_page(page)
-        return render(request, 'index_dashboard.html', {'citas_atendidas': _citas_atendidas, 'citas_pendientes':_citas_pendientes, 'pacientes':_pacientes, 'citas_futuras':_citas_futuras})
+        return render(request, 'index_dashboard.html',
+                      {'citas_atendidas': _citas_atendidas, 'citas_pendientes': _citas_pendientes,
+                       'pacientes': _pacientes, 'citas_futuras': _citas_futuras, 'labels_nps': _labels_nps,
+                       'label_nps': _label_nps, 'data_nps': _data_nps})
 
 
 def numberModelarray(model):
@@ -235,46 +248,6 @@ def update_persona(request, pk_persona):
             model_persona.municipio = _municipio
             model_persona.save()
             return redirect('clinic:read_persona')
-
-
-def updatePersona(request, pk_historial_clinico):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
-        model_persona = Persona.objects.get(pk_persona=model_historial_clinico.fk_persona.pk_persona)
-        if (request.method == "GET"):
-
-            # print(type(model_persona.fecha_nacimiento.strftime("%Y-%m-%d")))
-            return render(request, 'Clinic/Persona/update_persona.html',
-                          {'model_persona': model_persona,
-                           'fecha_nacimiento': model_persona.fecha_nacimiento.strftime("%Y-%m-%d")})
-        else:
-            _nombre = request.POST.get('nombre')
-            _apellido = request.POST.get('apellido')
-            _dpi = request.POST.get('dpi')
-            _fecha_nacimiento = request.POST.get('fecha_nacimiento')
-            _telefono = request.POST.get('telefono')
-            _genero = request.POST.get('genero')
-            _direccion = request.POST.get('direccion')
-            _estado_civil = request.POST.get('estado_civil')
-            _municipio = request.POST.get('municipio')
-            fecha_nacimiento = datetime.strptime(_fecha_nacimiento, "%Y-%m-%d")
-            fecha_actual = datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")
-            _edad = int(fecha_actual.strftime("%Y")) - int(fecha_nacimiento.strftime("%Y"))
-            model_persona.nombre = _nombre
-            model_persona.apellido = _apellido
-            model_persona.dpi = _dpi
-            model_persona.genero = _genero
-            model_persona.edad = _edad
-            model_persona.fecha_nacimiento = _fecha_nacimiento
-            model_persona.telefono = _telefono
-            model_persona.direccion = _direccion
-            model_persona.estado_civil = _estado_civil
-            model_persona.municipio = _municipio
-            model_persona.save()
-            return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
-                            model_historial_clinico.fk_cita.pk_cita)
 
 
 def delete_persona(request, pk_persona):
@@ -439,7 +412,7 @@ def read_historial_clinico(request):
     else:
         _nombre = request.GET.get('nombre')
         # model_historial_clinico = HistorialClinico.objects.all().order_by('-fecha_creacion')
-        model_historial_clinico = HistorialClinico.objects.all().order_by('fecha_creacion')
+        model_historial_clinico = HistorialClinico.objects.all().order_by('-fecha_creacion')
         model_pregunta = Pregunta.objects.filter(estado=True)
         if _nombre:
             model_historial_clinico = HistorialClinico.objects.filter(Q(nombre__icontains=_nombre)).order_by(
@@ -608,11 +581,13 @@ def isBlank(myString):
     else:
         return myString
 
+
 def isStr(myString):
     if not (myString and myString.strip()):
         return ""
     else:
         return myString
+
 
 def isNone(myDate):
     print(type(myDate), ' -valor- ', myDate)
@@ -1033,40 +1008,63 @@ def delete_pregunta(request, pk_pregunta):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        pregunta = Pregunta.objects.get(pk_pregunta=pk_pregunta)
-        pregunta.estado = False
-        pregunta.save()
+        model_pregunta = Pregunta.objects.get(pk_pregunta=pk_pregunta)
+        model_pregunta.estado = False
+        model_pregunta.save()
         return redirect('clinic:read_pregunta')
 
 
 """
- -- MODEL USUARIO
+ -- CRUD TO THE MODEL SERVICIO
 """
 
 
-def read_usuario(request):
+def create_servicio(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        usuario = Usuario.objects.filter(ESTADO=True)
-        carnet = request.GET.get("CARNET")
-        if carnet:
-            usuario = Usuario.objects.filter(Q(ESTADO=True), Q(CARNET__icontains=carnet))
-        paginator = Paginator(usuario, 10)
-        page = request.GET.get('page')
-        usuario = paginator.get_page(page)
-        return render(request, 'Clinic/Usuario/read_usuario.html', {'usuario': usuario})
-
-
-def update_usuario(request, pk_usuario):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        usuario = Usuario.objects.get(PK_USUARIO=pk_usuario)
-        if request.method == "GET":
-            return render(request, 'Clinic/Usuario/update_usuario.html', {'usuario': usuario})
+        if request.method == 'GET':
+            return render(request, 'Clinic/Servicio/create_servicio.html')
         else:
-            usuario.CONTRASENIA = request.POST.get('CONTRASENIA')
-            usuario.CORREO = request.POST.get('CORREO')
-            usuario.save()
-            return redirect('clinic:read_usuario')
+            _nombre = request.POST.get('nombre')
+            _brev_descripcion = request.POST.get('brev_descripcion')
+            model_servicio = Servicio(nombre=_nombre, brev_descripcion=_brev_descripcion)
+            model_servicio.save()
+            return redirect('dashboard')
+
+
+def read_servicio(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_servicio = Servicio.objects.filter(estado=True)
+        _nombre = isStr(request.GET.get('nombre'))
+        if _nombre:
+            model_servicio = Servicio.objects.filter(Q(estado=True) & Q(nombre__icontains=_nombre))
+
+        return render(request, 'Clinic/Servicio/read_servicio.html', {'model_servicio': model_servicio})
+
+
+def update_servicio(request, pk_servicio):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_servicio = Servicio.objects.get(pk_servicio   =pk_servicio)
+        if request.method == 'GET':
+            return render(request, 'Clinic/Servicio/update_servicio.html', {'model_servicio': model_servicio})
+        else:
+            _nombre = request.POST.get('nombre')
+            _brev_descripcion = request.POST.get('brev_descripcion')
+            model_servicio.nombre = _nombre
+            model_servicio.brev_descripcion = _brev_descripcion
+            model_servicio.save()
+            return redirect('clinic:read_servicio')
+
+def delete_servicio(request, pk_servicio):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_servicio = Servicio.objects.get(pk_servicio=pk_servicio)
+        model_servicio.estado = False
+        model_servicio.save()
+        return redirect('clinic:read_servicio')

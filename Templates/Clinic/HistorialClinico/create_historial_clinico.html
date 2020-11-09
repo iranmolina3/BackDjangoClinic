@@ -90,6 +90,7 @@
 
 
 
+
 </style>
 <div class="col-lg-12">
     <div class="card">
@@ -401,7 +402,10 @@
                                                     <label for="select-pregunta">Pregunta:</label>
                                                     <select class="custom-select" id="select-pregunta"
                                                             name="pk_pregunta">
-                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}"
+                                                                selected>
+                                                            {{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}
+                                                        </option>
                                                         {%for lista_pregunta in model_pregunta%}
                                                         <option value="{{lista_pregunta.pk_pregunta}}">
                                                             {{lista_pregunta.descripcion}}
@@ -488,7 +492,10 @@
                                                     <label for="select-pregunta">Pregunta:</label>
                                                     <select class="custom-select" id="select-pregunta"
                                                             name="pk_pregunta">
-                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}"
+                                                                selected>
+                                                            {{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}
+                                                        </option>
                                                         {%for lista_pregunta in model_pregunta%}
                                                         <option value="{{lista_pregunta.pk_pregunta}}">
                                                             {{lista_pregunta.descripcion}}
@@ -502,7 +509,7 @@
                                                         <div id="radios">
                                                             <label for="1" class="material-icons">
                                                                 <input type="radio" name="respuesta" id="1" value="1"
-                                                                       />
+                                                                />
                                                                 <span style="font-size: 1.5em; color: #E8270C;"><i
                                                                         class="far fa-tired"></i></span>
                                                             </label>
@@ -575,7 +582,10 @@
                                                     <label for="select-pregunta">Pregunta:</label>
                                                     <select class="custom-select" id="select-pregunta"
                                                             name="pk_pregunta">
-                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}"
+                                                                selected>
+                                                            {{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}
+                                                        </option>
                                                         {%for lista_pregunta in model_pregunta%}
                                                         <option value="{{lista_pregunta.pk_pregunta}}">
                                                             {{lista_pregunta.descripcion}}
@@ -589,7 +599,7 @@
                                                         <div id="radios">
                                                             <label for="1" class="material-icons">
                                                                 <input type="radio" name="respuesta" id="1" value="1"
-                                                                       />
+                                                                />
                                                                 <span style="font-size: 1.5em; color: #E8270C;"><i
                                                                         class="far fa-tired"></i></span>
                                                             </label>
@@ -662,7 +672,10 @@
                                                     <label for="select-pregunta">Pregunta:</label>
                                                     <select class="custom-select" id="select-pregunta"
                                                             name="pk_pregunta">
-                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}"
+                                                                selected>
+                                                            {{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}
+                                                        </option>
                                                         {%for lista_pregunta in model_pregunta%}
                                                         <option value="{{lista_pregunta.pk_pregunta}}">
                                                             {{lista_pregunta.descripcion}}
@@ -676,7 +689,7 @@
                                                         <div id="radios">
                                                             <label for="1" class="material-icons">
                                                                 <input type="radio" name="respuesta" id="1" value="1"
-                                                                       />
+                                                                />
                                                                 <span style="font-size: 1.5em; color: #E8270C;"><i
                                                                         class="far fa-tired"></i></span>
                                                             </label>
@@ -749,7 +762,10 @@
                                                     <label for="select-pregunta">Pregunta:</label>
                                                     <select class="custom-select" id="select-pregunta"
                                                             name="pk_pregunta">
-                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}" selected>{{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}</option>
+                                                        <option value="{{model_historial_clinico.fk_nps.fk_pregunta.pk_pregunta}}"
+                                                                selected>
+                                                            {{model_historial_clinico.fk_nps.fk_pregunta.descripcion}}
+                                                        </option>
                                                         {%for lista_pregunta in model_pregunta%}
                                                         <option value="{{lista_pregunta.pk_pregunta}}">
                                                             {{lista_pregunta.descripcion}}
@@ -763,7 +779,7 @@
                                                         <div id="radios">
                                                             <label for="1" class="material-icons">
                                                                 <input type="radio" name="respuesta" id="1" value="1"
-                                                                       />
+                                                                />
                                                                 <span style="font-size: 1.5em; color: #E8270C;"><i
                                                                         class="far fa-tired"></i></span>
                                                             </label>
@@ -814,7 +830,7 @@
                             <a href="{%url 'clinic:delete_historial_clinico' model_historial_clinico.pk_historial_clinico model_historial_clinico.fk_cita.pk_cita%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-danger"><i
-                                        class="far fa-trash-alt"></i></button>
+                                        class="fas fa-laptop-medical"></i></button>
                             </a>
                         </td>
                     </tr>
@@ -838,6 +854,7 @@ $( document ).ready(function() {
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     $("#fecha").val(today);
 });
+
 
 
 

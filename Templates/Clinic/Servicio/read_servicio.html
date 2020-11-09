@@ -1,0 +1,130 @@
+{%extends 'index_dashboard.html'%}
+{%load staticfiles%}
+
+{%block link%}
+{%endblock link%}
+
+{%block body%}
+<form method="GET" id="FORM">
+    {%csrf_token%}
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Busqueda de servicio</h4>
+                        <h6 class="card-subtitle">Puedes escribir palabras claves o completa del servicio</h6>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control"
+                                               name="nombre">
+                                        <button type="submit"
+                                                class="btn waves-effect waves-light btn-outline-primary"
+                                                data-toggle="modal"
+                                                data-target="#staticBackdrop"><i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Listado de servicio</h4>
+            <!--<h6 class="card-subtitle">To use add class <code>.bg-success .text-white</code> in the
+                <code>&lt;thead&gt;</code>.</h6>-->
+            <h6 class="card-subtitle">Lista de servicios registrados en el sistema</h6>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-primary text-white">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%if model_servicio%}
+                    {%for list_servicio in model_servicio%}
+                    <tr>
+                        <td>{{list_servicio.pk_servicio}}</td>
+                        <td>{{list_servicio.nombre}}</td>
+                        <td>
+                            <!-- Custom width modal -->
+                            <a href="{%url 'clinic:update_servicio' list_servicio.pk_servicio%}">
+                                <button type="button" class="btn btn-primary btn-rounded"><i
+                                    class="fas fa-pencil-alt"></i>
+                                </button>
+                            </a>
+                            </button>
+
+                            <button type="button"
+                                    class="btn waves-effect waves-light btn-rounded btn-danger" data-toggle="modal"
+                                    data-target="#delete-cita{{list_servicio.pk_servicio}}"><i
+                                    class="far fa-trash-alt"></i></button>
+                            <!-- Danger Alert Modal -->
+                            <div id="delete-cita{{list_servicio.pk_servicio}}" class="modal fade" tabindex="-1"
+                                 role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content modal-filled bg-danger">
+                                        <div class="modal-body p-4">
+                                            <div class="text-center">
+                                                <i class="dripicons-wrong h1"></i>
+                                                <h4 class="mt-2"><i class="fas fa-exclamation-triangle fa-2x"></i></h4>
+                                                <p class="mt-3">La fila seleccionada sera eliminada presiona cancelar
+                                                    para volver o aceptar para eliminar.</p>
+                                                <button type="button" class="btn btn-light my-2"
+                                                        data-dismiss="modal">Cancelar
+                                                </button>
+                                                <a href="{%url 'clinic:delete_servicio' list_servicio.pk_servicio%}">
+                                                    <button type="submit" class="btn btn-success my-2">Aceptar
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td>No hay informacion</td>
+                        <td>No hay informacion</td>
+                        <td>
+                            <a href="">
+                                <button type="button" class="btn btn-primary btn-rounded"><i
+                                        class="fas fa-pencil-alt"></i>
+                                </button>
+                            </a>
+                            <a href="">
+                                <button type="button"
+                                        class="btn waves-effect waves-light btn-rounded btn-danger"><i
+                                        class="far fa-trash-alt"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{%endblock body%}

@@ -7,7 +7,11 @@ urlpatterns = [
     path('read_persona/', read_persona, name='read_persona'),
     path('update_persona/<int:pk_persona>', update_persona, name='update_persona'),
     path('delete_persona/<int:pk_persona>', delete_persona, name='delete_persona'),
-    path('updatePersona/<int:pk_historial_clinico>', updatePersona, name='updatePersona'),
+    # model servicio
+    path('create_servicio/', create_servicio, name='create_servicio'),
+    path('read_servicio/', read_servicio, name='read_servicio'),
+    path('update_servicio/<int:pk_servicio>', update_servicio, name='update_servicio'),
+    path('delete_servicio/<int:pk_servicio>', delete_servicio, name='delete_servicio'),
     # model cita
     path('create_cita/', create_cita, name='create_cita'),
     path('read_cita/', read_cita, name='read_cita'),
