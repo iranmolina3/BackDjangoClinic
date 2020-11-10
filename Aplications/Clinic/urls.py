@@ -12,6 +12,7 @@ urlpatterns = [
     path('read_servicio/', read_servicio, name='read_servicio'),
     path('update_servicio/<int:pk_servicio>', update_servicio, name='update_servicio'),
     path('delete_servicio/<int:pk_servicio>', delete_servicio, name='delete_servicio'),
+    path('updatePersona/<int:pk_historial_clinico>', updatePersona, name='updatePersona'),
     # model cita
     path('create_cita/', create_cita, name='create_cita'),
     path('read_cita/', read_cita, name='read_cita'),

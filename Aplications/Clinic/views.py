@@ -93,23 +93,24 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        _citas_atendidas = numberModelarray(Cita.objects.filter(
+        _citas_atendidas = countModelarray(Cita.objects.filter(
             Q(tipo_estado=True) & Q(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d"))))
-        _citas_pendientes = numberModelarray(Cita.objects.filter(
+        _citas_pendientes = countModelarray(Cita.objects.filter(
             Q(Q(estado=True) & Q(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))))
-        _pacientes = numberModelarray(Persona.objects.filter(estado=True))
-        _citas_futuras = numberModelarray(Cita.objects.filter(estado=True).exclude(
+        _pacientes = countModelarray(Persona.objects.filter(estado=True))
+        _citas_futuras = countModelarray(Cita.objects.filter(estado=True).exclude(
             fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))
         # -- data stadistic Charts.js with Django - model Pacientes satisfechos
         _labels_nps = ['Muy malo', 'Malo', 'Normal', 'Bueno', 'Muy bueno']
-        _label_nps = numberModelarray(Nps.objects.filter(estado=True))
+        _label_nps = countModelarray(Nps.objects.filter(estado=True))
         _data_nps = []
-        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=1)))
-        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=2)))
-        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=3)))
-        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=4)))
-        _data_nps.append(numberModelarray(Nps.objects.filter(respuesta=5)))
-
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=1)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=2)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=3)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=4)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=5)))
+        _label_servicio = labelModelservicio(Servicio.objects.filter(estado=True))
+        _data_servicio = dataModelservicio(_label_servicio)
         #        cita1 = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
         #        cita2 = Cita.objects.filter(ESTADO=True).order_by('FECHA_INGRESO').exclude(FECHA_INGRESO=date.today())
         #        paginator = Paginator(cita1, 10)
@@ -118,10 +119,27 @@ def dashboard(request):
         return render(request, 'index_dashboard.html',
                       {'citas_atendidas': _citas_atendidas, 'citas_pendientes': _citas_pendientes,
                        'pacientes': _pacientes, 'citas_futuras': _citas_futuras, 'labels_nps': _labels_nps,
-                       'label_nps': _label_nps, 'data_nps': _data_nps})
+                       'label_nps': _label_nps, 'data_nps': _data_nps, 'label_servicio': _label_servicio, 'data_servicio':_data_servicio})
+
+def dataModelservicio(label):
+    data = []
+    count = 0
+    for seq in range(len(label)):
+        print(label[seq])
+        data.append(countModelarray(Consulta.objects.filter(fk_servicio=Servicio.objects.get(nombre=label[seq]))))
+        count = count + 1
+    print(data)
+    return data
 
 
-def numberModelarray(model):
+def labelModelservicio(model):
+    label = []
+    for list_model in model:
+        label.append(list_model.nombre)
+    return label
+
+
+def countModelarray(model):
     count = 0
     for list_model in model:
         count = count + 1
@@ -248,6 +266,46 @@ def update_persona(request, pk_persona):
             model_persona.municipio = _municipio
             model_persona.save()
             return redirect('clinic:read_persona')
+
+
+def updatePersona(request, pk_historial_clinico):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
+        model_persona = Persona.objects.get(pk_persona=model_historial_clinico.fk_persona.pk_persona)
+        if (request.method == "GET"):
+
+            # print(type(model_persona.fecha_nacimiento.strftime("%Y-%m-%d")))
+            return render(request, 'Clinic/Persona/update_persona.html',
+                          {'model_persona': model_persona,
+                           'fecha_nacimiento': model_persona.fecha_nacimiento.strftime("%Y-%m-%d")})
+        else:
+            _nombre = request.POST.get('nombre')
+            _apellido = request.POST.get('apellido')
+            _dpi = request.POST.get('dpi')
+            _fecha_nacimiento = request.POST.get('fecha_nacimiento')
+            _telefono = request.POST.get('telefono')
+            _genero = request.POST.get('genero')
+            _direccion = request.POST.get('direccion')
+            _estado_civil = request.POST.get('estado_civil')
+            _municipio = request.POST.get('municipio')
+            fecha_nacimiento = datetime.strptime(_fecha_nacimiento, "%Y-%m-%d")
+            fecha_actual = datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")
+            _edad = int(fecha_actual.strftime("%Y")) - int(fecha_nacimiento.strftime("%Y"))
+            model_persona.nombre = _nombre
+            model_persona.apellido = _apellido
+            model_persona.dpi = _dpi
+            model_persona.genero = _genero
+            model_persona.edad = _edad
+            model_persona.fecha_nacimiento = _fecha_nacimiento
+            model_persona.telefono = _telefono
+            model_persona.direccion = _direccion
+            model_persona.estado_civil = _estado_civil
+            model_persona.municipio = _municipio
+            model_persona.save()
+            return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                            model_historial_clinico.fk_cita.pk_cita)
 
 
 def delete_persona(request, pk_persona):
@@ -450,11 +508,13 @@ def create_consulta(request, pk_historial_clinico):
         return redirect('sing')
     else:
         model_pregunta = Pregunta.objects.filter(estado=True)
+        model_servicio = Servicio.objects.filter(estado=True)
         if request.method == "POST":
             model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
-            _motivo = request.POST.get('motivo')
+            _pk_servicio = request.POST.get('pk_servicio')
+            model_servicio = Servicio.objects.get(pk_servicio=_pk_servicio)
             _historia = request.POST.get('historia')
-            model_consulta = Consulta(motivo_consulta=_motivo, historia=_historia)
+            model_consulta = Consulta(fk_servicio=model_servicio, historia=_historia)
             model_consulta.save()
             model_historial_clinico.fk_consulta = model_consulta
             model_historial_clinico.save()
@@ -462,7 +522,8 @@ def create_consulta(request, pk_historial_clinico):
                           {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
         else:
             model_consulta = Consulta.objects.filter(estado=True)
-            return render(request, 'Clinic/Consulta/create_consulta.html', {'model_consulta': model_consulta})
+            return render(request, 'Clinic/Consulta/create_consulta.html',
+                          {'model_consulta': model_consulta, 'model_servicio': model_servicio})
 
 
 def update_consulta(request, pk_consulta):
@@ -471,13 +532,16 @@ def update_consulta(request, pk_consulta):
     else:
         model_pregunta = Pregunta.objects.filter(estado=True)
         model_consulta = Consulta.objects.get(pk_consulta=pk_consulta)
+        model_servicio = Servicio.objects.filter(estado=True)
         if request.method == "GET":
-            return render(request, 'Clinic/Consulta/update_consulta.html', {'model_consulta': model_consulta})
+            return render(request, 'Clinic/Consulta/update_consulta.html',
+                          {'model_consulta': model_consulta, 'model_servicio': model_servicio})
         else:
             model_historial_clinico = HistorialClinico.objects.get(fk_consulta=model_consulta)
-            _motivo = request.POST.get('motivo')
+            _pk_servicio = request.POST.get('pk_servicio')
             _historia = request.POST.get('historia')
-            model_consulta.motivo_consulta = _motivo
+            model_servicio = Servicio.objects.get(pk_servicio=_pk_servicio)
+            model_consulta.fk_servicio = model_servicio
             model_consulta.historia = _historia
             model_consulta.save()
             return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
@@ -1030,7 +1094,7 @@ def create_servicio(request):
             _brev_descripcion = request.POST.get('brev_descripcion')
             model_servicio = Servicio(nombre=_nombre, brev_descripcion=_brev_descripcion)
             model_servicio.save()
-            return redirect('dashboard')
+            return redirect('clinic:read_servicio')
 
 
 def read_servicio(request):
@@ -1049,7 +1113,7 @@ def update_servicio(request, pk_servicio):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        model_servicio = Servicio.objects.get(pk_servicio   =pk_servicio)
+        model_servicio = Servicio.objects.get(pk_servicio=pk_servicio)
         if request.method == 'GET':
             return render(request, 'Clinic/Servicio/update_servicio.html', {'model_servicio': model_servicio})
         else:
@@ -1059,6 +1123,7 @@ def update_servicio(request, pk_servicio):
             model_servicio.brev_descripcion = _brev_descripcion
             model_servicio.save()
             return redirect('clinic:read_servicio')
+
 
 def delete_servicio(request, pk_servicio):
     if not request.user.is_authenticated:

@@ -143,7 +143,7 @@ class ResourceConsulta(resources.ModelResource):
 
 class AdminConsulta(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ['estado']
-    list_display = ['fk_servicio', 'estado']
+    list_display = ['pk_consulta', 'fk_servicio', 'estado']
     resource_class = ResourceConsulta
 
 

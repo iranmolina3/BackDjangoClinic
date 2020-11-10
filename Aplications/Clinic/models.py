@@ -87,7 +87,7 @@ class Servicio(models.Model):
     class Meta:
         verbose_name = 'Servicio'
         verbose_name_plural = 'Servicios'
-        ordering = ['nombre']
+        ordering = ['pk_servicio']
 
     def __str__(self):
         return "{0}".format(self.nombre)
@@ -163,7 +163,7 @@ class Consulta(models.Model):
         ordering = ['pk_consulta']
 
     def __str__(self):
-        return "{0},{1}".format(self.fk_servicio, self.estado)
+        return "{0},{1}".format(self.pk_consulta, self.estado)
 
 
 class ExamenFisico(models.Model):

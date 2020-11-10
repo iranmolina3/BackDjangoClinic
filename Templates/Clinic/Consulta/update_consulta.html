@@ -18,8 +18,8 @@
                         <h4 class="card-title">Registro de consulta</h4>
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <h6 class="card-title">Motivo de consulta:</h6>
+                                <div class="col-sm-12 col-lg-6 col-md-12">
+                                    <h6 class="card-title">Municipio:</h6>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                                 <span class="input-group-text">
@@ -28,10 +28,12 @@
                                                     </div>
                                                 </span>
                                         </div>
-                                        <input type="text" class="form-control" id="nametext" name="motivo"
-                                               aria-describedby="name"
-                                               placeholder="Ej: Motivo o razon del paciente"
-                                               value="{{model_consulta.motivo_consulta}}">
+                                        <select class="custom-select" id="inputGroupSelect01" name="pk_servicio">
+                                            <option selected value="{{model_consulta.fk_servicio.pk_servicio}}">{{model_consulta.fk_servicio.nombre}}</option>
+                                            {%for list_servicio in model_servicio%}
+                                                <option value="{{list_servicio.pk_servicio}}">{{list_servicio.nombre}}</option>
+                                            {%endfor%}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
