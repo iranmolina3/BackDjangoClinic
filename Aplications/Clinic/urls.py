@@ -22,7 +22,8 @@ urlpatterns = [
     path('create_historial_clinico/<int:pk_persona>/<int:pk_cita>', create_historial_clinico,
          name='create_historial_clinico'),
     path('read_historial_clinico/', read_historial_clinico, name='read_historial_clinico'),
-    path('delete_historial_clinico/<int:pk_historial_clinico>/<int:pk_cita>', delete_historial_clinico, name='delete_historial_clinico'),
+    path('delete_historial_clinico/<int:pk_historial_clinico>/<int:pk_cita>', delete_historial_clinico,
+         name='delete_historial_clinico'),
     # model consulta
     path('create_consulta/<int:pk_historial_clinico>', create_consulta, name='create_consulta'),
     path('read_consulta/', read_consulta, name='read_consulta'),
@@ -55,7 +56,12 @@ urlpatterns = [
     path('read_pregunta/', read_pregunta, name='read_pregunta'),
     path('update_pregunta/<int:pk_pregunta>', update_pregunta, name='update_pregunta'),
     path('delete_pregunta/<int:pk_pregunta>', delete_pregunta, name='delete_pregunta'),
-    # model clinica
-    path('open_clinica/', open_clinica, name='open_clinica'),
-    path('close_clinica/', close_clinica, name='close_clinica'),
+    # dashboard
+    path('dashboardFiltermonth/<int:month>', dashboardFiltermonth, name='dashboardFiltermonth'),
+    # model control clinic
+    path('control_clinica/', control_clinica, name='control_clinica'),
+    path('estado_servicio_control_clinica/<int:estado_servicio>', estado_servicio_control_clinica,
+         name='estado_servicio_control_clinica'),
+    # tutorial
+    path('show_tutorial/', show_tutorial, name='show_tutorial'),
 ]

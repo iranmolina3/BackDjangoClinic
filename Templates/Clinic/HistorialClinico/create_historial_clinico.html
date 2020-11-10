@@ -314,7 +314,6 @@
                                                     <label for="select-pregunta">Pregunta:</label>
                                                     <select class="custom-select" id="select-pregunta"
                                                             name="pk_pregunta">
-                                                        <option value="" disabled selected>Selecciona...</option>
                                                         {%for lista_pregunta in model_pregunta%}
                                                         <option value="{{lista_pregunta.pk_pregunta}}">
                                                             {{lista_pregunta.descripcion}}

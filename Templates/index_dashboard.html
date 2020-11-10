@@ -73,6 +73,7 @@
                             <!-- Light Logo text -->
                                 <img src="{%static 'dashboard/assets/images/logo-light-text.png'%}" class="light-logo"
                                      alt="homepage"/>
+
                             </span>
                     </a>
                 </div>
@@ -208,6 +209,7 @@
                     <!-- ============================================================== -->
                     <!-- Search -->
                     <!-- ============================================================== -->
+                    <!--
                     <li class="nav-item d-none d-md-block">
                         <a class="nav-link" href="javascript:void(0)">
                             <form>
@@ -219,15 +221,17 @@
                             </form>
                         </a>
                     </li>
+                    -->
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <img src="{%static 'dashboard/assets/images/users/profile-pic.jpg'%}" alt="user"
+                            <!--<img src="{%static 'dashboard/assets/images/users/profile-pic.jpg'%}" alt="user"
                                  class="rounded-circle"
-                                 width="40">
+                                 width="40">-->
+                            <i class="fas fa-user-md fa-2x"></i>
                             <span class="ml-2 d-none d-lg-inline-block"><span>Hola,</span> <span
                                     class="text-dark">{{user.get_full_name}}</span> <i data-feather="chevron-down"
                                                                                        class="svg-icon"></i></span>
@@ -381,7 +385,7 @@
                             class="hide-menu">Clinica
                                 </span></a>
                         <ul aria-expanded="false" class="collapse first-level base-level-line">
-                            <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><span
+                            <li class="sidebar-item"><a href="{%url 'clinic:control_clinica'%}" class="sidebar-link"><span
                                     class="hide-menu"> Controles</span></a></li>
                         </ul>
                     </li>
@@ -391,20 +395,8 @@
                                                 aria-expanded="false"><i class="fab fa-youtube"></i><span
                             class="hide-menu">Video tutoriales </span></a>
                         <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                            <li class="sidebar-item"><a href="form-inputs.html" class="sidebar-link"><span
-                                    class="hide-menu"> Tutorial pacientes
-                                        </span></a>
-                            </li>
-                            <li class="sidebar-item"><a href="form-input-grid.html" class="sidebar-link"><span
-                                    class="hide-menu"> Tutorial citas
-                                        </span></a>
-                            </li>
-                            <li class="sidebar-item"><a href="form-input-grid.html" class="sidebar-link"><span
-                                    class="hide-menu"> Tutorial medicamentos
-                                        </span></a>
-                            </li>
-                            <li class="sidebar-item"><a href="form-input-grid.html" class="sidebar-link"><span
-                                    class="hide-menu"> Tutorial clinica
+                            <li class="sidebar-item"><a href="{%url 'clinic:show_tutorial'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutoriales
                                         </span></a>
                             </li>
                         </ul>
@@ -415,7 +407,7 @@
                     <!--<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="../../docs/docs.html"
                                                 aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span
                             class="hide-menu">Documentation</span></a></li>-->
-                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="authentication-login1.html"
+                    <li class="sidebar-item"><a class="sidebar-link sidebar-link" href="{%url 'logout'%}"
                                                 aria-expanded="false"><i data-feather="log-out"
                                                                          class="feather-icon"></i><span
                             class="hide-menu">Cerrar sesion</span></a></li>
@@ -549,6 +541,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Nps de pacientes</h4>
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Identificacion de la calidad del servicio</h6>
                             <canvas id="myChart" width="400" height="400"></canvas>
                         </div>
                     </div>
@@ -557,73 +550,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Servicios mas brindados</h4>
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Servicios mas pedidos por pacientes</h6>
                             <canvas id="ChartPie" width="400" height="400"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-12">
+                <div class="col-lg-4 col-md-12" >
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Earning by Location</h4>
-                            <div class="" style="height:180px">
-                                <div id="visitbylocate" style="height:100%"></div>
-                            </div>
-                            <div class="row mb-3 align-items-center mt-1 mt-5">
-                                <div class="col-4 text-right">
-                                    <span class="text-muted font-14">India</span>
-                                </div>
-                                <div class="col-5">
-                                    <div class="progress" style="height: 5px;">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 100%"
-                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-3 text-right">
-                                    <span class="mb-0 font-14 text-dark font-weight-medium">28%</span>
-                                </div>
-                            </div>
-                            <div class="row mb-3 align-items-center">
-                                <div class="col-4 text-right">
-                                    <span class="text-muted font-14">UK</span>
-                                </div>
-                                <div class="col-5">
-                                    <div class="progress" style="height: 5px;">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 74%"
-                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-3 text-right">
-                                    <span class="mb-0 font-14 text-dark font-weight-medium">21%</span>
-                                </div>
-                            </div>
-                            <div class="row mb-3 align-items-center">
-                                <div class="col-4 text-right">
-                                    <span class="text-muted font-14">USA</span>
-                                </div>
-                                <div class="col-5">
-                                    <div class="progress" style="height: 5px;">
-                                        <div class="progress-bar bg-cyan" role="progressbar" style="width: 60%"
-                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-3 text-right">
-                                    <span class="mb-0 font-14 text-dark font-weight-medium">18%</span>
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-4 text-right">
-                                    <span class="text-muted font-14">China</span>
-                                </div>
-                                <div class="col-5">
-                                    <div class="progress" style="height: 5px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%"
-                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="col-3 text-right">
-                                    <span class="mb-0 font-14 text-dark font-weight-medium">12%</span>
-                                </div>
-                            </div>
+                            <h4 class="card-title">Estados de citas</h4>
+                            <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Cantidad de citas completas y canceladas</h6>
+                            <canvas id="ChartDoughnut" width="400" height="400"></canvas>
                         </div>
                     </div>
                 </div>
@@ -637,7 +574,7 @@
             <!-- *************************************************************** -->
 
             <div class="row">
-                <div class="col-md-6 col-lg-8">
+                <div class="col-md-6 col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-start">
@@ -650,72 +587,31 @@
                                             <i data-feather="more-vertical"></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
-                                            <a class="dropdown-item" href="#">Insert</a>
-                                            <a class="dropdown-item" href="#">Update</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 1%}">Enero</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 2%}">Febrero</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 3%}">Marzo</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 4%}">Abril</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 5%}">Mayo</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 6%}">Junio</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 7%}">Julio</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 8%}">Agosto</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 9%}">Septiembre</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 10%}">Octubre</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 11%}">Noviembre</a>
+                                            <a class="dropdown-item" href="{%url 'clinic:dashboardFiltermonth' 12%}">Diciembre</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!--
                             <div class="pl-4 mb-5">
                                 <div class="stats ct-charts position-relative" style="height: 315px;"></div>
                             </div>
                             <ul class="list-inline text-center mt-4 mb-0">
                                 <li class="list-inline-item text-muted font-italic">Earnings for this month</li>
                             </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Recent Activity</h4>
-                            <div class="mt-4 activity">
-                                <div class="d-flex align-items-start border-left-line pb-3">
-                                    <div>
-                                        <a href="javascript:void(0)" class="btn btn-info btn-circle mb-2 btn-item">
-                                            <i data-feather="shopping-cart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="ml-3 mt-2">
-                                        <h5 class="text-dark font-weight-medium mb-2">New Product Sold!</h5>
-                                        <p class="font-14 mb-2 text-muted">John Musa just purchased <br> Cannon 5M
-                                            Camera.
-                                        </p>
-                                        <span class="font-weight-light font-14 text-muted">10 Minutes Ago</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-start border-left-line pb-3">
-                                    <div>
-                                        <a href="javascript:void(0)"
-                                           class="btn btn-danger btn-circle mb-2 btn-item">
-                                            <i data-feather="message-square"></i>
-                                        </a>
-                                    </div>
-                                    <div class="ml-3 mt-2">
-                                        <h5 class="text-dark font-weight-medium mb-2">New Support Ticket</h5>
-                                        <p class="font-14 mb-2 text-muted">Richardson just create support <br>
-                                            ticket</p>
-                                        <span class="font-weight-light font-14 text-muted">25 Minutes Ago</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-start border-left-line">
-                                    <div>
-                                        <a href="javascript:void(0)" class="btn btn-cyan btn-circle mb-2 btn-item">
-                                            <i data-feather="bell"></i>
-                                        </a>
-                                    </div>
-                                    <div class="ml-3 mt-2">
-                                        <h5 class="text-dark font-weight-medium mb-2">Notification Pending Order!
-                                        </h5>
-                                        <p class="font-14 mb-2 text-muted">One Pending order from Ryne <br> Doe</p>
-                                        <span class="font-weight-light font-14 mb-1 d-block text-muted">2 Hours
-                                            Ago</span>
-                                        <a href="javascript:void(0)" class="font-14 border-bottom pb-1 border-info">Load
-                                            More</a>
-                                    </div>
-                                </div>
-                            </div>
+                            -->
+                            <canvas id="ChartLine" width="400" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -1040,12 +936,20 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 165, 0, 0.2)',
             ],
             borderColor: [
-                //'rgba(255, 99, 132, 1)',
-                //'rgba(54, 162, 235, 1)',
-                //'rgba(255, 206, 86, 1)',
-                //'rgba(75, 192, 192, 1)',
-                //'rgba(153, 102, 255, 1)',
-                //'rgba(255, 159, 64, 1)'
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(0, 255, 255, 1)',
+                'rgba(255, 255, 0, 1)',
+                'rgba(138, 43, 226, 1)',
+                'rgba(127, 255, 0, 1)',
+                'rgba(210, 105, 30, 1)',
+                'rgba(0, 0, 139, 1)',
+                'rgba(255, 69, 0, 1)',
+                'rgba(0, 128, 0, 1)',
+                'rgba(255, 165, 0, 1)',
             ],
             borderWidth: 1
         }]
@@ -1066,6 +970,154 @@ var myChart = new Chart(ctx, {
 });
 
 </script>
+
+<script>
+var ctx = document.getElementById('ChartDoughnut').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: {{label_cita|safe}},
+        datasets: [{
+            label: '{{label_cita}} Votos',
+            data: {{data_cita|safe}},
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(0, 255, 255, 0.2)',
+                'rgba(255, 255, 0, 0.2)',
+                'rgba(138, 43, 226, 0.2)',
+                'rgba(127, 255, 0, 0.2)',
+                'rgba(210, 105, 30, 0.2)',
+                'rgba(0, 0, 139, 0.2)',
+                'rgba(255, 69, 0, 0.2)',
+                'rgba(0, 128, 0, 0.2)',
+                'rgba(255, 165, 0, 0.2)',
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                //'rgba(255, 206, 86, 1)',
+                //'rgba(75, 192, 192, 1)',
+                //'rgba(153, 102, 255, 1)',
+                //'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            position: 'bottom',
+            //display: false,
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+<script>
+var ctx = document.getElementById('ChartLine').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{label_cita_date|safe}},
+        datasets: [{
+            label: 'Paciente atendidos',
+            data: {{data_cita_date|safe}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(0, 255, 255, 0.2)',
+                'rgba(255, 255, 0, 0.2)',
+                'rgba(138, 43, 226, 0.2)',
+                'rgba(127, 255, 0, 0.2)',
+                'rgba(210, 105, 30, 0.2)',
+                'rgba(0, 0, 139, 0.2)',
+                'rgba(255, 69, 0, 0.2)',
+                'rgba(0, 128, 0, 0.2)',
+                'rgba(255, 165, 0, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(0, 255, 255, 0.2)',
+                'rgba(255, 255, 0, 0.2)',
+                'rgba(138, 43, 226, 0.2)',
+                'rgba(127, 255, 0, 0.2)',
+                'rgba(210, 105, 30, 0.2)',
+                'rgba(0, 0, 139, 0.2)',
+                'rgba(255, 69, 0, 0.2)',
+                'rgba(0, 128, 0, 0.2)',
+                'rgba(255, 165, 0, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(0, 255, 255, 1)',
+                'rgba(255, 255, 0, 1)',
+                'rgba(138, 43, 226, 1)',
+                'rgba(127, 255, 0, 1)',
+                'rgba(210, 105, 30, 1)',
+                'rgba(0, 0, 139, 1)',
+                'rgba(255, 69, 0, 1)',
+                'rgba(0, 128, 0, 1)',
+                'rgba(255, 165, 0, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(0, 255, 255, 1)',
+                'rgba(255, 255, 0, 1)',
+                'rgba(138, 43, 226, 1)',
+                'rgba(127, 255, 0, 1)',
+                'rgba(210, 105, 30, 1)',
+                'rgba(0, 0, 139, 1)',
+                'rgba(255, 69, 0, 1)',
+                'rgba(0, 128, 0, 1)',
+                'rgba(255, 165, 0, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            position: 'bottom',
+            display: false,
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+
 </body>
 
 </html>

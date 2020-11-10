@@ -274,7 +274,7 @@ class Receta(models.Model):
 class ControlClinica(models.Model):
     pk_control_clinica = models.AutoField(primary_key=True)
     nombre = models.CharField('Nombre de la clinica', max_length=200, blank=False, null=False)
-    servicio = models.BooleanField('control atendiendo/no atendiendo', blank=False, null=False)
+    estado_servicio = models.BooleanField('control atendiendo/no atendiendo', blank=False, null=False)
     estado = models.BooleanField('Activa/Desactivada', blank=False, null=False)
 
     class Meta:

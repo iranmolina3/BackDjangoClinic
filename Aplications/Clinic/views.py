@@ -14,34 +14,6 @@ from django.contrib.auth import authenticate, login, logout
 """
 
 
-def close_clinica(request):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        modelcontrolclinica = ControlClinica.objects.get(estado=True)
-        if request.method == 'GET':
-            return render(request, 'Clinic/ControlClinica/close_clinica.html',
-                          {'modelcontrolclinica': modelcontrolclinica})
-        else:
-            modelcontrolclinica.servicio = False
-            modelcontrolclinica.save()
-            return redirect('dashboard')
-
-
-def open_clinica(request):
-    if not request.user.is_authenticated:
-        return redirect('sing')
-    else:
-        modelcontrolclinica = ControlClinica.objects.get(estado=True)
-        if request.method == 'GET':
-            return render(request, 'Clinic/ControlClinica/open_clinica.html',
-                          {'modelcontrolclinica': modelcontrolclinica})
-        else:
-            modelcontrolclinica.servicio = True
-            modelcontrolclinica.save()
-            return redirect('dashboard')
-
-
 def logout_view(request):
     logout(request)
     return redirect('index')
@@ -111,24 +83,120 @@ def dashboard(request):
         _data_nps.append(countModelarray(Nps.objects.filter(respuesta=5)))
         _label_servicio = labelModelservicio(Servicio.objects.filter(estado=True))
         _data_servicio = dataModelservicio(_label_servicio)
-        #        cita1 = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=date.today()).order_by('FECHA_INGRESO')
-        #        cita2 = Cita.objects.filter(ESTADO=True).order_by('FECHA_INGRESO').exclude(FECHA_INGRESO=date.today())
-        #        paginator = Paginator(cita1, 10)
-        #        page = request.GET.get('page')
-        #        cita1 = paginator.get_page(page)
+
+        _label_cita = ['Citas completadas', 'Citas canceladas']
+        _data_cita = dataModelcita()
+
+        _label_cita_date = labelModelcitadate(int(date.today().strftime("%m")))
+        _data_cita_date = dataModelcitadate(int(date.today().strftime("%m")))
+
+        # print(labelModelcitadate())
         return render(request, 'index_dashboard.html',
                       {'citas_atendidas': _citas_atendidas, 'citas_pendientes': _citas_pendientes,
                        'pacientes': _pacientes, 'citas_futuras': _citas_futuras, 'labels_nps': _labels_nps,
-                       'label_nps': _label_nps, 'data_nps': _data_nps, 'label_servicio': _label_servicio, 'data_servicio':_data_servicio})
+                       'label_nps': _label_nps, 'data_nps': _data_nps, 'label_servicio': _label_servicio,
+                       'data_servicio': _data_servicio, 'data_cita': _data_cita, 'label_cita': _label_cita,
+                       'label_cita_date': _label_cita_date, 'data_cita_date': _data_cita_date})
+
+
+def dashboardFiltermonth(request, month):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        _citas_atendidas = countModelarray(Cita.objects.filter(
+            Q(tipo_estado=True) & Q(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d"))))
+        _citas_pendientes = countModelarray(Cita.objects.filter(
+            Q(Q(estado=True) & Q(fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))))
+        _pacientes = countModelarray(Persona.objects.filter(estado=True))
+        _citas_futuras = countModelarray(Cita.objects.filter(estado=True).exclude(
+            fecha=datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")))
+        # -- data stadistic Charts.js with Django - model Pacientes satisfechos
+        _labels_nps = ['Muy malo', 'Malo', 'Normal', 'Bueno', 'Muy bueno']
+        _label_nps = countModelarray(Nps.objects.filter(estado=True))
+        _data_nps = []
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=1)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=2)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=3)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=4)))
+        _data_nps.append(countModelarray(Nps.objects.filter(respuesta=5)))
+        _label_servicio = labelModelservicio(Servicio.objects.filter(estado=True))
+        _data_servicio = dataModelservicio(_label_servicio)
+
+        _label_cita = ['Citas completadas', 'Citas canceladas']
+        _data_cita = dataModelcita()
+        _label_cita_date = labelModelcitadate(month)
+        _data_cita_date = dataModelcitadate(month)
+        return render(request, 'index_dashboard.html',
+                      {'citas_atendidas': _citas_atendidas, 'citas_pendientes': _citas_pendientes,
+                       'pacientes': _pacientes, 'citas_futuras': _citas_futuras, 'labels_nps': _labels_nps,
+                       'label_nps': _label_nps, 'data_nps': _data_nps, 'label_servicio': _label_servicio,
+                       'data_servicio': _data_servicio, 'data_cita': _data_cita, 'label_cita': _label_cita,
+                       'label_cita_date': _label_cita_date, 'data_cita_date': _data_cita_date})
+
+
+def dataModelcitadate(month):
+    _data = []
+    _year = int(date.today().strftime("%Y"))
+    _month = [1, 3, 5, 7, 8, 10, 12]
+    if month in _month:
+        for day in range(1, 32):
+            count_cita = countModelarray(Cita.objects.filter(
+                Q(tipo_estado=True) & Q(Q(fecha__year=_year) & Q(fecha__month=month) & Q(fecha__day=day))))
+            # print(cita)
+            _data.append(count_cita)
+    elif month == 2:
+        for day in range(1, 29):
+            count_cita = countModelarray(Cita.objects.filter(
+                Q(tipo_estado=True) & Q(Q(fecha__year=_year) & Q(fecha__month=month) & Q(fecha__day=day))))
+            # print(cita)
+            _data.append(count_cita)
+    else:
+        for day in range(1, 31):
+            count_cita = countModelarray(Cita.objects.filter(
+                Q(tipo_estado=True) & Q(Q(fecha__year=_year) & Q(fecha__month=month) & Q(fecha__day=day))))
+            # print(cita)
+            _data.append(count_cita)
+    return (_data)
+
+
+def labelModelcitadate(month):
+    _label = []
+    _year = int(date.today().strftime("%Y"))
+    _month = [1, 3, 5, 7, 8, 10, 12]
+    cita = Cita.objects.filter(Q(tipo_estado=True) & Q(Q(fecha__month=month) & Q(fecha__day=11)))
+    if month in _month:
+        for day in range(1, 32):
+            _date = str(_year) + "-" + str(month) + "-" + str(day)
+            # print(type(_date), ' ', _date)
+            # print(type(day), 'dia ', day)
+            _label.append(_date)
+    elif month == 2:
+        for day in range(1, 29):
+            _date = str(_year) + "-" + str(month) + "-" + str(day)
+            # print(type(_date), ' ', _date)
+            # print(type(day), 'dia ', day)
+            _label.append(_date)
+    else:
+        for day in range(1, 31):
+            _date = str(_year) + "-" + str(month) + "-" + str(day)
+            # print(type(_date), ' ', _date)
+            # print(type(day), 'dia ', day)
+            _label.append(_date)
+    return (_label)
+
+
+def dataModelcita():
+    data = []
+    label = [True, False]
+    for seq in range(len(label)):
+        data.append(countModelarray(Cita.objects.filter(tipo_estado=label[seq])))
+    return data
+
 
 def dataModelservicio(label):
     data = []
-    count = 0
     for seq in range(len(label)):
-        print(label[seq])
         data.append(countModelarray(Consulta.objects.filter(fk_servicio=Servicio.objects.get(nombre=label[seq]))))
-        count = count + 1
-    print(data)
     return data
 
 
@@ -1133,3 +1201,47 @@ def delete_servicio(request, pk_servicio):
         model_servicio.estado = False
         model_servicio.save()
         return redirect('clinic:read_servicio')
+
+
+"""
+ -- CRUD TO THE MODEL CONTROL-CLINIC
+"""
+
+
+def control_clinica(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        try:
+            model_control_clinica = ControlClinica.objects.filter(estado=True)[:1].get()
+        except ObjectDoesNotExist:
+            model_control_clinica = ControlClinica(nombre="ClinicaDrPineda", estado_servicio=True, estado=True)
+            model_control_clinica.save()
+        return render(request, 'Clinic/ControlClinica/control_clinica.html',
+                      {'model_control_clinica': model_control_clinica})
+
+
+def estado_servicio_control_clinica(request, estado_servicio):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        if estado_servicio == 1:
+            model_control_clinica = ControlClinica.objects.filter(estado=True)[:1].get()
+            model_control_clinica.estado_servicio = True
+            model_control_clinica
+        else:
+            model_control_clinica = ControlClinica.objects.filter(estado=True)[:1].get()
+            model_control_clinica.estado_servicio = False
+            model_control_clinica
+        model_control_clinica.save()
+        return redirect('clinic:control_clinica')
+
+"""
+ -- SISTEM TUTORIALS
+"""
+
+def show_tutorial(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        return render(request, 'Clinic/Tutorial/tutorial.html')
