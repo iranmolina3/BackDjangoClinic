@@ -114,7 +114,7 @@
                                         </ul>
                                     </li>
                                     -->
-                                    <li><a href="">Servicios</a></li>
+                                    <li><a href="{%url 'servicios'%}">Servicios</a></li>
                                     <!--
                                     <li class="has-dropdown">
                                         <a href="">Departamentos</a>
@@ -147,7 +147,7 @@
             </div>
         </div>
     </nav>
-
+    {%block body%}
     <aside id="colorlib-hero">
         <div class="flexslider">
             <ul class="slides">
@@ -740,7 +740,7 @@
             </div>
         </div>
     </div>
-
+    {%endblock body%}
 
     <footer id="colorlib-footer" role="contentinfo">
         <div class="overlay"></div>
@@ -748,8 +748,8 @@
             <div class="row row-pb-md">
                 <div class="col-md-3 colorlib-widget">
                     <h3>ClinicaMedica Dr.Pineda</h3>
-                    <p>Asegurar una conducta ética, transparencia y responsabilidad es clave en la creación y prueba de
-                        los medicamentos y otras tecnologías de salud.</p>
+                    <p>Asegurar una conducta ética, transparencia y responsabilidad es clave en la creación,
+                        medicamentos y otras tecnologías de salud para tu bienestar.</p>
                 </div>
                 <div class="col-md-3 col-md-push-1 colorlib-widget">
                     <h3>Navegacion</h3>

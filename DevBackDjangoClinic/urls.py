@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('clinic/', include(('Aplications.Clinic.urls', 'clinic'))),
     path('', home, name = 'index'),
+    path('servicios/', servicios, name='servicios'),
     path('sing/', sing, name ='sing'),
     path('dashboard/', dashboard, name='dashboard'),
     path('logout_view/', logout_view, name = 'logout')
