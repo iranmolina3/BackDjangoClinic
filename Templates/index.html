@@ -161,7 +161,7 @@
                                     <h2 class="doc-holder">Dr. Fernando Pineda Peñate Médico especialista en cirugía
                                         general.</h2>
                                     <h2>Puedes realizar tus consultas en la sección de contacto.</h2>
-                                    <p><a class="btn btn-primary btn-lg" href="">Contacto</a></p>
+                                    <p><a class="btn btn-primary btn-lg" href="{%url 'contacto'%}">Contacto</a></p>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                                     <h2 class="doc-holder">Servicio de ultrasonido para hombre y mujer!</h2>
                                     <h2>Para diagnosticar las causas de dolor, hinchazón e infección en los órganos
                                         internos del cuerpo y mas.</h2>
-                                    <p><a class="btn btn-primary btn-lg" href="">Contacto</a></p>
+                                    <p><a class="btn btn-primary btn-lg" href="{%url 'contacto'%}">Contacto</a></p>
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
                                     <h2 class="doc-holder">Por que tu salud es nuestra proridad!</h2>
                                     <h2>Para la evaluación de la salud del paciente y registro de historial médico para
                                         un mejor control de tu salud.</h2>
-                                    <p><a class="btn btn-primary btn-lg btn-learn" href="">Contacto</a>
+                                    <p><a class="btn btn-primary btn-lg btn-learn" href="{%url 'contacto'%}">Contacto</a>
                                     </p>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@
                                     <h1>Especilidad <strong>quirúrgica</strong></h1>
                                     <h2 class="doc-holder">Operaciones de diferentes tipos!</h2>
                                     <h2>Atencion al cliente en cirugia general tu salud en buenas manos.</h2>
-                                    <p><a class="btn btn-primary btn-lg btn-learn" href="">Contacto</a>
+                                    <p><a class="btn btn-primary btn-lg btn-learn" href="{%url 'contacto'%}">Contacto</a>
                                     </p>
                                 </div>
                             </div>
@@ -354,7 +354,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <h2 class="line-block">Haga su cita</h2>
-                    <p class="line-block"><a href="#" class="btn btn-primary btn-outline btn-cta">Contacto <i
+                    <p class="line-block"><a href="{%url 'contacto'%}" class="btn btn-primary btn-outline btn-cta">Contacto <i
                             class="fas fa-address-book"></i></a></p>
                 </div>
             </div>
@@ -377,7 +377,7 @@
 							<i class="fas fa-file-signature"></i>
 						</span>
                         <div class="desc">
-                            <h3><a href="#">{{list_model_servicio.nombre}}</a></h3>
+                            <h3><a href="{%url 'servicios'%}">{{list_model_servicio.nombre}}</a></h3>
                             <p>{{list_model_servicio.brev_descripcion}}</p>
                         </div>
                     </div>
@@ -647,7 +647,7 @@
                             <span id="seconds"></span>
                         </p>
                         <p><strong>Oferta limitada, apresurate!</strong></p>
-                        <p><a href="#" class="btn btn-primary btn-lg">Contacto <i
+                        <p><a href="{%url 'contacto'%}" class="btn btn-primary btn-lg">Contacto <i
                                 class="fas fa-address-book"></i></a>
                         </p>
                     </div>
@@ -756,8 +756,8 @@
                     <ul class="colorlib-footer-links">
                         <li><a href="#"><i class="icon-check"></i> Departamentos</a></li>
                         <li><a href="#"><i class="icon-check"></i> Blog</a></li>
-                        <li><a href="#"><i class="icon-check"></i> Contacto</a></li>
-                        <li><a href="#"><i class="icon-check"></i> Servicios</a></li>
+                        <li><a href="{%url 'contacto'%}"><i class="icon-check"></i> Contacto</a></li>
+                        <li><a href="{%url 'servicios'%}"><i class="icon-check"></i> Servicios</a></li>
                         <li><a href="#"><i class="icon-check"></i> Personal</a></li>
                     </ul>
                 </div>
@@ -765,11 +765,11 @@
                 <div class="col-md-3 colorlib-widget">
                     <h3>Nuestros servicios</h3>
                     <ul class="colorlib-footer-links">
-                        <li><a href="#"><i class="icon-check"></i> Apendice</a></li>
-                        <li><a href="#"><i class="icon-check"></i> Electrocardiograma</a></li>
-                        <li><a href="#"><i class="icon-check"></i> Satura de heridas</a></li>
-                        <li><a href="#"><i class="icon-check"></i> Consulta general medica</a></li>
-                        <li><a href="#"><i class="icon-check"></i> Vesicula</a></li>
+                        <li><a href="{%url 'servicios'%}"><i class="icon-check"></i> Apendice</a></li>
+                        <li><a href="{%url 'servicios'%}"><i class="icon-check"></i> Electrocardiograma</a></li>
+                        <li><a href="{%url 'servicios'%}"><i class="icon-check"></i> Satura de heridas</a></li>
+                        <li><a href="{%url 'servicios'%}"><i class="icon-check"></i> Consulta general medica</a></li>
+                        <li><a href="{%url 'servicios'%}"><i class="icon-check"></i> Vesicula</a></li>
                     </ul>
                 </div>
 
