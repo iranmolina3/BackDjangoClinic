@@ -9,6 +9,7 @@ from random import choice
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
+
 """
  -- GLOBAL VARS
 """
@@ -17,15 +18,6 @@ from django.contrib.auth import authenticate, login, logout
 def logout_view(request):
     logout(request)
     return redirect('index')
-
-
-def span_numero_citas():
-    fecha_ingreso = date.today()
-    cita = Cita.objects.filter(ESTADO=True, FECHA_INGRESO=fecha_ingreso)
-    contador = 0
-    for lista_cita in cita:
-        contador = contador + 1
-    return contador
 
 
 def generator_password():
@@ -67,6 +59,7 @@ def home(request):
                    'number_servicio': _number_servicio, 'number_satisfacion': _number_satisfacion,
                    'model_historial_clinico': model_historial_clinico})
 
+
 def servicios(request):
     model_servicio = Servicio.objects.filter(estado=True)
     model_control_clinica = ControlClinica.objects.filter(estado=True)[:1].get()
@@ -75,9 +68,11 @@ def servicios(request):
     _number_satisfacion = countModelarray(Nps.objects.filter(respuesta=5)) + countModelarray(
         Nps.objects.filter(respuesta=4)) + countModelarray(Nps.objects.filter(respuesta=3))
     model_historial_clinico = HistorialClinico.objects.all()[:10]
-    return render(request, 'services.html', {'model_control_clinica': model_control_clinica, 'model_servicio': model_servicio,
+    return render(request, 'services.html',
+                  {'model_control_clinica': model_control_clinica, 'model_servicio': model_servicio,
                    'number_servicio': _number_servicio, 'number_satisfacion': _number_satisfacion,
                    'model_historial_clinico': model_historial_clinico})
+
 
 def contacto(request):
     model_servicio = Servicio.objects.filter(estado=True)
@@ -87,9 +82,11 @@ def contacto(request):
     _number_satisfacion = countModelarray(Nps.objects.filter(respuesta=5)) + countModelarray(
         Nps.objects.filter(respuesta=4)) + countModelarray(Nps.objects.filter(respuesta=3))
     model_historial_clinico = HistorialClinico.objects.all()[:10]
-    return render(request, 'contact.html', {'model_control_clinica': model_control_clinica, 'model_servicio': model_servicio,
+    return render(request, 'contact.html',
+                  {'model_control_clinica': model_control_clinica, 'model_servicio': model_servicio,
                    'number_servicio': _number_servicio, 'number_satisfacion': _number_satisfacion,
                    'model_historial_clinico': model_historial_clinico})
+
 
 def dashboard(request):
     if not request.user.is_authenticated:
@@ -282,6 +279,7 @@ def create_persona(request):
             _direccion = request.POST.get('direccion')
             _estado_civil = request.POST.get('estado_civil')
             _municipio = request.POST.get('municipio')
+            _hora_inicio = request.POST.get('hora_inicio')
             fecha_nacimiento = datetime.strptime(_fecha_nacimiento, "%Y-%m-%d")
             fecha_actual = datetime.strptime(date.today().strftime("%Y-%m-%d"), "%Y-%m-%d")
             # print(type(_fecha_nacimiento))
@@ -299,13 +297,19 @@ def create_persona(request):
             # print('Mi edad es ', _edad)
             # print(_dpi, _edad, _genero, _nombre, _apellido, _direccion, _fecha_nacimiento, _estado_civil, _municipio,
             #      _telefono)
+            print('HORA_INICIO', _hora_inicio)
+            _hora_final = datetime.today().strftime("%Y-%m-%dT%H:%M")
+            print('HORA_FINAL', _hora_final)
             model_persona = Persona(nombre=_nombre, apellido=_apellido, dpi=_dpi, edad=_edad,
                                     fecha_nacimiento=_fecha_nacimiento, telefono=_telefono, genero=_genero,
-                                    direccion=_direccion, municipio=_municipio, estado_civil=_estado_civil)
+                                    direccion=_direccion, municipio=_municipio, estado_civil=_estado_civil,
+                                    hora_inicio=_hora_inicio, hora_final=_hora_final)
             model_persona.save()
-            print(model_persona.pk_persona)
             return redirect('clinic:read_persona')
-        return render(request, 'Clinic/Persona/create_persona.html')
+        else:
+            _hora_inicio = datetime.today().strftime("%Y-%m-%dT%H:%M")
+            print('HORA_INICIO', _hora_inicio)
+            return render(request, 'Clinic/Persona/create_persona.html', {'hora_inicio':_hora_inicio})
 
 
 def read_persona(request):
