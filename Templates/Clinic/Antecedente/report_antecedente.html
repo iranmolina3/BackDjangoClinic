@@ -1,0 +1,382 @@
+{%extends 'index_dashboard.html'%}
+{%load staticfiles%}
+
+{%block link%}
+{%endblock link%}
+
+{%block body%}
+
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Registro de antecedente</h4>
+                    {%if tipo_antecedente == 1%}
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Ultima regla:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" id="nametext"
+                                           name="ultima_regla"
+                                           aria-describedby="name" value="{{ultima_regla}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Fecha probable parto:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" id="nametext"
+                                           name="fecha_probable_parto"
+                                           aria-describedby="name" value="{{fecha_probable_parto}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Gesta:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" id="nametext"
+                                           name="gesta"
+                                           aria-describedby="name" value="{{gesta}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Aborto:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" id="nametext"
+                                           name="aborto"
+                                           aria-describedby="name" value="{{aborto}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Hijos vivos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="number" class="form-control" id="nametext" name="hijos_vivos"
+                                           aria-describedby="name" value="{{model_antecedente.hijos_vivos}}"
+                                           placeholder="Ej: 0, 1, 2.. 100">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Peso:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="number" class="form-control" id="nametext" name="peso"
+                                           aria-describedby="name" value="{{model_antecedente.peso}}"
+                                           placeholder="Ej: 0, 1, 2.. 100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                <h6 class="card-title">Quirurgico:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="quirurgicos"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Operaciones quirurgicas">{{model_antecedente.quirurgico}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Medicos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="medicos"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Historiales medicos">{{model_antecedente.medico}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Alergias:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="alergias"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Alergias del paciente">{{model_antecedente.alergia}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                <h6 class="card-title">Familiares:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="familiares"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Enfermedades familiar">{{model_antecedente.familiar}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Habitos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="habitos"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Habitos del paciente">{{model_antecedente.habito}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Cigarrillos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="nametext" name="cigarrillos"
+                                           aria-describedby="name"
+                                           placeholder="Ej: 2 cajas cada semana" value="{{model_antecedente.cigarro}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                <h6 class="card-title">Licor:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="nametext" name="licor"
+                                           aria-describedby="name"
+                                           placeholder="Ej: 2 botellas cada semana" value="{{model_antecedente.licor}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%else%}
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Hijos vivos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="number" class="form-control" id="nametext" name="hijos_vivos"
+                                           aria-describedby="name" value="{{model_antecedente.hijos_vivos}}"
+                                           placeholder="Ej: 0, 1, 2.. 100">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Peso:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="number" class="form-control" id="nametext" name="peso"
+                                           aria-describedby="name" value="{{model_antecedente.peso}}"
+                                           placeholder="Ej: 0, 1, 2.. 100">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                <h6 class="card-title">Quirurgico:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="quirurgicos"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Operaciones quirurgicas">{{model_antecedente.quirurgico}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Medicos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="medicos"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Historiales medicos">{{model_antecedente.medico}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Alergias:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="alergias"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Alergias del paciente">{{model_antecedente.alergia}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                <h6 class="card-title">Familiares:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="familiares"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Enfermedades familiar">{{model_antecedente.familiar}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Habitos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="habitos"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Habitos del paciente">{{model_antecedente.habito}}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <h6 class="card-title">Cigarrillos:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="nametext" name="cigarrillos"
+                                           aria-describedby="name"
+                                           placeholder="Ej: 2 cajas cada semana" value="{{model_antecedente.cigarro}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
+                                <h6 class="card-title">Licor:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="nametext" name="licor"
+                                           aria-describedby="name"
+                                           placeholder="Ej: 2 botellas cada semana" value="{{model_antecedente.licor}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Para js de validaciones de campos -->
+<!--<script src="{% static 'js/validador.js'%}"></script>-->
+
+{%endblock body%}

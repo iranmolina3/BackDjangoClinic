@@ -368,6 +368,15 @@ def update_persona(request, pk_persona):
             model_persona.save()
             return redirect('clinic:read_persona')
 
+def report_persona(request, pk_persona):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_persona = Persona.objects.get(pk_persona=pk_persona)
+        return render(request, 'Clinic/Persona/report_persona.html',
+                      {'model_persona': model_persona,
+                       'fecha_nacimiento': model_persona.fecha_nacimiento.strftime("%Y-%m-%d")})
+
 
 def updatePersona(request, pk_historial_clinico):
     if not request.user.is_authenticated:
@@ -575,13 +584,29 @@ def read_historial_clinico(request):
         model_pregunta = Pregunta.objects.filter(estado=True)
         if _nombre:
             model_historial_clinico = HistorialClinico.objects.filter(Q(nombre__icontains=_nombre)).order_by(
-                'fecha_creacion')
+                '-fecha_creacion')
         # paginator = Paginator(historial_clinico, 3)
         # page = request.GET.get('page')
         # historial_clinico = paginator.get_page(page)
         return render(request, 'Clinic/HistorialClinico/read_historial_clinico.html',
                       {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
 
+def read_historial_clinico(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        _nombre = request.GET.get('nombre')
+        # model_historial_clinico = HistorialClinico.objects.all().order_by('-fecha_creacion')
+        model_historial_clinico = HistorialClinico.objects.all().order_by('-fecha_creacion')
+        model_pregunta = Pregunta.objects.filter(estado=True)
+        if _nombre:
+            model_historial_clinico = HistorialClinico.objects.filter(Q(nombre__icontains=_nombre)).order_by(
+                '-fecha_creacion')
+        # paginator = Paginator(historial_clinico, 3)
+        # page = request.GET.get('page')
+        # historial_clinico = paginator.get_page(page)
+        return render(request, 'Clinic/HistorialClinico/read_historial_clinico.html',
+                      {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
 
 def delete_historial_clinico(request, pk_historial_clinico, pk_cita):
     if not request.user.is_authenticated:
@@ -648,6 +673,15 @@ def update_consulta(request, pk_consulta):
             return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
                             model_historial_clinico.fk_cita.pk_cita)
 
+def report_consulta(request, pk_consulta):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_consulta = Consulta.objects.get(pk_consulta=pk_consulta)
+        model_servicio = Servicio.objects.filter(estado=True)
+        return render(request, 'Clinic/Consulta/report_consulta.html',
+                      {'model_consulta': model_consulta, 'model_servicio': model_servicio})
+
 
 def delete_consulta(request, pk_consulta):
     if not request.user.is_authenticated:
@@ -671,7 +705,7 @@ def read_consulta(request):
         paginator = Paginator(consulta, 6)
         page = request.GET.get('page')
         consulta = paginator.get_page(page)
-        return render(request, 'Clinic/Consulta/read_consulta.html', {'consulta': consulta})
+        return render(request, 'Clinic/Consulta/report_consulta.html', {'consulta': consulta})
 
 
 """
@@ -834,6 +868,20 @@ def update_antecedente(request, pk_antecedente, tipo_antecedente):
                 return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
                                 model_historial_clinico.fk_cita.pk_cita)
 
+def report_antecedente(request, pk_antecedente, tipo_antecedente):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_antecedente = Antecedente.objects.get(pk_antecedente=pk_antecedente)
+        ultima_regla = isNone(model_antecedente.ultima_regla)
+        fecha_probable_parto = isNone(model_antecedente.fecha_probable_parto)
+        gesta = isNone(model_antecedente.gesta)
+        aborto = isNone(model_antecedente.aborto)
+        return render(request, 'Clinic/Antecedente/report_antecedente.html',
+                      {'model_antecedente': model_antecedente, 'tipo_antecedente': tipo_antecedente,
+                       'ultima_regla': ultima_regla, 'fecha_probable_parto': fecha_probable_parto, 'gesta': gesta,
+                       'aborto': aborto})
+
 
 def read_antecedente(request):
     if not request.user.is_authenticated:
@@ -843,7 +891,7 @@ def read_antecedente(request):
         paginator = Paginator(antecedente, 6)
         page = request.GET.get('page')
         antecedente = paginator.get_page(page)
-        return render(request, 'Clinic/Antecedente/read_antecedente.html', {'antecedente': antecedente})
+        return render(request, 'Clinic/Antecedente/report_antecedente.html', {'antecedente': antecedente})
 
 
 def delete_antecedente(request, pk_antecedente):
@@ -964,17 +1012,13 @@ def update_examen_fisico(request, pk_examen_fisico, tipo_examen_fisico):
                 return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
                                 model_historial_clinico.fk_cita.pk_cita)
 
-
-def read_examen_fisico(request):
+def report_examen_fisico(request, pk_examen_fisico, tipo_examen_fisico):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        examen_fisico = ExamenFisico.objects.filter(ESTADO=True)
-        print(examen_fisico)
-        paginator = Paginator(examen_fisico, 6)
-        page = request.GET.get('page')
-        examen_fisico = paginator.get_page(page)
-        return render(request, 'Clinic/ExamenFisico/read_examen_fisico.html', {'examen_fisico': examen_fisico})
+        model_examen_fisico = ExamenFisico.objects.get(pk_examen_fisico=pk_examen_fisico)
+        return render(request, 'Clinic/ExamenFisico/report_examen_fisico.html',
+                      {'model_examen_fisico': model_examen_fisico, 'tipo_examen_fisico': tipo_examen_fisico})
 
 
 def delete_examen_fisico(request, pk_examen_fisico):
@@ -1022,12 +1066,9 @@ def read_medicamento(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        if request.method == "POST":
-            return render(request, 'dashboard')
-        else:
-            _nombre = isStr(request.GET.get('descripcion'))
-            model_medicamento = Medicamento.objects.filter(Q(estado=True) & Q(nombre__icontains=_nombre))
-            return render(request, 'Clinic/Medicamento/read_medicamento.html', {'model_medicamento': model_medicamento})
+        _nombre = isStr(request.GET.get('nombre'))
+        model_medicamento = Medicamento.objects.filter(Q(estado=True) & Q(nombre__icontains=_nombre))
+        return render(request, 'Clinic/Medicamento/read_medicamento.html', {'model_medicamento': model_medicamento})
 
 
 def update_medicamento(request, pk_medicamento):
@@ -1036,8 +1077,8 @@ def update_medicamento(request, pk_medicamento):
     else:
         model_medicamento = Medicamento.objects.get(pk_medicamento=pk_medicamento)
         if request.method == "POST":
-            _nombre = request.POST.get('nombre')
-            if Medicamento.objects.filter(nombre__icontains=_nombre).exists():
+            _nombre = request.POST.get('descripcion')
+            if Medicamento.objects.filter(Q(nombre__icontains=_nombre) & Q(estado=True)).exists():
                 estado_text_helper = True
                 return render(request, 'Clinic/Medicamento/update_medicamento.html',
                               {'estado_text_helper': estado_text_helper})
@@ -1105,6 +1146,18 @@ def create_receta(request, pk_historial_clinico):
                           {'model_receta': model_receta, 'datalist_medicamento': datalist_medicamento,
                            'model_historial_clinico': model_historial_clinico})
 
+def report_receta(request, pk_historial_clinico):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
+        model_historial_clinico.estado_receta = existsReceta(model_historial_clinico)
+        model_historial_clinico.save()
+        model_receta = Receta.objects.filter(Q(estado=True) & Q(fk_historialclinico=model_historial_clinico))
+        datalist_medicamento = Medicamento.objects.filter(estado=True)
+        return render(request, 'Clinic/Receta/report_receta.html',
+                      {'model_receta': model_receta, 'datalist_medicamento': datalist_medicamento,
+                       'model_historial_clinico': model_historial_clinico})
 
 def delete_receta(request, pk_receta, pk_historial_clinico):
     if not request.user.is_authenticated:

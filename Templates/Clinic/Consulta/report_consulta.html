@@ -1,0 +1,64 @@
+{%extends 'index_dashboard.html'%}
+{%load staticfiles%}
+
+{%block link%}
+{%endblock link%}
+
+{%block body%}
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Registro de consulta</h4>
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-6 col-md-12">
+                                <h6 class="card-title">Municipio:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <select class="custom-select" id="inputGroupSelect01" name="pk_servicio">
+                                        <option selected value="{{model_consulta.fk_servicio.pk_servicio}}">
+                                            {{model_consulta.fk_servicio.nombre}}
+                                        </option>
+                                        {%for list_servicio in model_servicio%}
+                                        <option value="{{list_servicio.pk_servicio}}">{{list_servicio.nombre}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <h6 class="card-title">Historia:</h6>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" id="nametext" name="historia"
+                                              aria-describedby="name"
+                                              placeholder="Ej: Como empezaron los sintomas">{{model_consulta.historia}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock body%}

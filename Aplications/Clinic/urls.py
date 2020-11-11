@@ -7,6 +7,7 @@ urlpatterns = [
     path('read_persona/', read_persona, name='read_persona'),
     path('update_persona/<int:pk_persona>', update_persona, name='update_persona'),
     path('delete_persona/<int:pk_persona>', delete_persona, name='delete_persona'),
+    path('report_persona/<int:pk_persona>', report_persona, name='report_persona'),
     # model servicio
     path('create_servicio/', create_servicio, name='create_servicio'),
     path('read_servicio/', read_servicio, name='read_servicio'),
@@ -26,7 +27,7 @@ urlpatterns = [
          name='delete_historial_clinico'),
     # model consulta
     path('create_consulta/<int:pk_historial_clinico>', create_consulta, name='create_consulta'),
-    path('read_consulta/', read_consulta, name='read_consulta'),
+    path('report_consulta/<int:pk_consulta>', report_consulta, name='report_consulta'),
     path('update_consulta/<int:pk_consulta>', update_consulta, name='update_consulta'),
     path('delete_consulta/<int:pk_consulta>', delete_consulta, name='delete_consulta'),
     # model antecedente
@@ -35,16 +36,19 @@ urlpatterns = [
     path('read_antecedente/', read_antecedente, name='read_antecedente'),
     path('update_antecedente/<int:pk_antecedente>/<int:tipo_antecedente>', update_antecedente,
          name='update_antecedente'),
+    path('report_antecedente/<int:pk_antecedente>/<int:tipo_antecedente>', report_antecedente,
+         name='report_antecedente'),
     path('delete_antecedente/<int:pk_antecedente>', delete_antecedente, name='delete_antecedente'),
     # model examen fisico
     path('create_examen_fisico/<int:pk_historial_clinico>/<int:tipo_examen_fisico>', create_examen_fisico,
          name='create_examen_fisico'),
-    path('read_examen_fisico/', read_examen_fisico, name='read_examen_fisico'),
+    path('report_examen_fisico/<int:pk_examen_fisico>/<int:tipo_examen_fisico>', report_examen_fisico, name='report_examen_fisico'),
     path('update_examen_fisico/<int:pk_examen_fisico>/<int:tipo_examen_fisico>', update_examen_fisico,
          name='update_examen_fisico'),
     path('delete_examen_fisico/<int:pk_examen_fisico>', delete_examen_fisico, name='delete_examen_fisico'),
     # model recetario
     path('create_receta/<int:pk_historial_clinico>', create_receta, name='create_receta'),
+    path('report_receta/<int:pk_historial_clinico>', report_receta, name='report_receta'),
     path('delete_receta/<int:pk_receta>/<int:pk_historial_clinico>', delete_receta, name='delete_receta'),
     # model medicamento
     path('create_medicamento/', create_medicamento, name='create_medicamento'),

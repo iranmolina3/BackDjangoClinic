@@ -165,7 +165,7 @@
                         </td>
                         {%else%}
                         <td>
-                            <a href="{%url 'clinic:report_persona' list_historial_clinico.fk_persona.pk_persona%}">
+                            <a href="{%url 'clinic:updatePersona' list_historial_clinico.pk_historial_clinico%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-user-injured"></i></button>
@@ -175,7 +175,7 @@
                         <!--segunda condicional para motivo-->
                         {%if list_historial_clinico.fk_consulta is None%}
                         <td>
-                            <a href="">
+                            <a href="{%url 'clinic:create_consulta' list_historial_clinico.pk_historial_clinico%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
@@ -183,7 +183,7 @@
                         </td>
                         {%else%}
                         <td>
-                            <a href="{%url 'clinic:report_consulta' list_historial_clinico.fk_consulta.pk_consulta%}">
+                            <a href="{%url 'clinic:update_consulta' list_historial_clinico.fk_consulta.pk_consulta%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
@@ -194,18 +194,18 @@
                         {%if list_historial_clinico.fk_antecedente is None%}
                         <td>
                             {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
-                            <a href="">
+                            <a href="{%url 'clinic:create_antecedente' list_historial_clinico.pk_historial_clinico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
                             </a>
                             {%else%}
-                            <a href="">
+                            <a href="{%url 'clinic:create_antecedente' list_historial_clinico.pk_historial_clinico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
                             </a>
-                            <a href="">
+                            <a href="{%url 'clinic:create_antecedente' list_historial_clinico.pk_historial_clinico 1%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-baby-carriage"></i></button>
@@ -215,30 +215,30 @@
                         {%else%}
                         <td>
                             {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
-                            <a href="{%url 'clinic:report_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
                             {%else%}
                             {% if list_historial_clinico.fk_antecedente.tipo_antecedente == 1%}
-                            <a href="">
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
-                            <a href="{%url 'clinic:report_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 1%}">
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 1%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-baby-carriage"></i></button>
                             </a>
                             {%else%}
-                            <a href="{%url 'clinic:report_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
-                            <a href="">
+                            <a href="{%url 'clinic:update_antecedente' list_historial_clinico.fk_antecedente.pk_antecedente 1%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-baby-carriage"></i></button>
@@ -251,18 +251,18 @@
                         {%if list_historial_clinico.fk_examen_fisico is None%}
                         <td>
                             {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
-                            <a href="">
+                            <a href="{%url 'clinic:create_examen_fisico' list_historial_clinico.pk_historial_clinico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
                             </a>
                             {%else%}
-                            <a href="">
+                            <a href="{%url 'clinic:create_examen_fisico' list_historial_clinico.pk_historial_clinico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="far fa-clipboard"></i></button>
                             </a>
-                            <a href="">
+                            <a href="{%url 'clinic:create_examen_fisico' list_historial_clinico.pk_historial_clinico 1%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-baby-carriage"></i></button>
@@ -272,30 +272,30 @@
                         {%else%}
                         <td>
                             {%if list_historial_clinico.fk_persona.genero == 'Masculino'%}
-                            <a href="{%url 'clinic:report_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
                             {%else%}
                             {% if list_historial_clinico.fk_examen_fisico.tipo_examen_fisico == 1%}
-                            <a href="">
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
-                            <a href="{%url 'clinic:report_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 1%}">
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 1%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-baby-carriage"></i></button>
                             </a>
                             {%else%}
-                            <a href="{%url 'clinic:report_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 0%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-notes-medical"></i></button>
                             </a>
-                            <a href="">
+                            <a href="{%url 'clinic:update_examen_fisico' list_historial_clinico.fk_examen_fisico.pk_examen_fisico 1%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-baby-carriage"></i></button>
@@ -306,7 +306,7 @@
                         {%endif%}
                         {%if not list_historial_clinico.estado_receta%}
                         <td>
-                            <a href="">
+                            <a href="{%url 'clinic:create_receta' list_historial_clinico.pk_historial_clinico%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-secondary"><i
                                         class="fas fa-capsules"></i></button>
@@ -314,7 +314,7 @@
                         </td>
                         {%else%}
                         <td>
-                            <a href="{%url 'clinic:report_receta' list_historial_clinico.pk_historial_clinico%}">
+                            <a href="{%url 'clinic:create_receta' list_historial_clinico.pk_historial_clinico%}">
                                 <button type="button"
                                         class="btn waves-effect waves-light btn-rounded btn-success"><i
                                         class="fas fa-capsules"></i></button>
@@ -342,10 +342,6 @@ $( document ).ready(function() {
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
     $("#fecha").val(today);
 });
-
-
-
-
 
 </script>
 {%endblock body%}
