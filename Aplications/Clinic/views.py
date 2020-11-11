@@ -79,6 +79,18 @@ def servicios(request):
                    'number_servicio': _number_servicio, 'number_satisfacion': _number_satisfacion,
                    'model_historial_clinico': model_historial_clinico})
 
+def contacto(request):
+    model_servicio = Servicio.objects.filter(estado=True)
+    model_control_clinica = ControlClinica.objects.filter(estado=True)[:1].get()
+    _number_servicio = countModelarray(Servicio.objects.filter(estado=True))
+    _number_servicio = countModelarray(Servicio.objects.filter(estado=True))
+    _number_satisfacion = countModelarray(Nps.objects.filter(respuesta=5)) + countModelarray(
+        Nps.objects.filter(respuesta=4)) + countModelarray(Nps.objects.filter(respuesta=3))
+    model_historial_clinico = HistorialClinico.objects.all()[:10]
+    return render(request, 'contact.html', {'model_control_clinica': model_control_clinica, 'model_servicio': model_servicio,
+                   'number_servicio': _number_servicio, 'number_satisfacion': _number_satisfacion,
+                   'model_historial_clinico': model_historial_clinico})
+
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('sing')
