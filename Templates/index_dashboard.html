@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{%static 'dashboard/assets/images/favicon.png'%}">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/L67qcnHq/logo.png">
     <title>ClinicaPineda</title>
     <!-- Custom CSS -->
     <link href="{%static 'dashboard/assets/extra-libs/c3/c3.min.css'%}" rel="stylesheet">
@@ -58,20 +58,20 @@
                     <a href="{%url 'dashboard'%}">
                         <b class="logo-icon">
                             <!-- Dark Logo icon -->
-                            <img src="{%static 'dashboard/assets/images/logo-icon.png'%}" alt="homepage"
+                            <img src="https://i.postimg.cc/L67qcnHq/logo.png" alt="homepage"
                                  class="dark-logo"/>
                             <!-- Light Logo icon -->
-                            <img src="{%static 'dashboard/assets/images/logo-icon.png'%}" alt="homepage"
+                            <img src="https://i.postimg.cc/L67qcnHq/logo.png" alt="homepage"
                                  class="light-logo"/>
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span class="logo-text">
                                 <!-- dark Logo text -->
-                                <img src="{%static 'dashboard/assets/images/logo-text.png'%}" alt="homepage"
+                                <img src="https://i.postimg.cc/zXVcpPtC/adminclinica-dark.png" alt="homepage"
                                      class="dark-logo"/>
                             <!-- Light Logo text -->
-                                <img src="{%static 'dashboard/assets/images/logo-light-text.png'%}" class="light-logo"
+                                <img src="https://i.postimg.cc/3JVbqCVP/adminclinica-light.png" class="light-logo"
                                      alt="homepage"/>
 
                             </span>
@@ -395,14 +395,38 @@
                                                 aria-expanded="false"><i class="fab fa-youtube"></i><span
                             class="hide-menu">Video tutoriales </span></a>
                         <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                            <li class="sidebar-item"><a href="{%url 'clinic:show_tutorial'%}" class="sidebar-link"><span
-                                    class="hide-menu"> Tutoriales
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_paciente'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial pacientes
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_cita'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial citas
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_medicamento'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial medicamentos
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_historial_medico'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial historial medico
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_pregunta_nps'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial preguntas nps
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_servicio'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial servicios
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_clinica'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial clinica
                                         </span></a>
                             </li>
                         </ul>
                     </li>
                     <li class="list-divider"></li>
-                    <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
+                    <li class="nav-small-cap"><span class="hide-menu">Extras</span></li>
 
                     <!--<li class="sidebar-item"><a class="sidebar-link sidebar-link" href="../../docs/docs.html"
                                                 aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span
@@ -578,7 +602,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-start">
-                                <h4 class="card-title mb-0">Earning Statistics</h4>
+                                <h4 class="card-title mb-0">Citas atendidas por mes</h4>
                                 <div class="ml-auto">
                                     <div class="dropdown sub-dropdown">
                                         <button class="btn btn-link text-muted dropdown-toggle" type="button"

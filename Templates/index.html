@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Medicare Template</title>
+    <title>ClinicaDr.Pineda</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
@@ -22,7 +22,7 @@
     <meta name="twitter:card" content=""/>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/L67qcnHq/logo.png">
     <!-- Animate.css -->
     <link rel="stylesheet" href="{%static 'medicare/css/animate.css'%}">
     <!-- Icomoon Icon Fonts-->
@@ -61,14 +61,18 @@
                     <div class="col-xs-12">
                         <div class="top">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div id="colorlib-logo"><a href="{%url 'index'%}"><i class="flaticon-stethoscope"></i>Clinica Medica <span>Dr.Pineda Peñate</span></a>
+                                <div class="col-md-12">
+                                    <div id="colorlib-logo"><a href="{%url 'index'%}"><i
+                                            class="flaticon-stethoscope"></i>Clinica Medica
+                                        <span>Dr.Pineda Peñate</span></a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-3">
                                     <div class="num">
                                         <span class="icon"><i class="icon-phone"></i></span>
-                                        <p><a href="#">5698-7620</a><br><a href="#">4518-5675</a></p>
+                                        <p><a href="#">Llamanos al:</a><br><strong><a href="#">5698-7620</a><br><a href="#">4518-5675</a></strong></p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -76,6 +80,19 @@
                                         <span class="icon"><i class="icon-location"></i></span>
                                         <p><a href="#">7av. 3-31 Zona 1 Apartamento "A" frente a Energuate</a></p>
                                     </div>
+                                </div>
+                                <div class="col-md-3">
+                                    {%if model_control_clinica.estado_servicio%}
+                                    <div class="loc">
+                                        <span class="icon"><i class="fas fa-door-open"></i></span>
+                                        <p><strong><a href="#">Se esta atendiedo pasa a realiza tu consulta o llamanos</a></strong></p>
+                                    </div>
+                                    {%else%}
+                                    <div class="loc">
+                                        <span class="icon"><i class="fas fa-door-closed"></i></span>
+                                        <p><strong><a href="#">Disculpanos en estos momentos la clinica no esta atendiendo</a></strong></p>
+                                    </div>
+                                    {%endif%}
                                 </div>
                             </div>
                         </div>
@@ -89,29 +106,35 @@
                             <div class="menu-1">
                                 <ul>
                                     <li class="active"><a href="{%url 'index'%}">Inicio</a></li>
+                                    <!--
                                     <li class="has-dropdown">
-                                        <a href="doctors.html">Doctor</a>
+                                        <a href="">Doctor</a>
                                         <ul class="dropdown">
-                                            <li><a href="doctors-single.html">Single Doctor</a></li>
+                                            <li><a href="">Single Doctor</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="services.html">Servicios</a></li>
+                                    -->
+                                    <li><a href="">Servicios</a></li>
+                                    <!--
                                     <li class="has-dropdown">
-                                        <a href="departments.html">Despartamentos</a>
+                                        <a href="">Departamentos</a>
                                         <ul class="dropdown">
-                                            <li><a href="departments-single.html">Departamento de sirugia plastica</a>
+                                            <li><a href="">Departamento de sirugia plastica</a>
                                             </li>
-                                            <li><a href="departments-single.html">Departamento dental</a></li>
-                                            <li><a href="departments-single.html">Departamento de terapia</a></li>
+                                            <li><a href="">Departamento dental</a></li>
+                                            <li><a href="">Departamento de terapia</a></li>
                                         </ul>
                                     </li>
+                                    -->
+                                    <!--
                                     <li class="has-dropdown">
-                                        <a href="blog.html">Blog</a>
+                                        <a href="">Blog</a>
                                         <ul class="dropdown">
-                                            <li><a href="blog-single.html">Single Blog</a></li>
+                                            <li><a href="">Single Blog</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="contact.html">Contacto</a></li>
+                                    -->
+                                    <li><a href="">Contacto</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -138,7 +161,7 @@
                                     <h2 class="doc-holder">Dr. Fernando Pineda Peñate Médico especialista en cirugía
                                         general.</h2>
                                     <h2>Puedes realizar tus consultas en la sección de contacto.</h2>
-                                    <p><a class="btn btn-primary btn-lg" href="appointment.html">Contacto</a></p>
+                                    <p><a class="btn btn-primary btn-lg" href="">Contacto</a></p>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +177,7 @@
                                     <h2 class="doc-holder">Servicio de ultrasonido para hombre y mujer!</h2>
                                     <h2>Para diagnosticar las causas de dolor, hinchazón e infección en los órganos
                                         internos del cuerpo y mas.</h2>
-                                    <p><a class="btn btn-primary btn-lg" href="appointment.html">Contacto</a></p>
+                                    <p><a class="btn btn-primary btn-lg" href="">Contacto</a></p>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +193,7 @@
                                     <h2 class="doc-holder">Por que tu salud es nuestra proridad!</h2>
                                     <h2>Para la evaluación de la salud del paciente y registro de historial médico para
                                         un mejor control de tu salud.</h2>
-                                    <p><a class="btn btn-primary btn-lg btn-learn" href="appointment.html">Contacto</a>
+                                    <p><a class="btn btn-primary btn-lg btn-learn" href="">Contacto</a>
                                     </p>
                                 </div>
                             </div>
@@ -186,7 +209,7 @@
                                     <h1>Especilidad <strong>quirúrgica</strong></h1>
                                     <h2 class="doc-holder">Operaciones de diferentes tipos!</h2>
                                     <h2>Atencion al cliente en cirugia general tu salud en buenas manos.</h2>
-                                    <p><a class="btn btn-primary btn-lg btn-learn" href="appointment.html">Contacto</a>
+                                    <p><a class="btn btn-primary btn-lg btn-learn" href="">Contacto</a>
                                     </p>
                                 </div>
                             </div>
@@ -347,179 +370,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 animate-box">
+                {%for list_model_servicio in model_servicio%}
+                <div class="col-md-4 col-lg-6 animate-box">
                     <div class="services">
 						<span class="icon">
 							<i class="fas fa-file-signature"></i>
 						</span>
                         <div class="desc">
-                            <h3><a href="#">Apéndice</a></h3>
-                            <p>La apendicitis se produce cuando el apéndice se inflama y se llena de pus. La apendicitis
-                                es una inflamación del apéndice, una bolsa en forma de dedo que se proyecta desde el
-                                colon en el lado inferior derecho del abdomen.</p>
+                            <h3><a href="#">{{list_model_servicio.nombre}}</a></h3>
+                            <p>{{list_model_servicio.brev_descripcion}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Vesícula</a></h3>
-                            <p>Los cálculos biliares son depósitos endurecidos de fluido digestivo que se pueden formar
-                                en la vesícula biliar. La vesícula es un órgano pequeño, con forma de pera, ubicado en
-                                la zona derecha del abdomen, justo debajo del hígado.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Hernias</a></h3>
-                            <p>El saco pasa a través de un agujero o área débil en la capa fuerte de la pared abdominal
-                                que rodea el músculo, denominada fascia.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Quistes</a></h3>
-                            <p>TCrecimiento anormal, generalmente no canceroso, lleno de líquido o una sustancia
-                                semisólida, que a veces causa dolor.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Lunares</a></h3>
-                            <p>En la mayoría de los casos, un nevo es benigno y no necesita tratamiento. En algunos
-                                casos poco frecuentes, puede convertirse en melanoma o en otro tipo de cáncer de
-                                piel.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Ulceras</a></h3>
-                            <p>Las úlceras se producen cuando el ácido estomacal daña el revestimiento del tracto
-                                digestivo. Las causas más comunes son la bacteria H. Pylori y los analgésicos
-                                antiinflamatorios como la aspirina.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Ultrasonidos</a></h3>
-                            <p>El ecógrafo crea imágenes de manera que se puedan examinar los órganos dentro del cuerpo.
-                                Esta máquina envía ondas sonoras de alta frecuencia, las cuales reflejan las estructuras
-                                corporales.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Pie diabético</a></h3>
-                            <p>El pie diabético aparece cuando existen niveles inadecuados de glucosa en sangre y otros
-                                factores que concurren con frecuencia en personas con diabetes (hipertensión arterial,
-                                hipercolesterolemia,...).</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Retiro de puntos</a></h3>
-                            <p>Los puntos se retiran generalmente dentro de los 14 días, según la ubicación de la
-                                herida. Su médico le dirá cuándo volver para que le retiren los puntos.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Satura de heridas</a></h3>
-                            <p>Disponemos de diferentes tipos de suturas: hilos, grapas, suturas adhesivas y adhesivos
-                                tisulares.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Curación de heridas</a></h3>
-                            <p>Procedimiento realizado sobre la herida destinada a prevenir y controlar las infecciones
-                                y promover la cicatrización. Es una técnica aséptica, por lo que se debe usar material
-                                estéril.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Consulta médica general</a></h3>
-                            <p>Es la atención brindada por un médico general, médico familiar o especialista,
-                                dependiendo del nivel de complejidad, incluye un conjunto de actividades mediante las
-                                cuales se evalúa el estado de salud.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 animate-box">
-                    <div class="services">
-						<span class="icon">
-							<i class="fas fa-file-signature"></i>
-						</span>
-                        <div class="desc">
-                            <h3><a href="#">Electrocardiograma</a></h3>
-                            <p>El electrocardiograma es la representación gráfica de la actividad eléctrica del corazón
-                                en función del tiempo, que se obtiene, desde la superficie corporal, en el pecho, con un
-                                electrocardiógrafo en forma de cinta continua.</p>
-                        </div>
-                    </div>
-                </div>
+                {%endfor%}
             </div>
         </div>
     </div>
@@ -583,7 +446,7 @@
         <div class="container">
             <div class="row animate-box">
                 <div class="col-md-6 col-md-offset-3 text-center colorlib-heading">
-                    <h2>Personal muy bien capacitado</h2>
+                    <h2>Nuestro personal</h2>
                     <p>Por que tu salud es primero el Dr. Doctor Pineda Peñate y el enfermero
                         Francisco Cristobal te atenderan.
                     </p>
@@ -675,8 +538,9 @@
                     <div class="row">
                         <div class="col-md-3 col-sm-6 text-center animate-box">
                             <span class="icon"><i class="flaticon-healthy"></i></span>
-                            <span class="colorlib-counter js-counter" data-from="0" data-to="3297" data-speed="5000"
-                                  data-refresh-interval="50"></span>
+                            <span class="colorlib-counter js-counter" data-from="0" data-to="{{number_satisfacion}}"
+                                  data-speed="5000"
+                                  data-refresh-interval="5"></span>
                             <span class="colorlib-counter-label">Pacientes satisfechos</span>
                         </div>
                         <div class="col-md-3 col-sm-6 text-center animate-box">
@@ -693,8 +557,9 @@
                         </div>
                         <div class="col-md-3 col-sm-6 text-center animate-box">
                             <span class="icon"><i class="flaticon-ambulance"></i></span>
-                            <span class="colorlib-counter js-counter" data-from="0" data-to="50" data-speed="5000"
-                                  data-refresh-interval="50"></span>
+                            <span class="colorlib-counter js-counter" data-from="0" data-to="{{number_servicio}}"
+                                  data-speed="50"
+                                  data-refresh-interval="1"></span>
                             <span class="colorlib-counter-label">Servicios</span>
                         </div>
                     </div>
@@ -714,7 +579,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="blog-entry">
-                        <a href="blog.html" class="blog-img"
+                        <a href="" class="blog-img"
                            style="background-image: url({%static 'medicare/images/blog-1.jpg'%});">
                             <p class="date">
                                 <span>1</span>
@@ -722,7 +587,7 @@
                             </p>
                         </a>
                         <div class="desc">
-                            <h3><a href="blog.html">He aquí por qué el yoga es mejor para tu salud</a></h3>
+                            <h3><a href="">He aquí por qué el yoga es mejor para tu salud</a></h3>
                             <p>El yoga fluye por su lugar del cuerpo tensa y lo suministra con la relagacion
                                 necesaria. </p>
                             <p><a href="#">Mas informacion <i class="icon-arrow-right3"></i></a></p>
@@ -731,7 +596,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="blog-entry">
-                        <a href="blog.html" class="blog-img"
+                        <a href="" class="blog-img"
                            style="background-image: url({%static 'medicare/images/blog-2.jpg'%});">
                             <p class="date">
                                 <span>31</span>
@@ -739,7 +604,7 @@
                             </p>
                         </a>
                         <div class="desc">
-                            <h3><a href="blog.html">Vive mejor conoce tu tecnología médica</a></h3>
+                            <h3><a href="">Vive mejor conoce tu tecnología médica</a></h3>
                             <p>La tecnologia y la ciencia medica ayudando al mismo proposito.</p>
                             <p><a href="#">Mas informacion <i class="icon-arrow-right3"></i></a></p>
                         </div>
@@ -747,7 +612,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="blog-entry">
-                        <a href="blog.html" class="blog-img"
+                        <a href="" class="blog-img"
                            style="background-image: url({%static 'medicare/images/blog-3.jpg'%});">
                             <p class="date">
                                 <span>30</span>
@@ -755,7 +620,7 @@
                             </p>
                         </a>
                         <div class="desc">
-                            <h3><a href="blog.html">Comer manzana es la fuente de energía</a></h3>
+                            <h3><a href="">Comer manzana es la fuente de energía</a></h3>
                             <p>La manzana como fuente de proteina de alta calidad y factor nutricional.</p>
                             <p><a href="#">Mas informacion <i class="icon-arrow-right3"></i></a></p>
                         </div>
@@ -802,76 +667,74 @@
             <div class="row">
                 <div class="col-md-12 animate-box">
                     <div class="owl-carousel">
+                        {%for list_model_historial_clinico in model_historial_clinico%}
                         <div class="item">
                             <div class="testimony text-center">
-                                <span class="img-user"
-                                      style="background-image: url({%static 'medicare/images/person1.jpg'%});"></span>
-                                <span class="user">Edward Tom</span>
+                                {%if list_model_historial_clinico.fk_nps.respuesta == 5%}
                                 <blockquote>
-                                    <p>"Una de las mejores clinicas medicas en Salama."</p>
-                                    <p class="color"><span><i class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i class="icon-star3"></i></span></p>
+                                    <span class="img-user" style="color: #5ED615;"
+                                          ><i class="fas fa-user-injured fa-6x"></i></span>
+                                    <span class="user">{{list_model_historial_clinico.fk_persona.nombre}}</span>
+                                    <p>"Ha calificado nuestro servicio con 5 estrellas."</p>
+                                    <p class="color">
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                    </p>
                                 </blockquote>
+                                {%elif list_model_historial_clinico.fk_nps.respuesta == 4%}
+                                <blockquote>
+                                    <span class="img-user" style="color: #5ED615;"
+                                          ><i class="fas fa-user-injured fa-6x"></i></span>
+                                    <span class="user">{{list_model_historial_clinico.fk_persona.nombre}}</span>
+                                    <p>"Ha calificado nuestro servicio con 4 estrellas."</p>
+                                    <p class="color">
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                    </p>
+                                </blockquote>
+                                {%elif list_model_historial_clinico.fk_nps.respuesta == 3%}
+                                <blockquote>
+                                    <span class="img-user" style="color: #5ED615;"
+                                          ><i class="fas fa-user-injured fa-6x"></i></span>
+                                    <span class="user">{{list_model_historial_clinico.fk_persona.nombre}}</span>
+                                    <p>"Ha calificado nuestro servicio con 3 estrellas."</p>
+                                    <p class="color">
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                    </p>
+                                </blockquote>
+                                {%elif list_model_historial_clinico.fk_nps.respuesta == 2%}
+                                <blockquote>
+                                    <span class="img-user" style="color: #5ED615;"
+                                          ><i class="fas fa-user-injured fa-6x"></i></span>
+                                    <span class="user">{{list_model_historial_clinico.fk_persona.nombre}}</span>
+                                    <p>"Ha calificado nuestro servicio con 2 estrellas."</p>
+                                    <p class="color">
+                                        <span><i class="icon-star3"></i></span>
+                                        <span><i class="icon-star3"></i></span>
+                                    </p>
+                                </blockquote>
+                                {%else%}
+                                <blockquote>
+                                    <span class="img-user" style="color: #5ED615;"
+                                          ><i class="fas fa-user-injured fa-6x"></i></span>
+                                    <span class="user">{{list_model_historial_clinico.fk_persona.nombre}}</span>
+                                    <p>"Ha calificado nuestro servicio con 1 estrella."</p>
+                                    <p class="color">
+                                        <span><i class="icon-star3"></i></span>
+                                    </p>
+                                </blockquote>
+                                {%endif%}
+
                             </div>
                         </div>
-                        <div class="item">
-                            <div class="testimony text-center">
-                                <span class="img-user"
-                                      style="background-image: url({%static 'medicare/images/person2.jpg'%});"></span>
-                                <span class="user">Carl Bean</span>
-                                <blockquote>
-                                    <p>"La mejor atencion en un clinica muy buen servicio."</p>
-                                    <p class="color"><span><i class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i class="icon-star3"></i></span></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony text-center">
-                                <span class="img-user"
-                                      style="background-image: url({%static 'medicare/images/person3.jpg'%});"></span>
-                                <span class="user">John Bay</span>
-                                <blockquote>
-                                    <p>"100% satifecho agradezco mucho el servicio dado en la clinica medica."</p>
-                                    <p class="color"><span><i class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i class="icon-star3"></i></span></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony text-center">
-                                <span class="img-user"
-                                      style="background-image: url({%static 'medicare/images/person1.jpg'%});"></span>
-                                <span class="user">Ronald Duck</span>
-                                <blockquote>
-                                    <p>"Muy amables y atentos al pacientes felicitaciones."</p>
-                                    <p class="color"><span><i class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i class="icon-star3"></i></span></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony text-center">
-                                <span class="img-user"
-                                      style="background-image: url({%static 'images/person2.jpg'%});"></span>
-                                <span class="user">Justine Mill</span>
-                                <blockquote>
-                                    <p>"Muy buena seccion de contacto facil de consultar y saber cuando atienden."</p>
-                                    <p class="color"><span><i class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i
-                                            class="icon-star3"></i></span><span><i class="icon-star3"></i></span></p>
-                                </blockquote>
-                            </div>
-                        </div>
+                        {%endfor%}
                     </div>
                 </div>
             </div>
@@ -915,19 +778,20 @@
                     <form class="contact-form">
                         <div class="form-group">
                             <label for="name" class="sr-only">Nombre</label>
-                            <input type="name" class="form-control" id="name" placeholder="Nombre">
+                            <input type="name" class="form-control" id="name" placeholder="Nombre" disabled>
                         </div>
                         <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email">
+                            <input type="email" class="form-control" id="email" placeholder="Email" disabled>
                         </div>
                         <div class="form-group">
                             <label for="message" class="sr-only">Mensaje</label>
-                            <textarea class="form-control" id="message" rows="3" placeholder="Mensaje"></textarea>
+                            <textarea class="form-control" id="message" rows="3" placeholder="Mensaje"
+                                      disabled></textarea>
                         </div>
                         <div class="form-group">
                             <input type="submit" id="btn-submit" class="btn btn-primary btn-send-message btn-md"
-                                   value="Send Message">
+                                   value="Enviar mensaje" disabled>
                         </div>
                     </form>
                 </div>

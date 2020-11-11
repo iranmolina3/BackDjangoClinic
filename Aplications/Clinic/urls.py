@@ -63,5 +63,11 @@ urlpatterns = [
     path('estado_servicio_control_clinica/<int:estado_servicio>', estado_servicio_control_clinica,
          name='estado_servicio_control_clinica'),
     # tutorial
-    path('show_tutorial/', show_tutorial, name='show_tutorial'),
+    path('tutorial_paciente/', tutorial_paciente, name='tutorial_paciente'),
+    path('tutorial_cita/', tutorial_cita, name='tutorial_cita'),
+    path('tutorial_medicamento/', tutorial_medicamento, name='tutorial_medicamento'),
+    path('tutorial_historial_medico/', tutorial_historial_medico, name='tutorial_historial_medico'),
+    path('tutorial_pregunta_nps/', tutorial_pregunta_nps, name='tutorial_pregunta_nps'),
+    path('tutorial_servicio/', tutorial_servicio, name='tutorial_servicio'),
+    path('tutorial_clinica/', tutorial_clinica, name='tutorial_clinica'),
 ]

@@ -42,7 +42,6 @@ def generator_carnet(_nombre, contador):
     #   generador de usuario con contador if a same user
     year = date.today().strftime("%Y")
     usuario = Usuario.objects.filter(ESTADO=True, CARNET__regex=str(_nombre) + str(year))
-    print()
     for lista_usuario in usuario:
         print(lista_usuario)
         contador = contador + 1
@@ -56,9 +55,17 @@ def generator_carnet(_nombre, contador):
 
 
 def home(request):
-    #    numero = span_numero_citas()
-    #    modelcontrolclinica = ControlClinica.objects.get(estado=True)
-    return render(request, 'index.html')
+    model_servicio = Servicio.objects.filter(estado=True)
+    model_control_clinica = ControlClinica.objects.filter(estado=True)[:1].get()
+    _number_servicio = countModelarray(Servicio.objects.filter(estado=True))
+    _number_servicio = countModelarray(Servicio.objects.filter(estado=True))
+    _number_satisfacion = countModelarray(Nps.objects.filter(respuesta=5)) + countModelarray(
+        Nps.objects.filter(respuesta=4)) + countModelarray(Nps.objects.filter(respuesta=3))
+    model_historial_clinico = HistorialClinico.objects.all()[:10]
+    return render(request, 'index.html',
+                  {'model_control_clinica': model_control_clinica, 'model_servicio': model_servicio,
+                   'number_servicio': _number_servicio, 'number_satisfacion': _number_satisfacion,
+                   'model_historial_clinico': model_historial_clinico})
 
 
 def dashboard(request):
@@ -1236,12 +1243,56 @@ def estado_servicio_control_clinica(request, estado_servicio):
         model_control_clinica.save()
         return redirect('clinic:control_clinica')
 
+
 """
  -- SISTEM TUTORIALS
 """
 
-def show_tutorial(request):
+
+def tutorial_paciente(request):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        return render(request, 'Clinic/Tutorial/tutorial.html')
+        return render(request, 'Clinic/Tutorial/tutorial_paciente.html')
+
+
+def tutorial_cita(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        return render(request, 'Clinic/Tutorial/tutorial_cita.html')
+
+
+def tutorial_medicamento(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        return render(request, 'Clinic/Tutorial/tutorial_medicamento.html')
+
+
+def tutorial_historial_medico(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        return render(request, 'Clinic/Tutorial/tutorial_historial_medico.html')
+
+
+def tutorial_pregunta_nps(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        return render(request, 'Clinic/Tutorial/tutorial_pregunta_nps.html')
+
+
+def tutorial_servicio(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        return render(request, 'Clinic/Tutorial/tutorial_servicio.html')
+
+
+def tutorial_clinica(request):
+    if not request.user.is_authenticated:
+        return redirect('sing')
+    else:
+        return render(request, 'Clinic/Tutorial/tutorial_clinica.html')

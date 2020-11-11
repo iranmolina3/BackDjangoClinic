@@ -93,9 +93,11 @@
                                                     </div>
                                                 </span>
                                         </div>
-                                        <input type="date" class="form-control" name="fecha_nacimiento" value="{{fecha_nacimiento}}">
+                                        <input type="date" class="form-control" name="fecha_nacimiento"
+                                               value="{{fecha_nacimiento}}">
                                     </div>
                                 </div>
+
                                 <div class="col-sm-12 col-md-6 col-lg-4 col-md-12">
                                     <h6 class="card-title">Estado civil:</h6>
                                     <div class="input-group mb-3">
@@ -167,11 +169,27 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- Warning Alert modal -->
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <h6 class="card-title">Edad:</h6>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <div style="font-size: 0.5rem;">
+                                                        <!--<i class="fas fa-asterisk fa-sm"></i>-->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <input type="text" class="form-control" value="{{model_persona.edad}}" disabled>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Warning Alert modal -->
                                 <button type="button" class="btn btn-success btn-rounded" data-toggle="modal"
                                         data-target="#warning-alert-modal"><i class="fas fa-check"></i> Guardar
                                 </button>
-                            </div>
                         </div>
                     </div>
                 </div>
