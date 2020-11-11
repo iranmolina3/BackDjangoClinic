@@ -20,16 +20,11 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="input-group mb-3">
-                                        <input type="text" list="info_persona" class="form-control" id="nametext"
+                                        <input type="text" class="form-control" id="nametext"
                                                value=""
                                                name="nombreapellido"
                                                aria-describedby="name"
                                                placeholder="Ej: Juan Pedro Monserrat o Juan">
-                                        <datalist id="info_persona">
-                                            {%for list_persona in datalist_persona%}
-                                            <option value="{{list_persona.nombre}} {{list_persona.apellido}}">
-                                                {%endfor%}
-                                        </datalist>
                                         <button type="submit"
                                                 class="btn waves-effect waves-light btn-outline-primary"
                                                 data-toggle="modal"
