@@ -190,7 +190,6 @@ def labelModelcitadate(month):
     _label = []
     _year = int(date.today().strftime("%Y"))
     _month = [1, 3, 5, 7, 8, 10, 12]
-    cita = Cita.objects.filter(Q(tipo_estado=True) & Q(Q(fecha__month=month) & Q(fecha__day=11)))
     if month in _month:
         for day in range(1, 32):
             _date = str(_year) + "-" + str(month) + "-" + str(day)
@@ -611,8 +610,8 @@ def create_consulta(request, pk_historial_clinico):
     else:
         model_pregunta = Pregunta.objects.filter(estado=True)
         model_servicio = Servicio.objects.filter(estado=True)
+        model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
         if request.method == "POST":
-            model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
             _pk_servicio = request.POST.get('pk_servicio')
             model_servicio = Servicio.objects.get(pk_servicio=_pk_servicio)
             _historia = request.POST.get('historia')
@@ -620,8 +619,8 @@ def create_consulta(request, pk_historial_clinico):
             model_consulta.save()
             model_historial_clinico.fk_consulta = model_consulta
             model_historial_clinico.save()
-            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                          {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+            return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                            model_historial_clinico.fk_cita.pk_cita)
         else:
             model_consulta = Consulta.objects.filter(estado=True)
             return render(request, 'Clinic/Consulta/create_consulta.html',
@@ -646,8 +645,8 @@ def update_consulta(request, pk_consulta):
             model_consulta.fk_servicio = model_servicio
             model_consulta.historia = _historia
             model_consulta.save()
-            return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                          {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+            return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                            model_historial_clinico.fk_cita.pk_cita)
 
 
 def delete_consulta(request, pk_consulta):
@@ -685,7 +684,6 @@ def create_antecedente(request, pk_historial_clinico, tipo_antecedente):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        model_pregunta = Pregunta.objects.filter(estado=True)
         model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
         if request.method == "POST":
             if tipo_antecedente == 1:
@@ -715,8 +713,8 @@ def create_antecedente(request, pk_historial_clinico, tipo_antecedente):
                 model_antecedente.save()
                 model_historial_clinico.fk_antecedente = model_antecedente
                 model_historial_clinico.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
             else:
                 _hijos_vivos = int(request.POST.get('hijos_vivos'))
                 print(type(_hijos_vivos), ' ', _hijos_vivos)
@@ -735,8 +733,8 @@ def create_antecedente(request, pk_historial_clinico, tipo_antecedente):
                 model_antecedente.save()
                 model_historial_clinico.fk_antecedente = model_antecedente
                 model_historial_clinico.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
         else:
             return render(request, 'Clinic/Antecedente/create_antecedente.html', {'tipo_antecedente': tipo_antecedente})
 
@@ -810,8 +808,8 @@ def update_antecedente(request, pk_antecedente, tipo_antecedente):
                 model_antecedente.licor = _licor
                 model_antecedente.tipo_antecedente = tipo_antecedente
                 model_antecedente.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
             else:
                 _hijos_vivos = request.POST.get('hijos_vivos')
                 _peso = request.POST.get('peso')
@@ -833,8 +831,8 @@ def update_antecedente(request, pk_antecedente, tipo_antecedente):
                 model_antecedente.licor = _licor
                 model_antecedente.tipo_antecedente = tipo_antecedente
                 model_antecedente.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
 
 
 def read_antecedente(request):
@@ -871,7 +869,6 @@ def create_examen_fisico(request, pk_historial_clinico, tipo_examen_fisico):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        model_pregunta = Pregunta.objects.filter(estado=True)
         if request.method == "POST":
             model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
             if tipo_examen_fisico == 1:
@@ -891,8 +888,8 @@ def create_examen_fisico(request, pk_historial_clinico, tipo_examen_fisico):
                 model_examen_fisico.save()
                 model_historial_clinico.fk_examen_fisico = model_examen_fisico
                 model_historial_clinico.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
             else:
                 _presion_arterial = int(request.POST.get('presion_arterial'))
                 _frecuencia_cardiaca = int(request.POST.get('frecuencia_cardiaca'))
@@ -908,8 +905,8 @@ def create_examen_fisico(request, pk_historial_clinico, tipo_examen_fisico):
                 model_examen_fisico.save()
                 model_historial_clinico.fk_examen_fisico = model_examen_fisico
                 model_historial_clinico.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
         else:
             return render(request, 'Clinic/ExamenFisico/create_examen_fisico.html',
                           {'tipo_examen_fisico': tipo_examen_fisico})
@@ -941,8 +938,8 @@ def update_examen_fisico(request, pk_examen_fisico, tipo_examen_fisico):
                 model_examen_fisico.impresion_clinica = _impresion_clinica
                 model_examen_fisico.tipo_examen_fisico = tipo_examen_fisico
                 model_examen_fisico.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
             else:
                 _hijos_vivos = request.POST.get('hijos_vivos')
                 _peso = request.POST.get('peso')
@@ -964,8 +961,8 @@ def update_examen_fisico(request, pk_examen_fisico, tipo_examen_fisico):
                 model_examen_fisico.licor = _licor
                 model_examen_fisico.tipo_examen_fisico = tipo_examen_fisico
                 model_examen_fisico.save()
-                return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
-                              {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
+                return redirect('clinic:create_historial_clinico', model_historial_clinico.fk_persona.pk_persona,
+                                model_historial_clinico.fk_cita.pk_cita)
 
 
 def read_examen_fisico(request):

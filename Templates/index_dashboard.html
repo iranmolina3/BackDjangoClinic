@@ -396,6 +396,18 @@
                                                 aria-expanded="false"><i class="fab fa-youtube"></i><span
                             class="hide-menu">Video tutoriales </span></a>
                         <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_servicio'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial servicios
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_medicamento'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial medicamentos
+                                        </span></a>
+                            </li>
+                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_pregunta_nps'%}" class="sidebar-link"><span
+                                    class="hide-menu"> Tutorial preguntas nps
+                                        </span></a>
+                            </li>
                             <li class="sidebar-item"><a href="{%url 'clinic:tutorial_paciente'%}" class="sidebar-link"><span
                                     class="hide-menu"> Tutorial pacientes
                                         </span></a>
@@ -404,20 +416,8 @@
                                     class="hide-menu"> Tutorial citas
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_medicamento'%}" class="sidebar-link"><span
-                                    class="hide-menu"> Tutorial medicamentos
-                                        </span></a>
-                            </li>
                             <li class="sidebar-item"><a href="{%url 'clinic:tutorial_historial_medico'%}" class="sidebar-link"><span
                                     class="hide-menu"> Tutorial historial medico
-                                        </span></a>
-                            </li>
-                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_pregunta_nps'%}" class="sidebar-link"><span
-                                    class="hide-menu"> Tutorial preguntas nps
-                                        </span></a>
-                            </li>
-                            <li class="sidebar-item"><a href="{%url 'clinic:tutorial_servicio'%}" class="sidebar-link"><span
-                                    class="hide-menu"> Tutorial servicios
                                         </span></a>
                             </li>
                             <li class="sidebar-item"><a href="{%url 'clinic:tutorial_clinica'%}" class="sidebar-link"><span
@@ -891,6 +891,9 @@
         integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
         crossorigin="anonymous"></script>
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+
 <!-- IRAN PONE ATENCION AQUI UNA DE LAS PARTES MAS FUNDAMENTALES PARA USAR ESTOS GRAFICOS ES CON EL TAG  safe-->
 <!-- Ejemplo {{label_name|safe}}    =  label_name es un array en las wievs y safe es el tag para que se pueda visualizar-->
 
@@ -942,7 +945,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: {{label_servicio|safe}},
         datasets: [{
-            label: '{{label_servicio}} Votos',
+            label: 'Cant',
             data: {{data_servicio|safe}},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -983,6 +986,21 @@ var myChart = new Chart(ctx, {
         legend: {
             position: 'bottom',
             display: false,
+        },
+        plugins: {
+            datalabels: {
+                formatter: (value, ctx) => {
+                    let datasets = ctx.chart.data.datasets;
+                    if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                        let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+                        let percentage = Math.round((value / sum) * 100) + '%';
+                        return percentage;
+                    } else {
+                        return percentage;
+                    }
+                },
+                color: '<div id="000000"></div>',
+            }
         },
         scales: {
             yAxes: [{
