@@ -33,8 +33,8 @@ class Persona(models.Model):
     municipio = models.CharField(max_length=50, blank=True, null=True)
     estado_civil = models.CharField(default="Soltero(a)", max_length=10, blank=True, null=True)
     estado = models.BooleanField(default=True, blank=False, null=False)
-    hora_inicio = models.DateTimeField(blank=True, null=True)
-    hora_final = models.DateTimeField(blank=True, null=True)
+    hora_inicio = models.TimeField(blank=True, null=True)
+    hora_final = models.TimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Persona'
@@ -242,8 +242,8 @@ class HistorialClinico(models.Model):
     fk_nps = models.ForeignKey(Nps, on_delete=models.CASCADE, blank=True, null=True)
     fk_cita = models.OneToOneField(Cita, on_delete=models.CASCADE, blank=True, null=True)
     estado_receta = models.BooleanField(default=False, blank=False, null=False)
-    hora_inicio = models.DateTimeField(blank=True, null=True)
-    hora_final = models.DateTimeField(blank=True, null=True)
+    hora_inicio = models.TimeField(blank=True, null=True)
+    hora_final = models.TimeField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Historial clinico'

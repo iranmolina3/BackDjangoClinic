@@ -298,7 +298,7 @@ def create_persona(request):
             # print(_dpi, _edad, _genero, _nombre, _apellido, _direccion, _fecha_nacimiento, _estado_civil, _municipio,
             #      _telefono)
             print('HORA_INICIO', _hora_inicio)
-            _hora_final = datetime.today().strftime("%Y-%m-%dT%H:%M:%S")
+            _hora_final = datetime.today().strftime("%H:%M:%S")
             print('HORA_FINAL', _hora_final)
             model_persona = Persona(nombre=_nombre, apellido=_apellido, dpi=_dpi, edad=_edad,
                                     fecha_nacimiento=_fecha_nacimiento, telefono=_telefono, genero=_genero,
@@ -307,7 +307,7 @@ def create_persona(request):
             model_persona.save()
             return redirect('clinic:read_persona')
         else:
-            _hora_inicio = datetime.today().strftime("%Y-%m-%dT%H:%M:%S")
+            _hora_inicio = datetime.today().strftime("%H:%M:%S")
             print('HORA_INICIO', _hora_inicio)
             return render(request, 'Clinic/Persona/create_persona.html', {'hora_inicio':_hora_inicio})
 
@@ -542,7 +542,7 @@ def create_historial_clinico(request, pk_persona, pk_cita):
                 return render(request, 'Clinic/HistorialClinico/create_historial_clinico.html',
                               {'model_historial_clinico': model_historial_clinico, 'model_pregunta': model_pregunta})
             except ObjectDoesNotExist:
-                _hora_inicio = datetime.strptime(datetime.today().strftime("%Y-%m-%dT%H:%M"), "%Y-%m-%dT%H:%M:%S")
+                _hora_inicio = datetime.today().strftime("%H:%M:%S")
                 # print("FECHA ACTUAL ", fecha_inicio)
                 model_cita = Cita.objects.get(pk_cita=pk_cita)
                 model_persona = Persona.objects.get(pk_persona=pk_persona)
@@ -613,7 +613,7 @@ def delete_historial_clinico(request, pk_historial_clinico, pk_cita):
     if not request.user.is_authenticated:
         return redirect('sing')
     else:
-        _hora_final = datetime.strptime(datetime.today().strftime("%Y-%m-%dT%H:%M:%S"), "%Y-%m-%dT%H:%M:%S")
+        _hora_final = datetime.today().strftime("%H:%M:%S")
         _model_historial_clinico = HistorialClinico.objects.get(pk_historial_clinico=pk_historial_clinico)
         _model_historial_clinico.estado = False
         _model_historial_clinico.hora_final = _hora_final
